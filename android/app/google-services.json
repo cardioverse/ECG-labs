@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "157611331845",
+    "project_id": "ecg-trainer-d0fba",
+    "storage_bucket": "ecg-trainer-d0fba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157611331845:android:9a1b7debb40e9d9e75676c",
+        "android_client_info": {
+          "package_name": "com.example.ecg_trainer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkI_QU3qA-Dst1vt_V2O_Ae3VubqFo3Xc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
