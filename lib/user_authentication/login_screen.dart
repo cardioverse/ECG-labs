@@ -69,10 +69,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(top: 16.0),
-                  child: Icon(
-                    Icons.favorite, // Heart icon at the top
-                    size: 80,
-                    color: Colors.white,
+                  child: Image.asset(
+                    'assets/icon/icon.png', // Custom icon at the top
+                    height: 200,
+
                   ),
                 ),
               ),
@@ -174,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Container(
                             width: 50,
                             decoration: BoxDecoration(
-                              color: Colors.purple,
+                              color: Colors.deepPurple[900],
                               borderRadius: BorderRadius.horizontal(right: Radius.circular(30.0)),
                             ),
                             child: Center(

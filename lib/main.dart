@@ -41,6 +41,17 @@ class ECGTrainerApp extends StatelessWidget {
             textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
+        navigationBarTheme: NavigationBarThemeData(
+          backgroundColor: Colors.black,
+          indicatorColor: Colors.deepPurple[900],
+          labelTextStyle: MaterialStateProperty.resolveWith<TextStyle?>((states) {
+            if (states.contains(MaterialState.selected)) {
+              return TextStyle(color: Colors.deepPurple[900]);
+            } else {
+              return TextStyle(color: Colors.white);
+            }
+          }),
+        ),
       ),
       home: LoginScreen(),  // Start with LoginScreen
     );

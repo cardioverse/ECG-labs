@@ -84,10 +84,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: Icon(
-                  Icons.favorite, // Placeholder for the heart logo with ECG waveform
-                  color: Colors.white,
-                  size: 80,
+                child: Image.asset(
+                  'assets/icon/icon.png', // Custom icon at the top
+                  height: 200,
                 ),
               ),
               SizedBox(height: 24),
@@ -241,7 +240,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Container(
                         width: 50,
                         decoration: BoxDecoration(
-                          color: Colors.purple,
+                          color: Colors.deepPurple[900],
                           borderRadius: BorderRadius.horizontal(right: Radius.circular(30.0)),
                         ),
                         child: Center(
