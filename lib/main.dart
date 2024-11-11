@@ -46,9 +46,16 @@ class ECGTrainerApp extends StatelessWidget {
           indicatorColor: Colors.deepPurple[900],
           labelTextStyle: MaterialStateProperty.resolveWith<TextStyle?>((states) {
             if (states.contains(MaterialState.selected)) {
-              return TextStyle(color: Colors.deepPurple[900]);
+              return TextStyle(color: Colors.white);
             } else {
               return TextStyle(color: Colors.white);
+            }
+          }),
+          iconTheme: MaterialStateProperty.resolveWith<IconThemeData>((states) {
+            if (states.contains(MaterialState.selected)) {
+              return IconThemeData(color: Colors.white);
+            } else {
+              return IconThemeData(color: Colors.white);
             }
           }),
         ),
