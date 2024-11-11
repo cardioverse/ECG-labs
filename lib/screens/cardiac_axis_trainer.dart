@@ -40,9 +40,7 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
   bool isTimerRunning = false;
   bool showRestartButton = false;
 
-  Timer? _timer;
   Timer? countdownTimer;
-  int _elapsedTime = 0;
   int countdown = 15;
 
   @override
@@ -53,7 +51,6 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
 
   @override
   void dispose() {
-    _timer?.cancel();
     countdownTimer?.cancel();
     super.dispose();
   }
@@ -72,6 +69,7 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
       if (availableImages.isEmpty) {
         usedImages.clear();
         availableImages = allImages;
+        showRestartButton = true; // Show Restart button when all questions are answered
       }
 
       availableImages.shuffle();
@@ -85,24 +83,6 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
           : 'Left Axis Deviation';
 
       _startCountdown();
-    });
-  }
-
-  void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        _elapsedTime++;
-      });
-    });
-    setState(() {
-      isTimerRunning = true;
-    });
-  }
-
-  void _stopTimer() {
-    _timer?.cancel();
-    setState(() {
-      isTimerRunning = false;
     });
   }
 
@@ -125,32 +105,20 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
         isAnswered = true;
         questionsAnswered++;
 
-        if (questionsAnswered == 1 && !isTimerRunning) {
-          _startTimer(); // Start the timer on the first answer
-        }
-
         if (selectedAnswer == correctAnswer) {
           score++;
           _showFeedbackMessage('Correct!');
         } else {
           wrongAnswers++;
           _showFeedbackMessage('Wrong! The correct answer was $correctAnswer');
-          _stopTimer(); // Stop the timer on wrong answer
-          Future.delayed(Duration(seconds: 2), () {
-            setState(() {
-              showRestartButton = true;
-            });
-          });
         }
         showNextButton = true;
       });
 
       // Automatically show the next image after 2 seconds if no restart button is needed
-      if (!showRestartButton) {
-        Future.delayed(Duration(seconds: 2), () {
-          if (showNextButton) _showNextImage();
-        });
-      }
+      Future.delayed(Duration(seconds: 2), () {
+        if (showNextButton && !showRestartButton) _showNextImage();
+      });
     }
   }
 
@@ -167,20 +135,17 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
   }
 
   void _resetQuiz() {
-    _stopTimer(); // Stop the timer when resetting the quiz
     countdownTimer?.cancel(); // Stop the countdown timer
     setState(() {
       score = 0;
       wrongAnswers = 0;
       questionsAnswered = 0;
       usedImages.clear();
-      _elapsedTime = 0; // Reset the elapsed time
       countdown = 15; // Reset the countdown
       showRestartButton = false; // Hide Restart button on quiz reset
       currentImage = ''; // Clear current image
     });
     _showNextImage(); // Show the next image (starts the quiz)
-    // Don't start the timer here
   }
 
   @override
@@ -206,17 +171,19 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
               ),
             SizedBox(height: 20),
 
-            // Timer display
-            Text(
-              'Total Time: $_elapsedTime seconds',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-
             // Countdown timer display
             Text(
               'Time Left: $countdown seconds',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: countdown > 5 ? Colors.black : Colors.red),
+            ),
+            // Score display
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildScoreCard('Correct', score, Colors.green, Colors.white), // Set text color to white
+                SizedBox(width: 80),
+                _buildScoreCard('Wrong', wrongAnswers, Colors.red, Colors.white), // Set text color to white
+              ],
             ),
             SizedBox(height: 20),
 
@@ -260,17 +227,6 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
                   ),
                 ),
               ),
-            SizedBox(height: 20),
-
-            // Score display
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildScoreCard('Correct', score, Colors.green, Colors.white), // Set text color to white
-                SizedBox(width: 80),
-                _buildScoreCard('Wrong', wrongAnswers, Colors.red, Colors.white), // Set text color to white
-              ],
-            ),
             SizedBox(height: 20),
           ],
         ),
