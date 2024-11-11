@@ -89,9 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ECG Trainer'),
-      ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.black,
