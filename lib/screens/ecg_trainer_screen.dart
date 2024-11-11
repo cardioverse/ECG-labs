@@ -12,49 +12,49 @@ class ECGTrainerScreen extends StatelessWidget {
   final List<_ECGTrainerItem> items = [
     _ECGTrainerItem(
       title: 'Cardiac Axis Trainer',
-      color: Colors.red,
+      color: Colors.deepPurple[900]!,
       destination: () => CardiacAxisTrainer(),
       image: AssetImage('assets/images/buttons/axismod.png'), // Replace with an appropriate icon
     ),
     _ECGTrainerItem(
       title: 'ECG Interpretation Helper',
-      color: Colors.blue,
+      color: Colors.deepPurple[900]!,
       destination: () => ECGInterpretationHelper(),
       icon: Icons.help_outline, // Replace with an appropriate icon
     ),
     _ECGTrainerItem(
       title: 'QRS Complex Quiz',
-      color: Colors.green,
+      color: Colors.deepPurple[900]!,
       destination: () => QRSComplexQuizScreen(),
       icon: Icons.quiz, // Replace with an appropriate icon
     ),
     _ECGTrainerItem(
       title: 'Arrhythmia Trainer',
-      color: Colors.purple,
+      color: Colors.deepPurple[900]!,
       destination: () => ArrhythmiaTrainer(),
       icon: Icons.show_chart, // Replace with an appropriate icon
     ),
     _ECGTrainerItem(
       title: 'ECG Animation',
-      color: Colors.orange,
+      color: Colors.deepPurple[900]!,
       destination: () => ECGAnimation(),
       icon: Icons.play_arrow, // Replace with an appropriate icon
     ),
     _ECGTrainerItem(
       title: 'ECG Repository',
-      color: Colors.teal,
+      color: Colors.deepPurple[900]!,
       destination: () => ECGRepositoryScreen(),
       icon: Icons.folder, // Replace with an appropriate icon
     ),
     _ECGTrainerItem(
       title: 'Abnormalities',
-      color: Colors.brown,
+      color: Colors.deepPurple[900]!,
       destination: () => AbnormalitiesScreen(),
       icon: Icons.warning, // Replace with an appropriate icon
     ),
     _ECGTrainerItem(
       title: 'QTc Calculator',
-      color: Colors.indigo,
+      color: Colors.deepPurple[900]!,
       destination: () => QTcCalculatorScreen(),
       icon: Icons.calculate, // Replace with an appropriate icon
     ),
