@@ -146,6 +146,22 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+
+
+            // Progress Bar with Label
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                LinearProgressIndicator(
+                  value: (currentQuestionIndex + 1) / shuffledMorphologies.length,
+                  backgroundColor: Colors.grey,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+
             // Score pills
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -156,11 +172,33 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
               ],
             ),
             SizedBox(height: 20),
-            // QRS Image
-            Expanded(
-              child: Image.asset(
-                'assets/images/qrs_quiz/${shuffledMorphologies[currentQuestionIndex]}.png',
-                fit: BoxFit.contain,
+
+            // QRS Image Card
+            Card(
+              color: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Text(
+                      'Identify the QRS Morphology',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Image.asset(
+                      'assets/images/qrs_quiz/${shuffledMorphologies[currentQuestionIndex]}.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(height: 20),
@@ -169,28 +207,32 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 2.5,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+                childAspectRatio: 3,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
               ),
               itemCount: currentOptions.length,
               itemBuilder: (context, index) {
                 String option = currentOptions[index];
                 return ElevatedButton(
                   onPressed: () => handleAnswer(option),
-                  child: Text(option),
+                  child: Text(
+                    option,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueGrey,
+                    backgroundColor: Colors.blueAccent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
                   ),
                 );
               },
-            ),
-            SizedBox(height: 20),
-            // Progress Bar
-            LinearProgressIndicator(
-              value: (currentQuestionIndex + 1) / shuffledMorphologies.length,
-              backgroundColor: Colors.grey,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
             ),
           ],
         ),
