@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CustomExpansionCard extends StatefulWidget {
   final String sectionTitle;
   final List<String> topics;
-  final Map<String, dynamic> userProgress;
+  final String userId;
 
-  CustomExpansionCard({required this.sectionTitle, required this.topics, required this.userProgress});
+  CustomExpansionCard({required this.sectionTitle, required this.topics, required this.userId});
 
   @override
   _CustomExpansionCardState createState() => _CustomExpansionCardState();
 }
 
-class _CustomExpansionCardState extends State<CustomExpansionCard> with SingleTickerProviderStateMixin {
+class _CustomExpansionCardState extends State<CustomExpansionCard> with TickerProviderStateMixin {
   bool _isExpanded = false;
   late AnimationController _controller;
   late Animation<double> _animation;
+  late AnimationController _progressController;
+  late Animation<double> _progressAnimation;
+  bool _progressAnimationCompleted = false;
+  Map<String, dynamic> userProgress = {};
 
   @override
   void initState() {
@@ -32,11 +37,45 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with SingleTi
       parent: _controller,
       curve: Curves.easeOutCubic,
     );
+
+    _progressController = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _progressAnimationCompleted = true;
+      }
+    });
+    _progressAnimation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+      parent: _progressController,
+      curve: Curves.easeInOut,
+    ));
+
+    if (!_progressAnimationCompleted) {
+      _progressController.forward();
+    }
+
+    _subscribeToUserProgress();
+  }
+
+  void _subscribeToUserProgress() {
+    FirebaseFirestore.instance
+        .collection('userProgress')
+        .doc(widget.userId)
+        .snapshots()
+        .listen((snapshot) {
+      if (snapshot.exists) {
+        setState(() {
+          userProgress = snapshot.data() as Map<String, dynamic>;
+        });
+      }
+    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _progressController.dispose();
     super.dispose();
   }
 
@@ -84,7 +123,7 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with SingleTi
       } else {
         topicKey = 'completedTopics.${topic.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '')}';
       }
-      return widget.userProgress[topicKey] == true;
+      return userProgress[topicKey] == true;
     }).length;
 
     double progress = completedCount / widget.topics.length;
@@ -116,16 +155,21 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with SingleTi
                           widget.sectionTitle,
                           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
-                        CircularPercentIndicator(
-                          radius: 40.0,
-                          lineWidth: 5.0,
-                          percent: progress,
-                          center: Text(
-                            '${(progress * 100).toStringAsFixed(0)}%',
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                          ),
-                          progressColor: Colors.green,
-                          backgroundColor: Colors.white,
+                        AnimatedBuilder(
+                          animation: _progressAnimation,
+                          builder: (context, child) {
+                            return CircularPercentIndicator(
+                              radius: 40.0,
+                              lineWidth: 5.0,
+                              percent: progress * (_progressAnimationCompleted ? 1 : _progressAnimation.value),
+                              center: Text(
+                                '${(progress * (_progressAnimationCompleted ? 1 : _progressAnimation.value) * 100).toStringAsFixed(0)}%',
+                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                              ),
+                              progressColor: Colors.green,
+                              backgroundColor: Colors.white,
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -165,7 +209,7 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with SingleTi
                             } else {
                               topicKey = 'completedTopics.${topic.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '')}';
                             }
-                            bool isCompleted = widget.userProgress[topicKey] ?? false;
+                            bool isCompleted = userProgress[topicKey] ?? false;
                             return Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: Container(

@@ -17,12 +17,16 @@ class HomeContent extends StatefulWidget {
   _HomeContentState createState() => _HomeContentState();
 }
 
-class _HomeContentState extends State<HomeContent> {
+class _HomeContentState extends State<HomeContent> with AutomaticKeepAliveClientMixin {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  Map<String, dynamic> userProgress = {};
   bool isLoading = true;
   String userName = "";
+  String userId = "";
+
+  // Local cache to store user data
+  static String? cachedUserName;
+  static String? cachedUserId;
 
   @override
   void initState() {
@@ -30,27 +34,37 @@ class _HomeContentState extends State<HomeContent> {
     _fetchUserProgress();
   }
 
+  @override
+  bool get wantKeepAlive => true;
+
   Future<void> _fetchUserProgress() async {
+    // Check if data is already cached
+    if (cachedUserName != null && cachedUserId != null) {
+      setState(() {
+        userName = cachedUserName!;
+        userId = cachedUserId!;
+        isLoading = false;
+      });
+      return;
+    }
+
     User? user = _auth.currentUser;
     if (user != null) {
       String uid = user.uid;
       try {
-        // Fetch user progress
-        DocumentSnapshot userDoc = await _firestore.collection('userProgress').doc(uid).get();
         // Fetch user's full name from Firestore
         DocumentSnapshot userInfo = await _firestore.collection('users').doc(uid).get();
         setState(() {
-          if (userDoc.exists) {
-            userProgress = userDoc.data() as Map<String, dynamic>? ?? {};
-          } else {
-            userProgress = {};
-          }
+          userId = uid;
           // Get user's full name
           if (userInfo.exists && userInfo['full_name'] != null) {
             userName = userInfo['full_name'];
           } else {
             userName = "User";
           }
+          // Cache the data
+          cachedUserName = userName;
+          cachedUserId = userId;
           isLoading = false;
         });
       } catch (e) {
@@ -68,6 +82,7 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (isLoading) {
       return Center(child: CircularProgressIndicator());
     }
@@ -121,7 +136,7 @@ class _HomeContentState extends State<HomeContent> {
               'Axis Calculation',
               'Lead Positioning',
             ],
-            userProgress: userProgress,
+            userId: userId,
           ),
           SizedBox(height: 20),
           CustomExpansionCard(
@@ -135,7 +150,7 @@ class _HomeContentState extends State<HomeContent> {
               'S-wave',
               'J-wave',
             ],
-            userProgress: userProgress,
+            userId: userId,
           ),
           SizedBox(height: 20),
           CustomExpansionCard(
@@ -146,7 +161,7 @@ class _HomeContentState extends State<HomeContent> {
               'PR segment',
               'QT interval',
             ],
-            userProgress: userProgress,
+            userId: userId,
           ),
         ],
       ),
