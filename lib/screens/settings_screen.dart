@@ -2,26 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ecg_trainer/user_authentication/login_screen.dart';
+import 'package:ecg_trainer/user_authentication/profile_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 48.0, left: 16.0, right: 16.0, bottom: 16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListTile(
-                  leading: Icon(Icons.person_outline, color: Colors.blue),
-                  title: Text('Profile'),
-                  subtitle: Text('Manage your profile information'),
+      appBar: AppBar(
+        title: Text('Settings'),
+        backgroundColor: Colors.black,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GridView(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1.5,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              children: [
+                SettingsCard(
+                  icon: Icons.person_outline,
+                  iconColor: Colors.white,
+                  title: 'Profile',
+                  subtitle: 'Manage your profile information',
                   onTap: () {
                     Navigator.push(
                       context,
@@ -29,173 +39,212 @@ class SettingsScreen extends StatelessWidget {
                     );
                   },
                 ),
-              ),
-              SizedBox(height: 16),
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListTile(
-                  leading: Icon(Icons.language_outlined, color: Colors.green),
-                  title: Text('Language'),
-                  subtitle: Text('Change app language'),
-                  onTap: () {
-                    // Add functionality to change language
-                  },
-                ),
-              ),
-              SizedBox(height: 16),
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListTile(
-                  leading: Icon(Icons.info_outline, color: Colors.orange),
-                  title: Text('About'),
-                  subtitle: Text('Learn more about the app'),
-                  onTap: () {
-                    showAboutDialog(
-                      context: context,
-                      applicationName: 'ECG Trainer',
-                      applicationVersion: 'Version 1.0.0',
-                      applicationIcon: Icon(Icons.favorite_outline, color: Colors.orange),
-                      children: [
-                        Text('ECG Trainer is designed to help users learn and understand electrocardiograms.'),
-                        SizedBox(height: 10),
-                        Text('Developer: Andy'),
-                        SizedBox(height: 10),
-                        Text('Acknowledgments: Special thanks to the medical community for their invaluable resources.'),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              SizedBox(height: 16),
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListTile(
-                  leading: Icon(Icons.privacy_tip_outlined, color: Colors.purple),
-                  title: Text('Privacy Policy'),
-                  subtitle: Text('View our privacy policy'),
-                  onTap: () {
-                    // Add functionality to show privacy policy
-                  },
-                ),
-              ),
-              SizedBox(height: 16),
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListTile(
-                  leading: Icon(Icons.support_agent_outlined, color: Colors.red),
-                  title: Text('Help & Support'),
-                  subtitle: Text('Get help or contact support'),
-                  onTap: () {
-                    // Add functionality for help & support
-                  },
-                ),
-              ),
-              SizedBox(height: 16),
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListTile(
-                  leading: Icon(Icons.restart_alt_outlined, color: Colors.teal),
-                  title: Text('Reset Data'),
-                  subtitle: Text('Reset all app data'),
+                SettingsCard(
+                  icon: Icons.restart_alt_outlined,
+                  iconColor: Colors.white,
+                  title: 'Reset Data',
+                  subtitle: 'Reset all app data',
                   onTap: () {
                     // Add functionality to reset data
                   },
                 ),
+                SettingsCard(
+                  icon: Icons.notifications_outlined,
+                  iconColor: Colors.white,
+                  title: 'Notification',
+                  subtitle: 'Toggle notification',
+                  onTap: () {
+                    // Add functionality to toggle notifications
+                  },
+                ),
+                SettingsCard(
+                  icon: Icons.privacy_tip_outlined,
+                  iconColor: Colors.white,
+                  title: 'Privacy Policy',
+                  subtitle: 'View our privacy policy',
+                  onTap: () {
+                    // Add functionality to show privacy policy
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            Card(
+              color: Colors.deepPurple[900],
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
-            ],
-          ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'About',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'ECG Labs',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Version : 1.0.0',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      'Developed by Cardioverse to provide a comprehensive, user-friendly learning experience',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      'Cardioverse is committed to developing practical, user-friendly tools for cardiology education. Through ECG Labs, we aim to bridge the gap between theory and clinical practice, helping professionals hone their ECG interpretation skills.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.language, color: Colors.white),
+                          onPressed: () {
+                            // Add functionality to open website
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.alternate_email, color: Colors.white),
+                          onPressed: () {
+                            // Add functionality to open Twitter
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.code, color: Colors.white),
+                          onPressed: () {
+                            // Add functionality to open GitHub
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.business, color: Colors.white),
+                          onPressed: () {
+                            // Add functionality to open LinkedIn
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.deepPurple[900],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        // Add functionality for licenses
+                      },
+                      child: Text('Licenses', style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.deepPurple[900],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        // Add functionality for privacy policy
+                      },
+                      child: Text('Privacy policy', style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class ProfileScreen extends StatefulWidget {
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
+class SettingsCard extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  String fullName = '';
-  String email = '';
-  String age = '';
-  String profession = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadUserProfile();
-  }
-
-  Future<void> _loadUserProfile() async {
-    User? user = _auth.currentUser;
-    if (user != null) {
-      DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
-      setState(() {
-        fullName = userDoc['full_name'] ?? '';
-        email = userDoc['email'] ?? '';
-        age = userDoc['age'] ?? '';
-        profession = userDoc['profession'] ?? '';
-      });
-    }
-  }
+  SettingsCard({
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        color: Colors.deepPurple[900],
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 7.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Name: $fullName', style: TextStyle(fontSize: 18)),
-              SizedBox(height: 16),
-              Text('Email: $email', style: TextStyle(fontSize: 18)),
-              SizedBox(height: 16),
-              Text('Age: $age', style: TextStyle(fontSize: 18)),
-              SizedBox(height: 16),
-              Text('Profession: $profession', style: TextStyle(fontSize: 18)),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  // Add functionality to edit profile
-                },
-                child: Text('Edit Profile'),
+              Icon(icon, color: iconColor, size: 32),
+              SizedBox(height: 8),
+              Text(
+                title,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                textAlign: TextAlign.center,
               ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  // Log out and navigate to LoginScreen
-                  _auth.signOut();
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                        (route) => false,
-                  );
-                },
-                child: Text('Log Out'),
+              SizedBox(height: 4),
+              Flexible(
+                child: Text(
+                  subtitle,
+                  style: TextStyle(fontSize: 12, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),

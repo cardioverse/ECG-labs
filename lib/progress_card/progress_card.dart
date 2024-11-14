@@ -138,7 +138,7 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with TickerPr
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.deepPurple.shade800,
+              color: Colors.deepPurple.shade900,
               borderRadius: BorderRadius.circular(20.0),
             ),
             child: InkWell(
