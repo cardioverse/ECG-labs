@@ -8,10 +8,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Settings'),
-        backgroundColor: Colors.black,
-      ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -44,8 +41,47 @@ class SettingsScreen extends StatelessWidget {
                   iconColor: Colors.white,
                   title: 'Reset Data',
                   subtitle: 'Reset all app data',
-                  onTap: () {
-                    // Add functionality to reset data
+                  onTap: () async {
+                    bool confirmReset = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Confirm Reset'),
+                          content: Text('Are you sure you want to reset all app data? This action cannot be undone.'),
+                          actions: [
+                            TextButton(
+                              child: Text('Cancel'),
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                              },
+                            ),
+                            TextButton(
+                              child: Text('Reset'),
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    if (confirmReset == true) {
+                      // Reset user data in Firestore
+                      User? user = FirebaseAuth.instance.currentUser;
+                      if (user != null) {
+                        await FirebaseFirestore.instance
+                            .collection('userProgress')
+                            .doc(user.uid)
+                            .delete();
+                      }
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('All app data has been reset.'),
+                        ),
+                      );
+                    }
                   },
                 ),
                 SettingsCard(
