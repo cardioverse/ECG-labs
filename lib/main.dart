@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:firebase_auth/firebase_auth.dart';  // Import Firebase Auth
 import 'screens/home_screen.dart';
 import 'screens/learn_screen.dart';
 import 'screens/ecg_trainer_screen.dart';  // Import the ECG Trainer screen
@@ -60,7 +61,34 @@ class ECGTrainerApp extends StatelessWidget {
           }),
         ),
       ),
-      home: LoginScreen(),  // Start with LoginScreen
+      home: SplashScreen(),  // Start with SplashScreen to check login status
+    );
+  }
+}
+
+class SplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Check user's authentication state to determine which screen to show
+    return FutureBuilder(
+      future: Future.delayed(Duration(seconds: 2)), // Simulate splash delay
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            backgroundColor: Colors.black,
+            body: Center(child: CircularProgressIndicator()),
+          );
+        } else {
+          User? user = FirebaseAuth.instance.currentUser;
+          if (user != null) {
+            // User is logged in, go to HomeScreen
+            return HomeScreen();
+          } else {
+            // No user is logged in, go to LoginScreen
+            return LoginScreen();
+          }
+        }
+      },
     );
   }
 }

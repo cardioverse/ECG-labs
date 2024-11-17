@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ecg_trainer/user_authentication/login_screen.dart';
+import 'dart:math';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -36,6 +37,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  Future<void> _deleteAccount() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      try {
+        await _firestore.collection('users').doc(user.uid).delete();
+        await user.delete();
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+              (route) => false,
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to delete account: $e')),
+        );
+      }
+    }
+  }
+
+  void _confirmDeleteAccount() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Account'),
+          content: Text('Are you sure you want to delete your account? This action is irreversible and all your data will be permanently deleted.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _deleteAccount();
+              },
+              child: Text('Delete', style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Color _generateRandomColor() {
+    Random random = Random();
+    return Color.fromARGB(
+      255,
+      random.nextInt(256),
+      random.nextInt(256),
+      random.nextInt(256),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +111,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(height: 20),
               CircleAvatar(
                 radius: 60,
-                backgroundColor: Colors.white,
+                backgroundColor: _generateRandomColor(),
+                child: Text(
+                  fullName.isNotEmpty ? fullName[0] : '',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               SizedBox(height: 16),
               Text(
@@ -114,6 +179,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ],
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                ),
+                onPressed: () {
+                  _confirmDeleteAccount();
+                },
+                child: Text('Delete Account', style: TextStyle(color: Colors.white)),
               ),
               SizedBox(height: 32),
               _buildProfileInfoCard('Name', fullName),

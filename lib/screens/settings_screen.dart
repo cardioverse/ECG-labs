@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ecg_trainer/user_authentication/login_screen.dart';
 import 'package:ecg_trainer/user_authentication/profile_screen.dart';
+import 'package:ecg_trainer/settings_screen/FAQ.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -94,12 +95,15 @@ class SettingsScreen extends StatelessWidget {
                   },
                 ),
                 SettingsCard(
-                  icon: Icons.privacy_tip_outlined,
+                  icon: Icons.help_outline,
                   iconColor: Colors.white,
-                  title: 'Privacy Policy',
-                  subtitle: 'View our privacy policy',
+                  title: 'Help & FAQ',
+                  subtitle: 'Need help? Start here',
                   onTap: () {
-                    // Add functionality to show privacy policy
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FAQScreen()),
+                    );
                   },
                 ),
               ],
