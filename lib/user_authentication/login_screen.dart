@@ -14,9 +14,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
   final AuthService authService = AuthService();
   bool _isPasswordVisible = false;
+  bool _isLoading = false;
 
   Future<void> _login() async {
-    setState(() {}); // Update icon state based on validation
+    setState(() {
+      _isLoading = true;
+    });
     print('Login button tapped');
     String email = emailController.text;
     String password = passwordController.text;
@@ -27,6 +30,10 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       print('Error during login: $e');
     }
+
+    setState(() {
+      _isLoading = false;
+    });
 
     if (user != null) {
       print('Login successful, navigating to HomeScreen');
@@ -166,7 +173,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             padding: EdgeInsets.symmetric(horizontal: 24.0),
                             alignment: Alignment.center,
-                            child: Text(
+                            child: _isLoading
+                                ? CircularProgressIndicator(color: Colors.white)
+                                : Text(
                               "Login",
                               style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                             ),

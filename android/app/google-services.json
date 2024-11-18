@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:157611331845:android:9a1b7debb40e9d9e75676c",
+        "mobilesdk_app_id": "1:157611331845:android:48e9797d1bf3ca0775676c",
         "android_client_info": {
-          "package_name": "com.example.ecg_trainer"
+          "package_name": "com.cardioverse.ecglabs"
         }
       },
       "oauth_client": [],

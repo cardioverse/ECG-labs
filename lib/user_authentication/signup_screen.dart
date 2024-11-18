@@ -16,8 +16,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController confirmPasswordController = TextEditingController();
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   String selectedProfession = 'Student';
+  bool _isLoading = false;
 
   Future<void> _signUp() async {
+    setState(() {
+      _isLoading = true;
+    });
+
     String fullName = fullNameController.text;
     String age = ageController.text;
     String email = emailController.text;
@@ -26,22 +31,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     if (fullName.isEmpty || age.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("All fields are required.")));
+      setState(() {
+        _isLoading = false;
+      });
       return;
     }
 
     if (!RegExp(r"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+").hasMatch(email)) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter a valid email address.")));
+      setState(() {
+        _isLoading = false;
+      });
       return;
     }
 
     int? ageValue = int.tryParse(age);
     if (ageValue == null || ageValue < 18 || ageValue > 100) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter a valid age between 18 and 100.")));
+      setState(() {
+        _isLoading = false;
+      });
       return;
     }
 
     if (password != confirmPassword) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Passwords do not match.")));
+      setState(() {
+        _isLoading = false;
+      });
       return;
     }
 
@@ -64,9 +81,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Navigator.pop(context);
       }
     } catch (e) {
-      // Show an error message
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sign up failed. Please try again.")));
+      String errorMessage;
+      if (e is FirebaseAuthException) {
+        switch (e.code) {
+          case 'email-already-in-use':
+            errorMessage = "The email address is already in use.";
+            break;
+          case 'invalid-email':
+            errorMessage = "The email address is not valid.";
+            break;
+          case 'weak-password':
+            errorMessage = "The password is too weak.";
+            break;
+          default:
+            errorMessage = "An unexpected error occurred. Please try again.";
+        }
+      } else {
+        errorMessage = "An unexpected error occurred. Please try again.";
+      }
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMessage)));
     }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -232,7 +270,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         padding: EdgeInsets.symmetric(horizontal: 24.0),
                         alignment: Alignment.center,
-                        child: Text(
+                        child: _isLoading
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : Text(
                           "Create",
                           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                         ),

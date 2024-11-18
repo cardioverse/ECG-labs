@@ -128,12 +128,12 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.library_books),
+            icon: Icon(Icons.school),
             label: 'Learn',
           ),
           NavigationDestination(
-            icon: Icon(Icons.school),
-            label: 'ECG Trainer',
+            icon: Icon(Icons.library_books),
+            label: 'Workshop',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings),

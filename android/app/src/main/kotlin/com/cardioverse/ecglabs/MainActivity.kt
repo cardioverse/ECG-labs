@@ -1,4 +1,4 @@
-package com.example.ecg_trainer
+package com.cardioverse.ecglabs
 
 import io.flutter.embedding.android.FlutterActivity
 
