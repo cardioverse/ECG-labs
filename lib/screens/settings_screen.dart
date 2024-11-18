@@ -210,7 +210,25 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        // Add functionality for licenses
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Licenses'),
+                              content: SingleChildScrollView(
+                                child: Text('This application is licensed under the GNU General Public License v3.0 (GPL-3.0).\n\nUnder this license, you are free to use, modify, and distribute this software, provided that any distribution is also licensed under GPL-3.0. This ensures that the application remains free and open-source.\n\nThe following open-source tools and libraries have been used in this application:\n\n1. Flutter - https://flutter.dev\n2. Firebase - https://firebase.google.com\n3. Additional third-party libraries, each governed by their respective licenses.\n\nFor more details about GPL-3.0, please visit: https://www.gnu.org/licenses/gpl-3.0.html.'),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Close'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       child: Text('Licenses', style: TextStyle(color: Colors.white)),
                     ),
@@ -225,7 +243,25 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        // Add functionality for privacy policy
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Privacy Policy'),
+                              content: SingleChildScrollView(
+                                child: Text('Privacy Policy:\n\nWe value your privacy. This application collects data to enhance your experience. None of your personal information will be shared with third parties without your explicit consent. For more details, please visit our official privacy policy page.'),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Close'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       child: Text('Privacy policy', style: TextStyle(color: Colors.white)),
                     ),
