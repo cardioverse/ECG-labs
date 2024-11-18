@@ -85,7 +85,8 @@ class QRSWaveScreen extends StatelessWidget {
             context,
             "Right Ventricular Hypertrophy (RVH)",
             "RVH shows tall R waves in V1/V2 and deep S waves in V5/V6, often with right axis deviation.",
-            'assets/images/rvh.png',  // Add an RVH image
+            // TODO: Add rvh image
+            // 'assets/images/rvh.png',  // Add an RVH image
           ),
 
           SizedBox(height: 20),
@@ -120,29 +121,31 @@ class QRSWaveScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAbnormalityCard(BuildContext context, String title, String description, String imagePath) {
-    return Card(
-      color: Colors.black87,
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-            SizedBox(height: 8),
-            Text(
-              description,
-              style: TextStyle(fontSize: 16, color: Colors.white),
-            ),
+Widget _buildAbnormalityCard(BuildContext context, String title, String description, [String? imagePath]) {
+  return Card(
+    color: Colors.black87,
+    margin: EdgeInsets.symmetric(vertical: 8.0),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          SizedBox(height: 8),
+          Text(
+            description,
+            style: TextStyle(fontSize: 16, color: Colors.white),
+          ),
+          if (imagePath != null) ...[
             SizedBox(height: 8),
             Image.asset(imagePath),
           ],
-        ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

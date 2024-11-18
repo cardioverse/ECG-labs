@@ -1,0 +1,26 @@
+{
+  "MI(2).jpg": {
+    "name": "Anterior Wall MI",
+    "interpretation": "ST elevation in V2, V3, ST depression in III, aVF."
+  },
+  "MI(4).jpg": {
+    "name": "Inferoposterior MI",
+    "interpretation": "ST elevation in II, III, aVF, Mirror image of ST elevation in AWMI (ST depression in V2, V3), q wave in III, aVF."
+  },
+  "MI(5).jpg": {
+    "name": "Anterolateral MI",
+    "interpretation": "ST elevation in V1-V6, I, Poor R wave progression in V1-V6, ST depression in II, III, aVF, q wave in aVL."
+  },
+  "MI(6).jpg": {
+    "name": "Anterolateral MI",
+    "interpretation": "ST elevation in V1-V6, I, Poor R wave progression in V1-V6, ST depression in II, III, aVF, q wave in aVL."
+  },
+  "MI(9).jpg": {
+    "name": "Inferior Wall MI",
+    "interpretation": "ST elevation in II, III, aVF, V6, ST depression in I, aVL, q wave in lead III."
+  },
+  "MI(10).jpg": {
+    "name": "Anterolateral MI",
+    "interpretation": "ST elevation in V2-V6, I, aVL, Slight ST depression in lead III, Poor R wave progression from V1-V6."
+  }
+}

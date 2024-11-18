@@ -67,6 +67,14 @@ class QTIntervalScreen extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
 
+            // Conclusion Text
+            Text(
+              'Concluding remarks about the QT interval could be added here, explaining its relevance to various cardiac pathologies and how it '
+                  'can be a useful indicator for assessing the risk of arrhythmias.',
+              style: TextStyle(fontSize: 16.0, color: Colors.white),
+            ),
+            SizedBox(height: 16.0),
+
             // Completed Topic Button for Quiz
             ElevatedButton(
               onPressed: () {
@@ -79,14 +87,6 @@ class QTIntervalScreen extends StatelessWidget {
                 backgroundColor: Colors.green, // Set button color to green
               ),
               child: Text('Completed Topic'),
-            ),
-            SizedBox(height: 16.0),
-
-            // Conclusion Text
-            Text(
-              'Concluding remarks about the QT interval could be added here, explaining its relevance to various cardiac pathologies and how it '
-                  'can be a useful indicator for assessing the risk of arrhythmias.',
-              style: TextStyle(fontSize: 16.0, color: Colors.white),
             ),
           ],
         ),

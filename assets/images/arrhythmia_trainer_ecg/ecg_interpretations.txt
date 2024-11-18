@@ -1,26 +1,86 @@
 {
-  "MI(2).jpg": {
-    "name": "Anterior Wall MI",
-    "interpretation": "ST elevation in V2, V3, ST depression in III, aVF."
-  },
-  "MI(4).jpg": {
-    "name": "Inferoposterior MI",
-    "interpretation": "ST elevation in II, III, aVF, Mirror image of ST elevation in AWMI (ST depression in V2, V3), q wave in III, aVF."
-  },
-  "MI(5).jpg": {
-    "name": "Anterolateral MI",
-    "interpretation": "ST elevation in V1-V6, I, Poor R wave progression in V1-V6, ST depression in II, III, aVF, q wave in aVL."
-  },
-  "MI(6).jpg": {
-    "name": "Anterolateral MI",
-    "interpretation": "ST elevation in V1-V6, I, Poor R wave progression in V1-V6, ST depression in II, III, aVF, q wave in aVL."
-  },
-  "MI(9).jpg": {
-    "name": "Inferior Wall MI",
-    "interpretation": "ST elevation in II, III, aVF, V6, ST depression in I, aVL, q wave in lead III."
-  },
-  "MI(10).jpg": {
-    "name": "Anterolateral MI",
-    "interpretation": "ST elevation in V2-V6, I, aVL, Slight ST depression in lead III, Poor R wave progression from V1-V6."
+    "MI(2).jpg": {
+      "name": "Anterior Wall MI",
+      "interpretation": "ST elevation in V2, V3, ST depression in III, aVF."
+    },
+    "MI(4).jpg": {
+      "name": "Inferoposterior MI",
+      "interpretation": "ST elevation in II, III, aVF, Mirror image of ST elevation in AWMI (ST depression in V2, V3), q wave in III, aVF."
+    },
+    "MI(5).jpg": {
+      "name": "Anterolateral MI",
+      "interpretation": "ST elevation in V1-V6, I, Poor R wave progression in V1-V6, ST depression in II, III, aVF, q wave in aVL."
+    },
+    "MI(6).jpg": {
+      "name": "Anterolateral MI",
+      "interpretation": "ST elevation in V1-V6, I, Poor R wave progression in V1-V6, ST depression in II, III, aVF, q wave in aVL."
+    },
+    "MI(9).jpg": {
+      "name": "Inferior Wall MI",
+      "interpretation": "ST elevation in II, III, aVF, V6, ST depression in I, aVL, q wave in lead III."
+    },
+    "MI(10).jpg": {
+      "name": "Anterolateral MI",
+      "interpretation": "ST elevation in V2-V6, I, aVL, Slight ST depression in lead III, Poor R wave progression from V1-V6."
+    },
+    "MI(11).jpg": {
+      "name": "Inferior Wall MI",
+      "interpretation": "Slight ST depression in V2, V3, q wave present in lead III."
+    },
+    "MI(12).jpg": {
+      "name": "Inferior Wall MI",
+      "interpretation": "ST elevation in lead III, aVF, Slight ST depression in I, aVL, V2, V3, Small q wave in II, III, aVF."
+    },
+    "MI(13).jpg": {
+      "name": "Inferior Wall MI",
+      "interpretation": "ST elevation in II, III, aVF."
+    },
+    "MI(14).jpg": {
+      "name": "Anterolateral MI",
+      "interpretation": "ST elevation in V2, V3, V4, V5, V6, T wave inversion in lead III."
+    },
+    "MI(15).jpg": {
+      "name": "Anterolateral MI",
+      "interpretation": "ST elevation in V3, V4, V5, V6, Small q and slight ST elevation in lead I, aVL."
+    },
+    "MI(16).jpg": {
+      "name": "Anterior Wall MI",
+      "interpretation": "ST elevation in V3, V4, V5, qR pattern in V1-V2."
+    },
+    "MI(17).jpg": {
+      "name": "Anterior Wall MI",
+      "interpretation": "ST elevation in V2-V6, Poor R wave progression V1-V6, Low voltage limb leads."
+    },
+    "MI(18).jpg": {
+      "name": "Anterior Wall MI",
+      "interpretation": "ST elevation V2-V6, slight ST elevation in I, aVL."
+    },
+    "MI(19).jpg": {
+      "name": "Anterior Wall MI",
+      "interpretation": "ST elevation in V2-V5, ST depression in III, aVF, irregular rhythm present."
+    },
+    "MI(20).jpg": {
+      "name": "Anterior Wall MI",
+      "interpretation": "ST elevation in V1-V4, ST depression in II, III, aVF."
+    },
+    "MI(21).jpg": {
+      "name": "Inferoposterior Wall MI",
+      "interpretation": "ST elevation in V1, ST elevation in II, III, aVF, ST depression in I, aVL, Irregular rhythm, Absence of P wave, Atrial fibrillation."
+    },
+    "MI(22).jpg": {
+      "name": "Possible AWMI",
+      "interpretation": "Slight ST elevation in aVL, Slight ST depression in II, III, aVF."
+    },
+    "MI(23).jpg": {
+      "name": "Inferior Wall MI",
+      "interpretation": "Irregular rhythm, P wave present, ST elevation in II, III, aVF, ST depression in aVL, V1-V5, Inferior wall MI with sinus sick syndrome."
+    },
+    "MI(24).jpg": {
+      "name": "Anterior Wall MI",
+      "interpretation": "Pacemaker spikes present, Slight ST depression in III, aVF, Poor R wave progression V1-V6, Pacemaker ECG with Anterior wall MI."
+    },
+    "MI(25).jpg": {
+      "name": "Inferior Wall MI",
+      "interpretation": "ST elevation in III, aVF, T wave inversion in aVL."
+    }
   }
-}

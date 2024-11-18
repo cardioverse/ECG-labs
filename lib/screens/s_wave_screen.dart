@@ -14,7 +14,7 @@ class SWaveScreen extends StatelessWidget {
         children: [
           // S-Wave Overview Section
           _buildImageWithDescriptionSection(
-            'assets/images/s_wave_example.png',
+            null,
             'The S-wave is the first negative deflection following the R-wave in the QRS complex. '
                 'It represents the depolarization of the basal portions of the ventricles.',
           ),
@@ -64,11 +64,11 @@ class SWaveScreen extends StatelessWidget {
   }
 
   // Helper Widget for an Image with Description
-  Widget _buildImageWithDescriptionSection(String imagePath, String description) {
+  Widget _buildImageWithDescriptionSection(String? imagePath, String description) {
     return Column(
       children: [
-        // Image first
-        Image.asset(imagePath, height: 200),
+        // Image first (only if available)
+        if (imagePath != null) Image.asset(imagePath, height: 200),
         SizedBox(height: 16),
         // Description next
         Text(
