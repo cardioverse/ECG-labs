@@ -151,9 +151,12 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with TickerPr
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          widget.sectionTitle,
-                          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                        Expanded(  // Ensure section title doesn't overflow
+                          child: Text(
+                            widget.sectionTitle,
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                            overflow: TextOverflow.ellipsis, // Avoid text overflow
+                          ),
                         ),
                         AnimatedBuilder(
                           animation: _progressAnimation,

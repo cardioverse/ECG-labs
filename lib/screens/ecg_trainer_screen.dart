@@ -8,6 +8,8 @@ import 'ecg repo/ecg_repository_screen.dart';
 import 'package:ecg_trainer/screens/Abnormalities/abnormalities_screen.dart';
 import 'Qtc_calculator/qtc_calculator_screen.dart';
 
+import 'package:ecg_trainer/medicine_repo/medicine_list_screen.dart'; // Import the new MedicineListScreen
+
 class ECGTrainerScreen extends StatelessWidget {
   final List<_ECGTrainerItem> abnormalitiesItem = [
     _ECGTrainerItem(
@@ -25,12 +27,6 @@ class ECGTrainerScreen extends StatelessWidget {
       destination: () => CardiacAxisTrainer(),
       icon: Icons.trending_up, // Updated icon for Cardiac Axis Trainer
     ),
-    // _ECGTrainerItem(
-    //   title: 'ECG Interpretation Helper',
-    //   color: Colors.deepPurple[900]!,
-    //   destination: () => ECGInterpretationHelper(),
-    //   icon: Icons.help_outline, // Replace with an appropriate icon
-    // ),
     _ECGTrainerItem(
       title: 'QRS Complex Quiz',
       color: Colors.deepPurple[900]!,
@@ -43,12 +39,6 @@ class ECGTrainerScreen extends StatelessWidget {
       destination: () => ArrhythmiaTrainer(),
       icon: Icons.show_chart, // Replace with an appropriate icon
     ),
-    // _ECGTrainerItem(
-    //   title: 'ECG Animation',
-    //   color: Colors.deepPurple[900]!,
-    //   destination: () => ECGAnimation(),
-    //   icon: Icons.play_arrow, // Replace with an appropriate icon
-    // ),
     _ECGTrainerItem(
       title: 'ECG Repository',
       color: Colors.deepPurple[900]!,
@@ -60,6 +50,12 @@ class ECGTrainerScreen extends StatelessWidget {
       color: Colors.deepPurple[900]!,
       destination: () => QTcCalculatorScreen(),
       icon: Icons.calculate, // Replace with an appropriate icon
+    ),
+    _ECGTrainerItem(
+      title: 'Medicine Repository', // New item for Medicine Repository
+      color: Colors.deepPurple[300]!,
+      destination: () => MedicineListScreen(), // Destination to the Medicine Repository
+      icon: Icons.medical_services, // Icon representing medicines
     ),
   ];
 
