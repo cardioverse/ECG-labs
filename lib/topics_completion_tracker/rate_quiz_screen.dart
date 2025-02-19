@@ -108,7 +108,7 @@ class _RateQuizScreenState extends State<RateQuizScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[800],
+                    backgroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                     textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
