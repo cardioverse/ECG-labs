@@ -10,7 +10,7 @@ class QTIntervalQuizScreen extends StatefulWidget {
 class _QTIntervalQuizScreenState extends State<QTIntervalQuizScreen> {
   int currentQuestionIndex = 0;
   int score = 0;
-  bool showResetButton = false;
+  final int passThreshold = 8;
 
   final List<Map<String, dynamic>> questions = [
     {
@@ -53,29 +53,86 @@ class _QTIntervalQuizScreenState extends State<QTIntervalQuizScreen> {
       ],
       'answer': 2,
     },
+    {
+      'question': 'What is the corrected QT interval (QTc) used for?',
+      'options': [
+        'Adjusting QT interval for heart rate',
+        'Measuring P wave duration',
+        'Detecting bundle branch blocks',
+        'Assessing atrial fibrillation severity'
+      ],
+      'answer': 0,
+    },
+    {
+      'question': 'Which electrolyte imbalance can prolong the QT interval?',
+      'options': [
+        'Hyperkalemia',
+        'Hypokalemia',
+        'Hypernatremia',
+        'Hyponatremia'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'Which medication is known to prolong the QT interval?',
+      'options': [
+        'Beta-blockers',
+        'Macrolide antibiotics',
+        'Loop diuretics',
+        'Calcium channel blockers'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'What is a dangerously prolonged QT interval associated with?',
+      'options': [
+        'AV block',
+        'Torsades de Pointes',
+        'Sinus arrhythmia',
+        'Wolff-Parkinson-White syndrome'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'What is a short QT interval commonly associated with?',
+      'options': [
+        'Hypercalcemia',
+        'Hypocalcemia',
+        'Hyperkalemia',
+        'Hypokalemia'
+      ],
+      'answer': 0,
+    },
+    {
+      'question': 'Which genetic syndrome is linked to prolonged QT interval?',
+      'options': [
+        'Brugada syndrome',
+        'Long QT syndrome',
+        'Wolff-Parkinson-White syndrome',
+        'Lown-Ganong-Levine syndrome'
+      ],
+      'answer': 1,
+    },
   ];
 
   void _checkAnswer(int selectedIndex) {
     if (selectedIndex == questions[currentQuestionIndex]['answer']) {
       score++;
-      setState(() {
-        if (currentQuestionIndex < questions.length - 1) {
-          currentQuestionIndex++;
-        } else {
-          _showCompletionDialog();
-        }
-      });
-    } else {
-      setState(() {
-        showResetButton = true;
-      });
     }
+
+    setState(() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+      } else {
+        _showCompletionDialog();
+      }
+    });
   }
 
   Future<void> _storeCompletionStatus() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      if (user != null && score == questions.length) {
+      if (user != null && score >= passThreshold) {
         String uid = user.uid;
         DocumentReference userDoc = FirebaseFirestore.instance.collection('userProgress').doc(uid);
 
@@ -110,14 +167,6 @@ class _QTIntervalQuizScreenState extends State<QTIntervalQuizScreen> {
     );
   }
 
-  void _resetQuiz() {
-    setState(() {
-      currentQuestionIndex = 0;
-      score = 0;
-      showResetButton = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,51 +180,37 @@ class _QTIntervalQuizScreenState extends State<QTIntervalQuizScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (!showResetButton) ...[
-              Text(
-                'Question ${currentQuestionIndex + 1} of ${questions.length}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              'Question ${currentQuestionIndex + 1} of ${questions.length}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 16),
-              Text(
-                questions[currentQuestionIndex]['question'],
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              questions[currentQuestionIndex]['question'],
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
               ),
-              SizedBox(height: 16),
-              ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[800],
-                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () => _checkAnswer(index),
-                    child: Text(questions[currentQuestionIndex]['options'][index]),
-                  ),
-                );
-              }),
-            ] else ...[
-              Center(
+            ),
+            SizedBox(height: 16),
+            ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  onPressed: _resetQuiz,
-                  child: Text('Restart Quiz'),
+                  onPressed: () => _checkAnswer(index),
+                  child: Text(questions[currentQuestionIndex]['options'][index]),
                 ),
-              ),
-            ],
+              );
+            }),
           ],
         ),
       ),
