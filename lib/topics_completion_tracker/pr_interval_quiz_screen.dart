@@ -10,7 +10,7 @@ class PRIntervalQuizScreen extends StatefulWidget {
 class _PRIntervalQuizScreenState extends State<PRIntervalQuizScreen> {
   int currentQuestionIndex = 0;
   int score = 0;
-  bool showResetButton = false;
+  final int passThreshold = 8;
 
   final List<Map<String, dynamic>> questions = [
     {
@@ -53,29 +53,86 @@ class _PRIntervalQuizScreenState extends State<PRIntervalQuizScreen> {
       ],
       'answer': 2,
     },
+    {
+      'question': 'What abnormality can a variable PR interval suggest?',
+      'options': [
+        'Atrial fibrillation',
+        'Second-degree AV block',
+        'Myocardial infarction',
+        'Sinus tachycardia'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'Which electrolyte imbalance can prolong the PR interval?',
+      'options': [
+        'Hypokalemia',
+        'Hypercalcemia',
+        'Hyperkalemia',
+        'Hyponatremia'
+      ],
+      'answer': 2,
+    },
+    {
+      'question': 'A progressively lengthening PR interval before a dropped beat is characteristic of?',
+      'options': [
+        'Mobitz Type I (Wenckebach)',
+        'Mobitz Type II',
+        'Complete heart block',
+        'Atrial flutter'
+      ],
+      'answer': 0,
+    },
+    {
+      'question': 'What does a PR interval shorter than 0.12 seconds typically indicate?',
+      'options': [
+        'Atrial fibrillation',
+        'Pre-excitation syndrome (e.g., WPW)',
+        'Sinus arrhythmia',
+        'Right bundle branch block'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'Which drug is known to prolong the PR interval?',
+      'options': [
+        'Digoxin',
+        'Aspirin',
+        'Ibuprofen',
+        'Lisinopril'
+      ],
+      'answer': 0,
+    },
+    {
+      'question': 'What heart block can result in complete dissociation between P waves and QRS complexes?',
+      'options': [
+        'First-degree AV block',
+        'Mobitz Type I',
+        'Mobitz Type II',
+        'Third-degree (complete) heart block'
+      ],
+      'answer': 3,
+    },
   ];
 
   void _checkAnswer(int selectedIndex) {
     if (selectedIndex == questions[currentQuestionIndex]['answer']) {
       score++;
-      setState(() {
-        if (currentQuestionIndex < questions.length - 1) {
-          currentQuestionIndex++;
-        } else {
-          _showCompletionDialog();
-        }
-      });
-    } else {
-      setState(() {
-        showResetButton = true;
-      });
     }
+
+    setState(() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+      } else {
+        _showCompletionDialog();
+      }
+    });
   }
 
   Future<void> _storeCompletionStatus() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      if (user != null && score == questions.length) {
+      if (user != null && score >= passThreshold) {
         String uid = user.uid;
         DocumentReference userDoc = FirebaseFirestore.instance.collection('userProgress').doc(uid);
 
@@ -110,14 +167,6 @@ class _PRIntervalQuizScreenState extends State<PRIntervalQuizScreen> {
     );
   }
 
-  void _resetQuiz() {
-    setState(() {
-      currentQuestionIndex = 0;
-      score = 0;
-      showResetButton = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,51 +180,37 @@ class _PRIntervalQuizScreenState extends State<PRIntervalQuizScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (!showResetButton) ...[
-              Text(
-                'Question ${currentQuestionIndex + 1} of ${questions.length}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              'Question ${currentQuestionIndex + 1} of ${questions.length}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 16),
-              Text(
-                questions[currentQuestionIndex]['question'],
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              questions[currentQuestionIndex]['question'],
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
               ),
-              SizedBox(height: 16),
-              ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[800],
-                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () => _checkAnswer(index),
-                    child: Text(questions[currentQuestionIndex]['options'][index]),
-                  ),
-                );
-              }),
-            ] else ...[
-              Center(
+            ),
+            SizedBox(height: 16),
+            ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  onPressed: _resetQuiz,
-                  child: Text('Restart Quiz'),
+                  onPressed: () => _checkAnswer(index),
+                  child: Text(questions[currentQuestionIndex]['options'][index]),
                 ),
-              ),
-            ],
+              );
+            }),
           ],
         ),
       ),
