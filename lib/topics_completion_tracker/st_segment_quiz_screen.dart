@@ -181,7 +181,7 @@ class _STSegmentQuizScreenState extends State<STSegmentQuizScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Question \${currentQuestionIndex + 1} of \${questions.length}',
+              'Question ${currentQuestionIndex + 1} of ${questions.length}',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
