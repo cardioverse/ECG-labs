@@ -11,6 +11,7 @@ class _SWaveQuizScreenState extends State<SWaveQuizScreen> {
   int currentQuestionIndex = 0;
   int score = 0;
   bool showResetButton = false;
+  final int passThreshold = 8;
 
   final List<Map<String, dynamic>> questions = [
     {
@@ -43,29 +44,96 @@ class _SWaveQuizScreenState extends State<SWaveQuizScreen> {
       ],
       'answer': 1,
     },
+    {
+      'question': 'A deep S wave in lead V6 suggests?',
+      'options': [
+        'Right bundle branch block',
+        'Left bundle branch block',
+        'Atrial fibrillation',
+        'Pericarditis'
+      ],
+      'answer': 0,
+    },
+    {
+      'question': 'Which condition is associated with an S1Q3T3 pattern?',
+      'options': [
+        'Pulmonary embolism',
+        'Myocardial infarction',
+        'Ventricular tachycardia',
+        'Hyperkalemia'
+      ],
+      'answer': 0,
+    },
+    {
+      'question': 'In which condition can an S wave persist in lateral leads?',
+      'options': [
+        'Right ventricular hypertrophy',
+        'Left atrial enlargement',
+        'Pericardial effusion',
+        'Hyperthyroidism'
+      ],
+      'answer': 0,
+    },
+    {
+      'question': 'What does a prominent S wave in lead I suggest?',
+      'options': [
+        'Left axis deviation',
+        'Right axis deviation',
+        'Myocardial infarction',
+        'Atrial flutter'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'A large S wave in V3 is commonly seen in?',
+      'options': [
+        'Brugada syndrome',
+        'Right ventricular hypertrophy',
+        'Atrial fibrillation',
+        'Sinus bradycardia'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'What does an S wave in lead aVR indicate?',
+      'options': [
+        'Normal finding',
+        'Right ventricular hypertrophy',
+        'Pericarditis',
+        'Inferior infarction'
+      ],
+      'answer': 0,
+    },
+    {
+      'question': 'What does an S wave in all precordial leads suggest?',
+      'options': [
+        'Ventricular hypertrophy',
+        'Myocarditis',
+        'Low QRS voltage',
+        'Bundle branch block'
+      ],
+      'answer': 3,
+    },
   ];
 
   void _checkAnswer(int selectedIndex) {
     if (selectedIndex == questions[currentQuestionIndex]['answer']) {
       score++;
-      setState(() {
-        if (currentQuestionIndex < questions.length - 1) {
-          currentQuestionIndex++;
-        } else {
-          _showCompletionDialog();
-        }
-      });
-    } else {
-      setState(() {
-        showResetButton = true;
-      });
     }
+
+    setState(() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+      } else {
+        _showCompletionDialog();
+      }
+    });
   }
 
   Future<void> _storeCompletionStatus() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      if (user != null && score == questions.length) {
+      if (user != null && score >= passThreshold) {
         String uid = user.uid;
         DocumentReference userDoc = FirebaseFirestore.instance.collection('userProgress').doc(uid);
 
@@ -121,51 +189,37 @@ class _SWaveQuizScreenState extends State<SWaveQuizScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (!showResetButton) ...[
-              Text(
-                'Question ${currentQuestionIndex + 1} of ${questions.length}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              'Question ${currentQuestionIndex + 1} of ${questions.length}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 16),
-              Text(
-                questions[currentQuestionIndex]['question'],
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              questions[currentQuestionIndex]['question'],
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
               ),
-              SizedBox(height: 16),
-              ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[800],
-                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () => _checkAnswer(index),
-                    child: Text(questions[currentQuestionIndex]['options'][index]),
-                  ),
-                );
-              }),
-            ] else ...[
-              Center(
+            ),
+            SizedBox(height: 16),
+            ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  onPressed: _resetQuiz,
-                  child: Text('Restart Quiz'),
+                  onPressed: () => _checkAnswer(index),
+                  child: Text(questions[currentQuestionIndex]['options'][index]),
                 ),
-              ),
-            ],
+              );
+            }),
           ],
         ),
       ),
