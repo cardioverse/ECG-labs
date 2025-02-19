@@ -10,7 +10,7 @@ class STSegmentQuizScreen extends StatefulWidget {
 class _STSegmentQuizScreenState extends State<STSegmentQuizScreen> {
   int currentQuestionIndex = 0;
   int score = 0;
-  bool showResetButton = false;
+  final int passThreshold = 8;
 
   final List<Map<String, dynamic>> questions = [
     {
@@ -53,29 +53,86 @@ class _STSegmentQuizScreenState extends State<STSegmentQuizScreen> {
       ],
       'answer': 1,
     },
+    {
+      'question': 'Which condition is least likely to cause ST segment elevation?',
+      'options': [
+        'Pericarditis',
+        'Myocardial infarction',
+        'Hypercalcemia',
+        'Left ventricular aneurysm'
+      ],
+      'answer': 2,
+    },
+    {
+      'question': 'What does a downsloping ST depression indicate?',
+      'options': [
+        'Pericarditis',
+        'Ischemia',
+        'Benign early repolarization',
+        'Hyperkalemia'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'ST elevation in leads II, III, and aVF suggests infarction in which area?',
+      'options': [
+        'Anterior',
+        'Lateral',
+        'Inferior',
+        'Septal'
+      ],
+      'answer': 2,
+    },
+    {
+      'question': 'Which feature differentiates benign early repolarization from myocardial infarction?',
+      'options': [
+        'Concave ST elevation',
+        'Reciprocal ST depression',
+        'T wave inversion',
+        'Q waves'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'What does ST elevation with PR depression suggest?',
+      'options': [
+        'Myocardial infarction',
+        'Hyperkalemia',
+        'Pericarditis',
+        'Hypothermia'
+      ],
+      'answer': 2,
+    },
+    {
+      'question': 'ST elevation in aVR with widespread ST depression suggests?',
+      'options': [
+        'Hypercalcemia',
+        'Pericarditis',
+        'Left bundle branch block',
+        'Left main coronary artery occlusion'
+      ],
+      'answer': 3,
+    },
   ];
 
   void _checkAnswer(int selectedIndex) {
     if (selectedIndex == questions[currentQuestionIndex]['answer']) {
       score++;
-      setState(() {
-        if (currentQuestionIndex < questions.length - 1) {
-          currentQuestionIndex++;
-        } else {
-          _showCompletionDialog();
-        }
-      });
-    } else {
-      setState(() {
-        showResetButton = true;
-      });
     }
+
+    setState(() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+      } else {
+        _showCompletionDialog();
+      }
+    });
   }
 
   Future<void> _storeCompletionStatus() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      if (user != null && score == questions.length) {
+      if (user != null && score >= passThreshold) {
         String uid = user.uid;
         DocumentReference userDoc = FirebaseFirestore.instance.collection('userProgress').doc(uid);
 
@@ -84,7 +141,7 @@ class _STSegmentQuizScreenState extends State<STSegmentQuizScreen> {
         }, SetOptions(merge: true));
       }
     } catch (e) {
-      print('Error storing completion status: $e');
+      print('Error storing completion status: \$e');
     }
   }
 
@@ -110,14 +167,6 @@ class _STSegmentQuizScreenState extends State<STSegmentQuizScreen> {
     );
   }
 
-  void _resetQuiz() {
-    setState(() {
-      currentQuestionIndex = 0;
-      score = 0;
-      showResetButton = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,51 +180,37 @@ class _STSegmentQuizScreenState extends State<STSegmentQuizScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (!showResetButton) ...[
-              Text(
-                'Question ${currentQuestionIndex + 1} of ${questions.length}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              'Question \${currentQuestionIndex + 1} of \${questions.length}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 16),
-              Text(
-                questions[currentQuestionIndex]['question'],
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              questions[currentQuestionIndex]['question'],
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
               ),
-              SizedBox(height: 16),
-              ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[800],
-                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () => _checkAnswer(index),
-                    child: Text(questions[currentQuestionIndex]['options'][index]),
-                  ),
-                );
-              }),
-            ] else ...[
-              Center(
+            ),
+            SizedBox(height: 16),
+            ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  onPressed: _resetQuiz,
-                  child: Text('Restart Quiz'),
+                  onPressed: () => _checkAnswer(index),
+                  child: Text(questions[currentQuestionIndex]['options'][index]),
                 ),
-              ),
-            ],
+              );
+            }),
           ],
         ),
       ),
