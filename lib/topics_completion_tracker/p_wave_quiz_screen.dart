@@ -10,6 +10,8 @@ class PWaveQuizScreen extends StatefulWidget {
 class _PWaveQuizScreenState extends State<PWaveQuizScreen> {
   int currentQuestionIndex = 0;
   int score = 0;
+  int correctAnswers = 0;
+  int incorrectAnswers = 0;
   bool showResetButton = false;
 
   final List<Map<String, dynamic>> questions = [
@@ -28,32 +30,66 @@ class _PWaveQuizScreenState extends State<PWaveQuizScreen> {
       'options': ['Left atrial enlargement', 'Right atrial enlargement', 'Myocardial infarction', 'Right bundle branch block'],
       'answer': 1,
     },
+    // 7 more questions added
+    {
+      'question': 'Where is the P wave best observed in a normal ECG?',
+      'options': ['Lead II', 'aVR', 'V5', 'V6'],
+      'answer': 0,
+    },
+    {
+      'question': 'Which leads usually show an inverted P wave in normal conditions?',
+      'options': ['Lead I', 'Lead II', 'aVR', 'V3'],
+      'answer': 2,
+    },
+    {
+      'question': 'What does a notched P wave suggest?',
+      'options': ['Atrial fibrillation', 'Right atrial enlargement', 'Left atrial enlargement', 'Sinus tachycardia'],
+      'answer': 2,
+    },
+    {
+      'question': 'What happens to the P wave in atrial fibrillation?',
+      'options': ['It disappears', 'Becomes peaked', 'Becomes biphasic', 'Becomes larger'],
+      'answer': 0,
+    },
+    {
+      'question': 'What condition is indicated by a short PR interval and slurred P wave?',
+      'options': ['Atrial flutter', 'Wolff-Parkinson-White syndrome', 'AV Block', 'Hyperkalemia'],
+      'answer': 1,
+    },
+    {
+      'question': 'What is a common cause of absent P waves?',
+      'options': ['AV block', 'Sinus arrest', 'Atrial fibrillation', 'All of the above'],
+      'answer': 3,
+    },
+    {
+      'question': 'Which electrolyte imbalance can flatten the P wave?',
+      'options': ['Hyperkalemia', 'Hypokalemia', 'Hypercalcemia', 'Hyponatremia'],
+      'answer': 0,
+    },
   ];
 
   void _checkAnswer(int selectedIndex) {
     if (selectedIndex == questions[currentQuestionIndex]['answer']) {
-      score++;
-      setState(() {
-        if (currentQuestionIndex < questions.length - 1) {
-          currentQuestionIndex++;
-        } else {
-          _showCompletionDialog();
-        }
-      });
+      correctAnswers++;
     } else {
-      setState(() {
-        showResetButton = true;
-      });
+      incorrectAnswers++;
     }
+
+    setState(() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+      } else {
+        _showCompletionDialog();
+      }
+    });
   }
 
   Future<void> _storeCompletionStatus() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      if (user != null && score == questions.length) {
+      if (user != null && correctAnswers >= 8) {
         String uid = user.uid;
         DocumentReference userDoc = FirebaseFirestore.instance.collection('userProgress').doc(uid);
-
         await userDoc.set({
           'completedTopics.pWave': true,
         }, SetOptions(merge: true));
@@ -64,21 +100,32 @@ class _PWaveQuizScreenState extends State<PWaveQuizScreen> {
   }
 
   void _showCompletionDialog() {
+    bool passed = correctAnswers >= 8;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Quiz Completed!'),
-          content: Text('You scored $score out of ${questions.length}.'),
+          title: Text(passed ? 'Quiz Passed!' : 'Quiz Failed'),
+          content: Text('Correct: $correctAnswers | Incorrect: $incorrectAnswers'),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                _storeCompletionStatus();
-              },
-              child: Text('Finish'),
-            ),
+            if (passed)
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  _storeCompletionStatus();
+                },
+                child: Text('Finish'),
+              )
+            else
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _resetQuiz();
+                },
+                child: Text('Retry'),
+              )
           ],
         );
       },
@@ -88,7 +135,8 @@ class _PWaveQuizScreenState extends State<PWaveQuizScreen> {
   void _resetQuiz() {
     setState(() {
       currentQuestionIndex = 0;
-      score = 0;
+      correctAnswers = 0;
+      incorrectAnswers = 0;
       showResetButton = false;
     });
   }
@@ -106,51 +154,37 @@ class _PWaveQuizScreenState extends State<PWaveQuizScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (!showResetButton) ...[
-              Text(
-                'Question ${currentQuestionIndex + 1} of ${questions.length}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              'Question ${currentQuestionIndex + 1} of ${questions.length}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 16),
-              Text(
-                questions[currentQuestionIndex]['question'],
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              questions[currentQuestionIndex]['question'],
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
               ),
-              SizedBox(height: 16),
-              ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[800],
-                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () => _checkAnswer(index),
-                    child: Text(questions[currentQuestionIndex]['options'][index]),
-                  ),
-                );
-              }),
-            ] else ...[
-              Center(
+            ),
+            SizedBox(height: 16),
+            ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  onPressed: _resetQuiz,
-                  child: Text('Restart Quiz'),
+                  onPressed: () => _checkAnswer(index),
+                  child: Text(questions[currentQuestionIndex]['options'][index]),
                 ),
-              ),
-            ],
+              );
+            }),
           ],
         ),
       ),
