@@ -11,6 +11,7 @@ class _QWaveQuizScreenState extends State<QWaveQuizScreen> {
   int currentQuestionIndex = 0;
   int score = 0;
   bool showResetButton = false;
+  final int passThreshold = 8;
 
   final List<Map<String, dynamic>> questions = [
     {
@@ -43,29 +44,96 @@ class _QWaveQuizScreenState extends State<QWaveQuizScreen> {
       ],
       'answer': 0,
     },
+    {
+      'question': 'Which of the following is NOT a characteristic of a normal Q wave?',
+      'options': [
+        'Less than 40 ms duration',
+        'Depth less than 25% of R wave',
+        'Present in all leads',
+        'Usually seen in lateral leads'
+      ],
+      'answer': 2,
+    },
+    {
+      'question': 'What is the usual cause of deep Q waves?',
+      'options': [
+        'Myocardial infarction',
+        'Atrial fibrillation',
+        'Pericarditis',
+        'Sinus bradycardia'
+      ],
+      'answer': 0,
+    },
+    {
+      'question': 'A pathological Q wave is typically how wide?',
+      'options': [
+        'Less than 20 ms',
+        'Greater than 40 ms',
+        'Between 10-30 ms',
+        'Greater than 60 ms'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'Which condition can cause pseudo-infarct Q waves?',
+      'options': [
+        'Hypertrophic cardiomyopathy',
+        'Pericardial effusion',
+        'Hyperkalemia',
+        'AV block'
+      ],
+      'answer': 0,
+    },
+    {
+      'question': 'Q waves in which lead may suggest an old inferior infarction?',
+      'options': [
+        'V1',
+        'aVR',
+        'II, III, aVF',
+        'I, aVL'
+      ],
+      'answer': 2,
+    },
+    {
+      'question': 'In which condition are deep Q waves a normal variant?',
+      'options': [
+        'Athletes heart',
+        'Myocardial infarction',
+        'Ventricular tachycardia',
+        'Hyperthyroidism'
+      ],
+      'answer': 0,
+    },
+    {
+      'question': 'What does a Q wave in V1-V3 typically indicate?',
+      'options': [
+        'Normal finding',
+        'Prior anterior infarction',
+        'Pericarditis',
+        'Atrial enlargement'
+      ],
+      'answer': 1,
+    },
   ];
 
   void _checkAnswer(int selectedIndex) {
     if (selectedIndex == questions[currentQuestionIndex]['answer']) {
       score++;
-      setState(() {
-        if (currentQuestionIndex < questions.length - 1) {
-          currentQuestionIndex++;
-        } else {
-          _showCompletionDialog();
-        }
-      });
-    } else {
-      setState(() {
-        showResetButton = true;
-      });
     }
+
+    setState(() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+      } else {
+        _showCompletionDialog();
+      }
+    });
   }
 
   Future<void> _storeCompletionStatus() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      if (user != null && score == questions.length) {
+      if (user != null && score >= passThreshold) {
         String uid = user.uid;
         DocumentReference userDoc = FirebaseFirestore.instance.collection('userProgress').doc(uid);
 
@@ -121,51 +189,37 @@ class _QWaveQuizScreenState extends State<QWaveQuizScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (!showResetButton) ...[
-              Text(
-                'Question ${currentQuestionIndex + 1} of ${questions.length}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              'Question ${currentQuestionIndex + 1} of ${questions.length}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 16),
-              Text(
-                questions[currentQuestionIndex]['question'],
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              questions[currentQuestionIndex]['question'],
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
               ),
-              SizedBox(height: 16),
-              ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[800],
-                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () => _checkAnswer(index),
-                    child: Text(questions[currentQuestionIndex]['options'][index]),
-                  ),
-                );
-              }),
-            ] else ...[
-              Center(
+            ),
+            SizedBox(height: 16),
+            ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  onPressed: _resetQuiz,
-                  child: Text('Restart Quiz'),
+                  onPressed: () => _checkAnswer(index),
+                  child: Text(questions[currentQuestionIndex]['options'][index]),
                 ),
-              ),
-            ],
+              );
+            }),
           ],
         ),
       ),
