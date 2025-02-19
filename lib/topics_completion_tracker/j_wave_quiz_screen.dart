@@ -10,7 +10,7 @@ class JWaveQuizScreen extends StatefulWidget {
 class _JWaveQuizScreenState extends State<JWaveQuizScreen> {
   int currentQuestionIndex = 0;
   int score = 0;
-  bool showResetButton = false;
+  final int passThreshold = 8;
 
   final List<Map<String, dynamic>> questions = [
     {
@@ -43,29 +43,96 @@ class _JWaveQuizScreenState extends State<JWaveQuizScreen> {
       ],
       'answer': 1,
     },
+    {
+      'question': 'J waves are most commonly seen in which leads?',
+      'options': [
+        'Leads V1-V3',
+        'Leads II, III, aVF',
+        'Leads I, aVL',
+        'All leads'
+      ],
+      'answer': 0,
+    },
+    {
+      'question': 'Which electrolyte imbalance is associated with J waves?',
+      'options': [
+        'Hyperkalemia',
+        'Hypocalcemia',
+        'Hypercalcemia',
+        'Hypothermia'
+      ],
+      'answer': 3,
+    },
+    {
+      'question': 'Which condition is NOT associated with J waves?',
+      'options': [
+        'Hypothermia',
+        'Hyperkalemia',
+        'Brugada syndrome',
+        'Early repolarization'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'J waves in hypothermia are also called?',
+      'options': [
+        'Epsilon waves',
+        'Osborn waves',
+        'Delta waves',
+        'Q waves'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'J waves are most commonly associated with which cardiac event?',
+      'options': [
+        'Atrial fibrillation',
+        'Ventricular fibrillation',
+        'Asystole',
+        'First-degree AV block'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'Which population often has benign J waves?',
+      'options': [
+        'Elderly patients',
+        'Athletes',
+        'Patients with heart failure',
+        'Infants'
+      ],
+      'answer': 1,
+    },
+    {
+      'question': 'Which ECG feature is often seen alongside J waves?',
+      'options': [
+        'ST elevation',
+        'ST depression',
+        'T wave inversion',
+        'Prolonged PR interval'
+      ],
+      'answer': 0,
+    },
   ];
 
   void _checkAnswer(int selectedIndex) {
     if (selectedIndex == questions[currentQuestionIndex]['answer']) {
       score++;
-      setState(() {
-        if (currentQuestionIndex < questions.length - 1) {
-          currentQuestionIndex++;
-        } else {
-          _showCompletionDialog();
-        }
-      });
-    } else {
-      setState(() {
-        showResetButton = true;
-      });
     }
+
+    setState(() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+      } else {
+        _showCompletionDialog();
+      }
+    });
   }
 
   Future<void> _storeCompletionStatus() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      if (user != null && score == questions.length) {
+      if (user != null && score >= passThreshold) {
         String uid = user.uid;
         DocumentReference userDoc = FirebaseFirestore.instance.collection('userProgress').doc(uid);
 
@@ -100,14 +167,6 @@ class _JWaveQuizScreenState extends State<JWaveQuizScreen> {
     );
   }
 
-  void _resetQuiz() {
-    setState(() {
-      currentQuestionIndex = 0;
-      score = 0;
-      showResetButton = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,51 +180,37 @@ class _JWaveQuizScreenState extends State<JWaveQuizScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (!showResetButton) ...[
-              Text(
-                'Question ${currentQuestionIndex + 1} of ${questions.length}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              'Question ${currentQuestionIndex + 1} of ${questions.length}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 16),
-              Text(
-                questions[currentQuestionIndex]['question'],
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              questions[currentQuestionIndex]['question'],
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
               ),
-              SizedBox(height: 16),
-              ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[800],
-                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () => _checkAnswer(index),
-                    child: Text(questions[currentQuestionIndex]['options'][index]),
-                  ),
-                );
-              }),
-            ] else ...[
-              Center(
+            ),
+            SizedBox(height: 16),
+            ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  onPressed: _resetQuiz,
-                  child: Text('Restart Quiz'),
+                  onPressed: () => _checkAnswer(index),
+                  child: Text(questions[currentQuestionIndex]['options'][index]),
                 ),
-              ),
-            ],
+              );
+            }),
           ],
         ),
       ),
