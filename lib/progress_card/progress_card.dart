@@ -26,7 +26,7 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with TickerPr
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     )..addListener(() {
       if (mounted) {
@@ -35,7 +35,7 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with TickerPr
     });
     _animation = CurvedAnimation(
       parent: _controller,
-      curve: Curves.easeOutCubic,
+      curve: Curves.fastOutSlowIn,
     );
 
     _progressController = AnimationController(
@@ -145,7 +145,7 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with TickerPr
               onTap: _toggleExpansion,
               borderRadius: BorderRadius.circular(20.0),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
                     Row(
@@ -154,7 +154,7 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with TickerPr
                         Expanded(  // Ensure section title doesn't overflow
                           child: Text(
                             widget.sectionTitle,
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
                             overflow: TextOverflow.ellipsis, // Avoid text overflow
                           ),
                         ),
@@ -162,12 +162,12 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with TickerPr
                           animation: _progressAnimation,
                           builder: (context, child) {
                             return CircularPercentIndicator(
-                              radius: 40.0,
-                              lineWidth: 5.0,
+                              radius: 25.0,
+                              lineWidth: 3.0,
                               percent: progress * (_progressAnimationCompleted ? 1 : _progressAnimation.value),
                               center: Text(
                                 '${(progress * (_progressAnimationCompleted ? 1 : _progressAnimation.value) * 100).toStringAsFixed(0)}%',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
                               ),
                               progressColor: Colors.green,
                               backgroundColor: Colors.white,
@@ -221,7 +221,9 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with TickerPr
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: ListTile(
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // Less padding
+                                  visualDensity: VisualDensity.compact, // Makes ListTile shorter
+
                                   title: Text(
                                     topic,
                                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
