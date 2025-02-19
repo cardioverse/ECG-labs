@@ -43,29 +43,61 @@ class _TWaveQuizScreenState extends State<TWaveQuizScreen> {
       ],
       'answer': 2,
     },
+    {
+      'question': 'Which electrolyte imbalance causes peaked T waves?',
+      'options': ['Hypokalemia', 'Hyperkalemia', 'Hypocalcemia', 'Hypernatremia'],
+      'answer': 1,
+    },
+    {
+      'question': 'What does a flattened T wave suggest?',
+      'options': ['Hyperkalemia', 'Hypokalemia', 'Hypercalcemia', 'Hypertension'],
+      'answer': 1,
+    },
+    {
+      'question': 'T wave inversion in V1-V3 can indicate?',
+      'options': ['Pulmonary embolism', 'Pericarditis', 'Wellens syndrome', 'Atrial fibrillation'],
+      'answer': 2,
+    },
+    {
+      'question': 'Which leads typically show an upright T wave in a normal ECG?',
+      'options': ['V1-V2', 'aVR', 'II, V3-V6', 'aVL'],
+      'answer': 2,
+    },
+    {
+      'question': 'T wave alternans is associated with?',
+      'options': ['Atrial fibrillation', 'Ventricular arrhythmias', 'Bradycardia', 'Sinus tachycardia'],
+      'answer': 1,
+    },
+    {
+      'question': 'A notched T wave can be seen in?',
+      'options': ['Hyperthyroidism', 'Hypothermia', 'Digitalis effect', 'Myocardial infarction'],
+      'answer': 2,
+    },
+    {
+      'question': 'Tall, symmetrical T waves may indicate?',
+      'options': ['Hyperkalemia', 'Hypomagnesemia', 'Mitral stenosis', 'Pulmonary hypertension'],
+      'answer': 0,
+    },
   ];
 
   void _checkAnswer(int selectedIndex) {
     if (selectedIndex == questions[currentQuestionIndex]['answer']) {
       score++;
-      setState(() {
-        if (currentQuestionIndex < questions.length - 1) {
-          currentQuestionIndex++;
-        } else {
-          _showCompletionDialog();
-        }
-      });
-    } else {
-      setState(() {
-        showResetButton = true;
-      });
     }
+
+    setState(() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+      } else {
+        _showCompletionDialog();
+      }
+    });
   }
 
   Future<void> _storeCompletionStatus() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      if (user != null && score == questions.length) {
+      if (user != null && score >= 8) {
         String uid = user.uid;
         DocumentReference userDoc = FirebaseFirestore.instance.collection('userProgress').doc(uid);
 
@@ -84,15 +116,21 @@ class _TWaveQuizScreenState extends State<TWaveQuizScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Quiz Completed!'),
-          content: Text('You scored $score out of ${questions.length}.'),
+          content: Text(score >= 8
+              ? 'You passed! Score: $score/10'
+              : 'You failed. Score: $score/10. Try again!'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                _storeCompletionStatus();
+                if (score >= 8) {
+                  _storeCompletionStatus();
+                  Navigator.of(context).pop();
+                } else {
+                  _resetQuiz();
+                }
               },
-              child: Text('Finish'),
+              child: Text(score >= 8 ? 'Finish' : 'Retry'),
             ),
           ],
         );
@@ -144,7 +182,7 @@ class _TWaveQuizScreenState extends State<TWaveQuizScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[800],
+                      backgroundColor: Colors.white,
                       padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                       textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
@@ -153,18 +191,6 @@ class _TWaveQuizScreenState extends State<TWaveQuizScreen> {
                   ),
                 );
               }),
-            ] else ...[
-              Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: _resetQuiz,
-                  child: Text('Restart Quiz'),
-                ),
-              ),
             ],
           ],
         ),
