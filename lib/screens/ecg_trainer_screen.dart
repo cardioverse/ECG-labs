@@ -9,6 +9,7 @@ import 'package:ecg_trainer/screens/Abnormalities/abnormalities_screen.dart';
 import 'Qtc_calculator/qtc_calculator_screen.dart';
 
 import 'package:ecg_trainer/medicine_repo/medicine_list_screen.dart'; // Import the new MedicineListScreen
+import 'package:ecg_trainer/forum/forum_home_screen.dart';
 
 class ECGTrainerScreen extends StatelessWidget {
   final List<_ECGTrainerItem> abnormalitiesItem = [
@@ -57,7 +58,15 @@ class ECGTrainerScreen extends StatelessWidget {
       destination: () => MedicineListScreen(), // Destination to the Medicine Repository
       icon: Icons.medical_services, // Icon representing medicines
     ),
+    _ECGTrainerItem(
+      title: 'Forum',
+      color: Colors.blue, // Choose a color that fits the theme
+      destination: () => ForumHomeScreen(), // Navigate to Forum screen
+      icon: Icons.forum, // Forum-related icon
+    ),
+
   ];
+
 
   @override
   Widget build(BuildContext context) {
