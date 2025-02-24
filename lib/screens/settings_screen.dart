@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ecg_trainer/user_authentication/login_screen.dart';
 import 'package:ecg_trainer/user_authentication/profile_screen.dart';
 import 'package:ecg_trainer/settings_screen/FAQ.dart';
+import 'package:ecg_trainer/settings_screen/reminder_settings_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -86,14 +87,19 @@ class SettingsScreen extends StatelessWidget {
                   },
                 ),
                 SettingsCard(
-                  icon: Icons.notifications_outlined,
+                  icon: Icons.notifications_active_outlined,
                   iconColor: Colors.white,
-                  title: 'Notification',
-                  subtitle: 'Toggle notification',
+                  title: 'Reminder',
+                  subtitle: 'Set up reminders',
                   onTap: () {
-                    // Add functionality to toggle notifications
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ReminderSettingsScreen()),
+                    );
                   },
                 ),
+
+
                 SettingsCard(
                   icon: Icons.help_outline,
                   iconColor: Colors.white,
