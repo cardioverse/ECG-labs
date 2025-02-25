@@ -29,12 +29,15 @@ class CaseSimulator extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CaseView()),
+            MaterialPageRoute(
+              builder: (context) => CaseView(category: title.toLowerCase()), // Pass category in lowercase for consistency
+            ),
           );
         },
         child: Text(title, style: TextStyle(color: Colors.white)),
       ),
     );
   }
+
 }
 
