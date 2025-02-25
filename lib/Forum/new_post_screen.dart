@@ -36,6 +36,10 @@ class _NewPostScreenState extends State<NewPostScreen> {
             .get();
 
         if (existingPosts.docs.isNotEmpty) {
+<<<<<<< Updated upstream
+=======
+          // Show a message if duplicate found
+>>>>>>> Stashed changes
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("A similar post already exists!"), backgroundColor: Colors.red),
           );
@@ -50,15 +54,22 @@ class _NewPostScreenState extends State<NewPostScreen> {
           'timestamp': FieldValue.serverTimestamp(),
         });
 
+<<<<<<< Updated upstream
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Post submitted successfully!"), backgroundColor: Colors.green),
         );
 
+=======
+>>>>>>> Stashed changes
         Navigator.pop(context);
       }
     }
   }
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +78,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+<<<<<<< Updated upstream
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -124,10 +136,29 @@ class _NewPostScreenState extends State<NewPostScreen> {
                   ),
                 ),
               ],
+=======
+            TextField(
+              controller: _titleController,
+              decoration: InputDecoration(labelText: 'Title'),
+            ),
+            TextField(
+              controller: _contentController,
+              decoration: InputDecoration(labelText: 'Content'),
+              maxLines: 5,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _submitPost,
+              child: Text('Submit'),
+>>>>>>> Stashed changes
             ),
           ],
         ),
       ),
     );
   }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

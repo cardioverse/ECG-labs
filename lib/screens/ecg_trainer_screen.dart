@@ -1,3 +1,4 @@
+import 'package:ecg_trainer/Forum/forum_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'cardiac_axis_trainer.dart';
 import 'ecg_interpretation_helper.dart';
@@ -58,10 +59,17 @@ class ECGTrainerScreen extends StatelessWidget {
       icon: Icons.medical_services, // Icon representing medicines
     ),
     _ECGTrainerItem(
+<<<<<<< Updated upstream
       title: 'Forums', // new item for forum
       color: Colors.deepPurple[900]!,
       destination: () => ForumHomeScreen(), // Destination to the Medicine Repository
       icon: Icons.medical_services, // Icon representing medicines
+=======
+      title: 'Forum', // New item for Forum
+      color: Colors.deepPurple[300]!,
+      destination: () => ForumHomeScreen(), // Destination to the Forum Homescreen
+      icon: Icons.chat, // Icon representing Forum
+>>>>>>> Stashed changes
     ),
   ];
 
