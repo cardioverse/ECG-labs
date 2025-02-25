@@ -1,3 +1,4 @@
+import 'package:ecg_trainer/medicine_repo/medicine_REPO.dart';
 import 'package:flutter/material.dart';
 import 'cardiac_axis_trainer.dart';
 import 'ecg_interpretation_helper.dart';
@@ -7,8 +8,8 @@ import 'ecg_animation.dart';
 import 'ecg repo/ecg_repository_screen.dart';
 import 'package:ecg_trainer/screens/Abnormalities/abnormalities_screen.dart';
 import 'Qtc_calculator/qtc_calculator_screen.dart';
-
-import 'package:ecg_trainer/medicine_repo/medicine_repo.dart'; // Import the new MedicineListScreen
+import 'package:ecg_trainer/forum/forum_home_screen.dart';
+import 'package:ecg_trainer/medicine_repo/medicine_detail_screen.dart'; // Import the new MedicineListScreen
 
 class ECGTrainerScreen extends StatelessWidget {
   final List<_ECGTrainerItem> abnormalitiesItem = [
@@ -55,6 +56,12 @@ class ECGTrainerScreen extends StatelessWidget {
       title: 'Medicine Repository', // New item for Medicine Repository
       color: Colors.deepPurple[900]!,
       destination: () => MedicineRepositoryScreen(), // Destination to the Medicine Repository
+      icon: Icons.medical_services, // Icon representing medicines
+    ),
+    _ECGTrainerItem(
+      title: 'Forums', // new item for forum
+      color: Colors.deepPurple[900]!,
+      destination: () => ForumHomeScreen(), // Destination to the Medicine Repository
       icon: Icons.medical_services, // Icon representing medicines
     ),
   ];
