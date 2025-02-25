@@ -148,7 +148,7 @@ class _HomeContentState extends State<HomeContent> with AutomaticKeepAliveClient
                   'Learning Progress Overview',
                   style: TextStyle(
                     fontSize: 24,
-                    fontWeight: FontWeight.w200,
+                    fontWeight: FontWeight.w600,
                     color: Colors.white,
                   ),
                 ),
