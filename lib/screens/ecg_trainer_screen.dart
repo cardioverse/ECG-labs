@@ -9,8 +9,8 @@ import 'ecg repo/ecg_repository_screen.dart';
 import 'package:ecg_trainer/screens/Abnormalities/abnormalities_screen.dart';
 import 'Qtc_calculator/qtc_calculator_screen.dart';
 import 'package:ecg_trainer/forum/forum_home_screen.dart';
-import 'package:ecg_trainer/medicine_repo/medicine_detail_screen.dart'; // Import the new MedicineListScreen
-
+import 'package:ecg_trainer/medicine_repo/medicine_detail_screen.dart';// Import the new MedicineListScreen
+import 'package:ecg_trainer/case_simulator/case_simulator.dart';
 class ECGTrainerScreen extends StatelessWidget {
   final List<_ECGTrainerItem> abnormalitiesItem = [
     _ECGTrainerItem(
@@ -64,6 +64,13 @@ class ECGTrainerScreen extends StatelessWidget {
       destination: () => ForumHomeScreen(), // Destination to the Medicine Repository
       icon: Icons.medical_services, // Icon representing medicines
     ),
+    _ECGTrainerItem(
+      title: 'Case Simulator', // new item for forum
+      color: Colors.deepPurple[900]!,
+      destination: () => CaseSimulator(), // Destination to the Medicine Repository
+      icon: Icons.medical_services, // Icon representing medicines
+    ),
+
   ];
 
   @override
