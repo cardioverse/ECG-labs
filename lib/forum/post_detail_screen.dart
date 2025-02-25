@@ -15,24 +15,33 @@ class PostDetailScreen extends StatefulWidget {
 class _PostDetailScreenState extends State<PostDetailScreen> {
   final TextEditingController _replyController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool _isSubmitting = false; // To prevent duplicate replies
 
   void _submitReply() async {
-    if (_replyController.text.isNotEmpty) {
-      User? user = _auth.currentUser;
+    if (_replyController.text.isEmpty || _isSubmitting) return;
 
-      if (user != null) {
-        DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-        String authorName = userDoc.exists && userDoc.data() != null ? userDoc['full_name'] ?? 'Unknown User' : 'Unknown User';
+    setState(() {
+      _isSubmitting = true; // Disable button
+    });
 
-        await FirebaseFirestore.instance.collection('forums').doc(widget.postId).collection('replies').add({
-          'author': authorName,
-          'content': _replyController.text.trim(),
-          'timestamp': FieldValue.serverTimestamp(),
-        });
+    User? user = _auth.currentUser;
 
-        _replyController.clear();
-      }
+    if (user != null) {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      String authorName = userDoc.exists && userDoc.data() != null ? userDoc['full_name'] ?? 'Unknown User' : 'Unknown User';
+
+      await FirebaseFirestore.instance.collection('forums').doc(widget.postId).collection('replies').add({
+        'author': authorName,
+        'content': _replyController.text.trim(),
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      _replyController.clear();
     }
+
+    setState(() {
+      _isSubmitting = false; // Re-enable button
+    });
   }
 
   String formatTimestamp(Timestamp? timestamp) {
@@ -75,14 +84,14 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                 ),
                                 SizedBox(height: 12),
 
-                                // Post Content (Moved Up)
+                                // Post Content
                                 Text(
                                   post['content'],
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 SizedBox(height: 12),
 
-                                // Author & Timestamp (Moved Down)
+                                // Author & Timestamp
                                 Text(
                                   'By: ${post['author']} • ${formatTimestamp(post['timestamp'])}',
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey[700]),
@@ -175,9 +184,9 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                 ),
                 SizedBox(width: 8),
                 GestureDetector(
-                  onTap: _submitReply,
+                  onTap: _isSubmitting ? null : _submitReply, // Disable tap when submitting
                   child: CircleAvatar(
-                    backgroundColor: Colors.green,
+                    backgroundColor: _isSubmitting ? Colors.grey : Colors.green, // Change color when disabled
                     radius: 22,
                     child: Icon(Icons.send, color: Colors.white),
                   ),
