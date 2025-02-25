@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-<<<<<<< Updated upstream
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
 class PostDetailScreen extends StatefulWidget {
-=======
-import 'package:intl/intl.dart';
-
-class PostDetailScreen extends StatelessWidget {
->>>>>>> Stashed changes
   final String postId;
 
   PostDetailScreen({required this.postId});
 
-<<<<<<< Updated upstream
   @override
   _PostDetailScreenState createState() => _PostDetailScreenState();
 }
@@ -51,8 +44,6 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
     });
   }
 
-=======
->>>>>>> Stashed changes
   String formatTimestamp(Timestamp? timestamp) {
     if (timestamp == null) return "Unknown time";
     DateTime dateTime = timestamp.toDate();
@@ -63,7 +54,6 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Post Details')),
-<<<<<<< Updated upstream
       body: Column(
         children: [
           Expanded(
@@ -205,114 +195,6 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
             ),
           ),
         ],
-=======
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('forums').doc(postId).snapshots(),
-        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
-          var post = snapshot.data!;
-
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Post Card
-                  Card(
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            post['title'],
-                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'By: ${post['author']}',
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey[700]),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            formatTimestamp(post['timestamp']),
-                            style: TextStyle(fontSize: 12, color: Colors.grey[500]),
-                          ),
-                          SizedBox(height: 12),
-                          Divider(),
-                          Text(
-                            post['content'],
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 20),
-
-                  // Comments Section
-                  Text(
-                    "Comments",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-
-                  StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection('forums').doc(postId).collection('comments').orderBy('timestamp', descending: true).snapshots(),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
-
-                      if (snapshot.data!.docs.isEmpty) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "No comments yet. Be the first to comment!",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        );
-                      }
-
-                      return ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: snapshot.data!.docs.map((doc) {
-                          return Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            margin: EdgeInsets.symmetric(vertical: 6),
-                            child: ListTile(
-                              leading: CircleAvatar(
-                                backgroundColor: Colors.blueAccent,
-                                child: Icon(Icons.person, color: Colors.white),
-                              ),
-                              title: Text(doc['content']),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('By: ${doc['author']}', style: TextStyle(fontWeight: FontWeight.w500)),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    formatTimestamp(doc['timestamp']),
-                                    style: TextStyle(fontSize: 12, color: Colors.grey[500]),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
->>>>>>> Stashed changes
       ),
     );
   }
