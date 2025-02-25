@@ -36,7 +36,6 @@ class _NewPostScreenState extends State<NewPostScreen> {
             .get();
 
         if (existingPosts.docs.isNotEmpty) {
-          // Show a message if duplicate found
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("A similar post already exists!"), backgroundColor: Colors.red),
           );
@@ -51,11 +50,14 @@ class _NewPostScreenState extends State<NewPostScreen> {
           'timestamp': FieldValue.serverTimestamp(),
         });
 
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Post submitted successfully!"), backgroundColor: Colors.green),
+        );
+
         Navigator.pop(context);
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,19 +67,63 @@ class _NewPostScreenState extends State<NewPostScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              controller: _titleController,
-              decoration: InputDecoration(labelText: 'Title'),
-            ),
-            TextField(
-              controller: _contentController,
-              decoration: InputDecoration(labelText: 'Content'),
-              maxLines: 5,
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: _titleController,
+                      decoration: InputDecoration(
+                        labelText: 'Title',
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    TextField(
+                      controller: _contentController,
+                      decoration: InputDecoration(
+                        labelText: 'Content',
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                      maxLines: 5,
+                    ),
+                  ],
+                ),
+              ),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _submitPost,
-              child: Text('Submit'),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _submitPost,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                    child: Text('Submit', style: TextStyle(fontSize: 16, color: Colors.white)),
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _titleController.clear();
+                      _contentController.clear();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey,
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                    child: Text('Clear', style: TextStyle(fontSize: 16, color: Colors.white)),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

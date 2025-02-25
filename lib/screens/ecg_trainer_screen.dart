@@ -53,13 +53,13 @@ class ECGTrainerScreen extends StatelessWidget {
     ),
     _ECGTrainerItem(
       title: 'Medicine Repository', // New item for Medicine Repository
-      color: Colors.deepPurple[300]!,
+      color: Colors.deepPurple[900]!,
       destination: () => MedicineListScreen(), // Destination to the Medicine Repository
       icon: Icons.medical_services, // Icon representing medicines
     ),
     _ECGTrainerItem(
       title: 'Forums', // new item for forum
-      color: Colors.deepPurple[300]!,
+      color: Colors.deepPurple[900]!,
       destination: () => ForumHomeScreen(), // Destination to the Medicine Repository
       icon: Icons.medical_services, // Icon representing medicines
     ),
