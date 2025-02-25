@@ -47,7 +47,10 @@ dependencies:
   firebase_auth: ^5.3.1
   flutter_dotenv: ^5.2.1
   percent_indicator: ^4.2.3
+  shared_preferences: ^2.5.2
 
+  timezone: ^0.10.0
+  intl: ^0.20.2
 
 
 
