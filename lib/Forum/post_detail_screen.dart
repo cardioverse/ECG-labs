@@ -21,18 +21,15 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
       User? user = _auth.currentUser;
 
       if (user != null) {
-        // Get user's full name from Firestore
         DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
         String authorName = userDoc.exists && userDoc.data() != null ? userDoc['full_name'] ?? 'Unknown User' : 'Unknown User';
 
-        // Save reply to Firestore inside "replies" subcollection
         await FirebaseFirestore.instance.collection('forums').doc(widget.postId).collection('replies').add({
           'author': authorName,
           'content': _replyController.text.trim(),
           'timestamp': FieldValue.serverTimestamp(),
         });
 
-        // Clear input field after submitting
         _replyController.clear();
       }
     }
@@ -71,14 +68,25 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(post['title'], style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                                SizedBox(height: 8),
-                                Text('By: ${post['author']}', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey[700])),
-                                SizedBox(height: 4),
-                                Text(formatTimestamp(post['timestamp']), style: TextStyle(fontSize: 12, color: Colors.grey[500])),
+                                // Title
+                                Text(
+                                  post['title'],
+                                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                                ),
                                 SizedBox(height: 12),
-                                Divider(),
-                                Text(post['content'], style: TextStyle(fontSize: 16)),
+
+                                // Post Content (Moved Up)
+                                Text(
+                                  post['content'],
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                SizedBox(height: 12),
+
+                                // Author & Timestamp (Moved Down)
+                                Text(
+                                  'By: ${post['author']} • ${formatTimestamp(post['timestamp'])}',
+                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey[700]),
+                                ),
                               ],
                             ),
                           ),
@@ -90,7 +98,12 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                         SizedBox(height: 8),
 
                         StreamBuilder(
-                          stream: FirebaseFirestore.instance.collection('forums').doc(widget.postId).collection('replies').orderBy('timestamp', descending: true).snapshots(),
+                          stream: FirebaseFirestore.instance
+                              .collection('forums')
+                              .doc(widget.postId)
+                              .collection('replies')
+                              .orderBy('timestamp', descending: true)
+                              .snapshots(),
                           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
 
@@ -142,7 +155,6 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
               color: Colors.black,
-
             ),
             child: Row(
               children: [
@@ -155,7 +167,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                       fillColor: Colors.white10,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none, // No harsh border
+                        borderSide: BorderSide.none,
                       ),
                       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
@@ -173,7 +185,6 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               ],
             ),
           ),
-
         ],
       ),
     );
