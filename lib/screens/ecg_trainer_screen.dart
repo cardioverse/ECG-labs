@@ -60,13 +60,13 @@ class ECGTrainerScreen extends StatelessWidget {
       title: 'Forums', // new item for forum
       color: Colors.deepPurple[900]!,
       destination: () => ForumHomeScreen(), // Destination to the Medicine Repository
-      icon: Icons.medical_services, // Icon representing medicines
+      icon: Icons.chat_rounded, // Icon representing medicines
     ),
     _ECGTrainerItem(
       title: 'Case Simulator', // new item for forum
       color: Colors.deepPurple[900]!,
       destination: () => const CaseSimulator(), // Destination to the Medicine Repository
-      icon: Icons.medical_services, // Icon representing medicines
+      icon: Icons.view_compact, // Icon representing medicines
     ),
 
   ];
