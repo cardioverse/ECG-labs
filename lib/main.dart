@@ -15,10 +15,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(ECGTrainerApp());
+  runApp(const ECGTrainerApp());
 }
 
 class ECGTrainerApp extends StatelessWidget {
+  const ECGTrainerApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,10 +28,10 @@ class ECGTrainerApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: Colors.black,
         ),
-        colorScheme: ColorScheme.dark(
+        colorScheme: const ColorScheme.dark(
           primary: Colors.white,
           onPrimary: Colors.black,
         ),
@@ -37,44 +39,46 @@ class ECGTrainerApp extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white, // Button background
             foregroundColor: Colors.black, // Button text color
-            minimumSize: Size(double.infinity, 50), // Full-width button
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            minimumSize: const Size(double.infinity, 50), // Full-width button
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
         navigationBarTheme: NavigationBarThemeData(
           backgroundColor: Colors.black,
           indicatorColor: Colors.deepPurple[900],
-          labelTextStyle: MaterialStateProperty.resolveWith<TextStyle?>((states) {
-            if (states.contains(MaterialState.selected)) {
-              return TextStyle(color: Colors.white);
+          labelTextStyle: WidgetStateProperty.resolveWith<TextStyle?>((states) {
+            if (states.contains(WidgetState.selected)) {
+              return const TextStyle(color: Colors.white);
             } else {
-              return TextStyle(color: Colors.white);
+              return const TextStyle(color: Colors.white);
             }
           }),
-          iconTheme: MaterialStateProperty.resolveWith<IconThemeData>((states) {
-            if (states.contains(MaterialState.selected)) {
-              return IconThemeData(color: Colors.white);
+          iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((states) {
+            if (states.contains(WidgetState.selected)) {
+              return const IconThemeData(color: Colors.white);
             } else {
-              return IconThemeData(color: Colors.white);
+              return const IconThemeData(color: Colors.white);
             }
           }),
         ),
       ),
-      home: SplashScreen(),  // Start with SplashScreen to check login status
+      home: const SplashScreen(),  // Start with SplashScreen to check login status
     );
   }
 }
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Check user's authentication state to determine which screen to show
     return FutureBuilder(
-      future: Future.delayed(Duration(seconds: 2)), // Simulate splash delay
+      future: Future.delayed(const Duration(seconds: 2)), // Simulate splash delay
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
+          return const Scaffold(
             backgroundColor: Colors.black,
             body: Center(child: CircularProgressIndicator()),
           );
@@ -82,10 +86,10 @@ class SplashScreen extends StatelessWidget {
           User? user = FirebaseAuth.instance.currentUser;
           if (user != null) {
             // User is logged in, go to HomeScreen
-            return HomeScreen();
+            return const HomeScreen();
           } else {
             // No user is logged in, go to LoginScreen
-            return LoginScreen();
+            return const LoginScreen();
           }
         }
       },
@@ -94,6 +98,8 @@ class SplashScreen extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -101,11 +107,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 1;
 
-  static List<Widget> _pages = <Widget>[
-    HomeContent(),
-    LearnScreen(),
+  static final List<Widget> _pages = <Widget>[
+    const HomeContent(),
+    const LearnScreen(),
     ECGTrainerScreen(),
-    SettingsScreen(),
+    const SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -122,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.black,
         selectedIndex: _selectedIndex,
         onDestinationSelected: _onItemTapped,
-        destinations: [
+        destinations: const [
           NavigationDestination(
             icon: Icon(Icons.home),
             label: 'Home',

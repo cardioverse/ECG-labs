@@ -4,15 +4,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ecg_trainer/progress_card/progress_card.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: HomeContent(),
     );
   }
 }
 
 class HomeContent extends StatefulWidget {
+  const HomeContent({super.key});
+
   @override
   _HomeContentState createState() => _HomeContentState();
 }
@@ -95,7 +99,7 @@ class _HomeContentState extends State<HomeContent> with AutomaticKeepAliveClient
     super.build(context);
 
     if (isLoading) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
 
     return Stack(
@@ -114,13 +118,13 @@ class _HomeContentState extends State<HomeContent> with AutomaticKeepAliveClient
                       children: [
                         Text(
                           userName.isEmpty ? 'Hello, Guest' : 'Hello, $userName', // Update greeting
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
-                        Text(
+                        const Text(
                           'Welcome to ECG Labs',
                           style: TextStyle(
                             fontSize: 16,
@@ -129,7 +133,7 @@ class _HomeContentState extends State<HomeContent> with AutomaticKeepAliveClient
                         ),
                       ],
                     ),
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 24,
                       backgroundColor: Colors.grey,
                       child: Icon(
@@ -142,8 +146,8 @@ class _HomeContentState extends State<HomeContent> with AutomaticKeepAliveClient
                 ),
               ),
               // Learning Progress Overview Section
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
                 child: Text(
                   'Learning Progress Overview',
                   style: TextStyle(
@@ -153,12 +157,12 @@ class _HomeContentState extends State<HomeContent> with AutomaticKeepAliveClient
                   ),
                 ),
               ),
-              SizedBox(height: 10),  // Added space for separation
+              const SizedBox(height: 10),  // Added space for separation
 
               // Expansion Cards Section
               CustomExpansionCard(
                 sectionTitle: 'Pure Basics',
-                topics: [
+                topics: const [
                   'Rate',
                   'Rhythm',
                   'Grid',
@@ -167,10 +171,10 @@ class _HomeContentState extends State<HomeContent> with AutomaticKeepAliveClient
                 ],
                 userId: userId,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               CustomExpansionCard(
                 sectionTitle: 'Waves',
-                topics: [
+                topics: const [
                   'P-wave',
                   'QRS Complex',
                   'T-wave',
@@ -181,10 +185,10 @@ class _HomeContentState extends State<HomeContent> with AutomaticKeepAliveClient
                 ],
                 userId: userId,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               CustomExpansionCard(
                 sectionTitle: 'Segments/Intervals',
-                topics: [
+                topics: const [
                   'PR interval',
                   'ST segment',
                   'PR segment',
@@ -206,12 +210,12 @@ class _HomeContentState extends State<HomeContent> with AutomaticKeepAliveClient
               child: Material(
                 color: Colors.transparent,
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                   decoration: BoxDecoration(
                     color: Colors.blueAccent,
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Ready to learn? Visit the Learn section!',
                     style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.normal),
                     textAlign: TextAlign.center,

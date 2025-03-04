@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'auth_service.dart';
 
 class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -30,7 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String confirmPassword = confirmPasswordController.text;
 
     if (fullName.isEmpty || age.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("All fields are required.")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("All fields are required.")));
       setState(() {
         _isLoading = false;
       });
@@ -38,7 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     if (!RegExp(r"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+").hasMatch(email)) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter a valid email address.")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please enter a valid email address.")));
       setState(() {
         _isLoading = false;
       });
@@ -47,7 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     int? ageValue = int.tryParse(age);
     if (ageValue == null || ageValue < 18 || ageValue > 100) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter a valid age between 18 and 100.")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please enter a valid age between 18 and 100.")));
       setState(() {
         _isLoading = false;
       });
@@ -55,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     if (password != confirmPassword) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Passwords do not match.")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Passwords do not match.")));
       setState(() {
         _isLoading = false;
       });
@@ -127,8 +128,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 200,
                 ),
               ),
-              SizedBox(height: 24),
-              Text(
+              const SizedBox(height: 24),
+              const Text(
                 'Create Account',
                 style: TextStyle(
                   color: Colors.white,
@@ -136,17 +137,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
-              Text(
+              const SizedBox(height: 8),
+              const Text(
                 'Please enter your info below to create your account',
                 style: TextStyle(
                   color: Colors.white70,
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.grey[850],
                   borderRadius: BorderRadius.circular(12),
@@ -155,7 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     TextField(
                       controller: fullNameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.person, color: Colors.white70),
                         labelText: 'Full Name',
                         labelStyle: TextStyle(color: Colors.white70),
@@ -163,11 +164,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderSide: BorderSide(color: Colors.white38),
                         ),
                       ),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     TextField(
                       controller: ageController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.calendar_today, color: Colors.white70),
                         labelText: 'Age',
                         labelStyle: TextStyle(color: Colors.white70),
@@ -175,7 +176,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderSide: BorderSide(color: Colors.white38),
                         ),
                       ),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.number,
                     ),
                     DropdownButtonFormField<String>(
@@ -199,7 +200,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           selectedProfession = value!;
                         });
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.work, color: Colors.white70),
                         labelText: 'Profession',
                         labelStyle: TextStyle(color: Colors.white70),
@@ -207,12 +208,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderSide: BorderSide(color: Colors.white38),
                         ),
                       ),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       dropdownColor: Colors.grey[850],
                     ),
                     TextField(
                       controller: emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.email, color: Colors.white70),
                         labelText: 'Email',
                         labelStyle: TextStyle(color: Colors.white70),
@@ -220,12 +221,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderSide: BorderSide(color: Colors.white38),
                         ),
                       ),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.emailAddress,
                     ),
                     TextField(
                       controller: passwordController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.lock, color: Colors.white70),
                         labelText: 'Password',
                         labelStyle: TextStyle(color: Colors.white70),
@@ -233,12 +234,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderSide: BorderSide(color: Colors.white38),
                         ),
                       ),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       obscureText: true,
                     ),
                     TextField(
                       controller: confirmPasswordController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.lock_outline, color: Colors.white70),
                         labelText: 'Confirm Password',
                         labelStyle: TextStyle(color: Colors.white70),
@@ -246,13 +247,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderSide: BorderSide(color: Colors.white38),
                         ),
                       ),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       obscureText: true,
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               GestureDetector(
                 onTap: _signUp,
                 child: Container(
@@ -266,13 +267,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.grey[700],
-                          borderRadius: BorderRadius.horizontal(left: Radius.circular(30.0)),
+                          borderRadius: const BorderRadius.horizontal(left: Radius.circular(30.0)),
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 24.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         alignment: Alignment.center,
                         child: _isLoading
-                            ? CircularProgressIndicator(color: Colors.white)
-                            : Text(
+                            ? const CircularProgressIndicator(color: Colors.white)
+                            : const Text(
                           "Create",
                           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                         ),
@@ -281,9 +282,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         width: 50,
                         decoration: BoxDecoration(
                           color: Colors.deepPurple[900],
-                          borderRadius: BorderRadius.horizontal(right: Radius.circular(30.0)),
+                          borderRadius: const BorderRadius.horizontal(right: Radius.circular(30.0)),
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Icon(
                             Icons.arrow_forward,
                             color: Colors.white,
@@ -294,13 +295,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Center(
                 child: TextButton(
                   onPressed: () {
                     Navigator.pop(context); // Navigate back to login
                   },
-                  child: Text(
+                  child: const Text(
                     'Already have an account? Login',
                     style: TextStyle(color: Colors.white),
                   ),

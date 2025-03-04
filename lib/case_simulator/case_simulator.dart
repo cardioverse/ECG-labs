@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'case_view.dart';
 
 class CaseSimulator extends StatelessWidget {
+  const CaseSimulator({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Case Simulator')),
+      appBar: AppBar(title: const Text('Case Simulator')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -34,7 +36,7 @@ class CaseSimulator extends StatelessWidget {
             ),
           );
         },
-        child: Text(title, style: TextStyle(color: Colors.white)),
+        child: Text(title, style: const TextStyle(color: Colors.white)),
       ),
     );
   }

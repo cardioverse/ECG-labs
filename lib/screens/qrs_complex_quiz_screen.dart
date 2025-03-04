@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 
 class QRSComplexQuizScreen extends StatefulWidget {
+  const QRSComplexQuizScreen({super.key});
+
   @override
   _QRSComplexQuizScreenState createState() => _QRSComplexQuizScreenState();
 }
@@ -45,7 +46,7 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
   void startTimer() {
     timer?.cancel();
     countdown = 10;
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       setState(() {
         if (countdown > 0) {
           countdown--;
@@ -85,7 +86,7 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
               Navigator.of(context).pop();
               goToNextQuestion();
             },
-            child: Text('Next Question'),
+            child: const Text('Next Question'),
           ),
         ],
       ),
@@ -108,7 +109,7 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Quiz Completed'),
+        title: const Text('Quiz Completed'),
         content: Text('Correct: $correctAnswers, Wrong: $wrongAnswers'),
         actions: [
           TextButton(
@@ -116,7 +117,7 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
               Navigator.of(context).pop();
               resetQuiz();
             },
-            child: Text('Reset'),
+            child: const Text('Reset'),
           ),
         ],
       ),
@@ -138,7 +139,7 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QRS Complex Quiz'),
+        title: const Text('QRS Complex Quiz'),
         backgroundColor: Colors.black,
       ),
       backgroundColor: Colors.black,
@@ -156,11 +157,11 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
                 LinearProgressIndicator(
                   value: (currentQuestionIndex + 1) / shuffledMorphologies.length,
                   backgroundColor: Colors.grey,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.blueAccent),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Score pills
             Row(
@@ -171,7 +172,7 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
                 _buildScorePill('Time', countdown, Colors.grey),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // QRS Image Card
             Card(
@@ -184,7 +185,7 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       'Identify the QRS Morphology',
                       style: TextStyle(
                         color: Colors.white,
@@ -192,7 +193,7 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Image.asset(
                       'assets/images/qrs_quiz/${shuffledMorphologies[currentQuestionIndex]}.png',
                       fit: BoxFit.contain,
@@ -201,11 +202,11 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Options Grid
             GridView.builder(
               shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 3,
                 crossAxisSpacing: 16,
@@ -216,20 +217,20 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
                 String option = currentOptions[index];
                 return ElevatedButton(
                   onPressed: () => handleAnswer(option),
-                  child: Text(
-                    option,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueAccent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16.0),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  ),
+                  child: Text(
+                    option,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 );
               },
@@ -242,14 +243,14 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
 
   Widget _buildScorePill(String label, int value, Color color) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
         '$label: $value',
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
     );
   }

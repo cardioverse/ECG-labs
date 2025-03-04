@@ -14,19 +14,21 @@ class QRSComplexNamingScreen extends StatelessWidget {
     {"name": "rR'", "image": "assets/images/qrs_rr_prime.png"},
   ];
 
+   QRSComplexNamingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QRS Complex Naming Convention'),
+        title: const Text('QRS Complex Naming Convention'),
       ),
       body: ListView.builder(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         itemCount: qrsComplexes.length,
         itemBuilder: (context, index) {
           final complex = qrsComplexes[index];
           return Card(
-            margin: EdgeInsets.symmetric(vertical: 8.0),
+            margin: const EdgeInsets.symmetric(vertical: 8.0),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -34,10 +36,10 @@ class QRSComplexNamingScreen extends StatelessWidget {
                 children: [
                   Text(
                     complex["name"]!,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Image.asset(
                     complex["image"]!,
                     width: MediaQuery.of(context).size.width,

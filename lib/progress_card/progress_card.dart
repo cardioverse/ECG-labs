@@ -7,7 +7,7 @@ class CustomExpansionCard extends StatefulWidget {
   final List<String> topics;
   final String userId;
 
-  CustomExpansionCard({required this.sectionTitle, required this.topics, required this.userId});
+  const CustomExpansionCard({super.key, required this.sectionTitle, required this.topics, required this.userId});
 
   @override
   _CustomExpansionCardState createState() => _CustomExpansionCardState();
@@ -154,7 +154,7 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with TickerPr
                         Expanded(  // Ensure section title doesn't overflow
                           child: Text(
                             widget.sectionTitle,
-                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+                            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
                             overflow: TextOverflow.ellipsis, // Avoid text overflow
                           ),
                         ),
@@ -167,7 +167,7 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with TickerPr
                               percent: progress * (_progressAnimationCompleted ? 1 : _progressAnimation.value),
                               center: Text(
                                 '${(progress * (_progressAnimationCompleted ? 1 : _progressAnimation.value) * 100).toStringAsFixed(0)}%',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
                               ),
                               progressColor: Colors.green,
                               backgroundColor: Colors.white,
@@ -221,12 +221,12 @@ class _CustomExpansionCardState extends State<CustomExpansionCard> with TickerPr
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: ListTile(
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // Less padding
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // Less padding
                                   visualDensity: VisualDensity.compact, // Makes ListTile shorter
 
                                   title: Text(
                                     topic,
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                   ),
                                   trailing: Icon(
                                     isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,

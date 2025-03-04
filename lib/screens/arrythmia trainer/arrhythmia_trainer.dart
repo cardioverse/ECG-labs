@@ -5,6 +5,8 @@ import 'dart:math';
 import 'dart:async';
 
 class ArrhythmiaTrainer extends StatefulWidget {
+  const ArrhythmiaTrainer({super.key});
+
   @override
   _ArrhythmiaTrainerState createState() => _ArrhythmiaTrainerState();
 }
@@ -90,7 +92,7 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (timeLeft > 0) {
           timeLeft--;
@@ -137,21 +139,21 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
                     RichText(
                       text: TextSpan(
                         text: 'The correct answer was: ',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style: const TextStyle(fontSize: 18, color: Colors.white),
                         children: [
                           TextSpan(
                             text: correctAnswer,
-                            style: TextStyle(fontSize: 18, color: Colors.green, fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontSize: 18, color: Colors.green, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
                     ),
-                  SizedBox(height: 16),
-                  Text(
+                  const SizedBox(height: 16),
+                  const Text(
                     'Interpretation:',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   InteractiveViewer(
                     panEnabled: true,
                     boundaryMargin: EdgeInsets.zero,
@@ -159,12 +161,12 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
                     maxScale: 4.0,
                     child: Image.asset('assets/images/arrhythmia_trainer_ecg/$currentImage'),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   ...interpretation.split('. ').map((point) => Padding(
                     padding: const EdgeInsets.only(bottom: 4.0),
                     child: Text(
                       '• $point',
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
                   )),
                 ],
@@ -175,7 +177,7 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
                     Navigator.of(context).pop();
                     loadNextECG();
                   },
-                  child: Text('Next Question'),
+                  child: const Text('Next Question'),
                 ),
               ],
             );
@@ -185,7 +187,7 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
     });
 
     if (mode == 'Rapid') {
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 1), () {
         loadNextECG();
         resetTimer();
       });
@@ -202,7 +204,7 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Arrhythmia Trainer'),
+        title: const Text('Arrhythmia Trainer'),
         actions: [
           DropdownButton<String>(
             value: mode,
@@ -223,13 +225,13 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
               });
             },
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
         ],
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : currentImage.isEmpty
-          ? Center(child: Text('No ECG data available'))
+          ? const Center(child: Text('No ECG data available'))
           : Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -242,9 +244,9 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Timer: $timeLeft', style: TextStyle(fontSize: 20)),
-                    Text('Correct: $correctCount', style: TextStyle(fontSize: 20)),
-                    Text('Wrong: $wrongCount', style: TextStyle(fontSize: 20)),
+                    Text('Timer: $timeLeft', style: const TextStyle(fontSize: 20)),
+                    Text('Correct: $correctCount', style: const TextStyle(fontSize: 20)),
+                    Text('Wrong: $wrongCount', style: const TextStyle(fontSize: 20)),
                   ],
                 ),
               ),
@@ -254,12 +256,12 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Correct: $correctCount', style: TextStyle(fontSize: 20)),
-                    Text('Wrong: $wrongCount', style: TextStyle(fontSize: 20)),
+                    Text('Correct: $correctCount', style: const TextStyle(fontSize: 20)),
+                    Text('Wrong: $wrongCount', style: const TextStyle(fontSize: 20)),
                   ],
                 ),
               ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: InteractiveViewer(
                 panEnabled: true,
@@ -269,15 +271,15 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
                 child: Image.asset('assets/images/arrhythmia_trainer_ecg/$currentImage'),
               ),
             ),
-            SizedBox(height: 16.0),
-            Text(
+            const SizedBox(height: 16.0),
+            const Text(
               'Select the correct MI:',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             GridView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: mode == 'Rapid' ? 2 : 2,
                 childAspectRatio: 1.0,
@@ -297,7 +299,7 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
                   buttonColor = Colors.blueAccent;
                 }
 
-                return Container(
+                return SizedBox(
                   height: 50,  // Set the desired height for the button
                   child: InkWell(
                     onTap: selectedAnswer == null ? () => checkAnswer(options[index]) : null,
@@ -312,7 +314,7 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
                       child: Center(
                         child: Text(
                           options[index],
-                          style: TextStyle(fontSize: 16.0, color: Colors.white),
+                          style: const TextStyle(fontSize: 16.0, color: Colors.white),
                           textAlign: TextAlign.center,
                         ),
                       ),

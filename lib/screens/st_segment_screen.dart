@@ -9,6 +9,8 @@ import 'package:ecg_trainer/screens/st_segment_types/posterior_mi_screen.dart';
 import 'package:ecg_trainer/topics_completion_tracker/st_segment_quiz_screen.dart';
 
 class STSegmentScreen extends StatefulWidget {
+  const STSegmentScreen({super.key});
+
   @override
   _STSegmentScreenState createState() => _STSegmentScreenState();
 }
@@ -21,7 +23,7 @@ class _STSegmentScreenState extends State<STSegmentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ST Segment'),
+        title: const Text('ST Segment'),
         backgroundColor: Colors.black,
       ),
       body: Padding(
@@ -30,7 +32,7 @@ class _STSegmentScreenState extends State<STSegmentScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // ST Segment Example Image
               _buildImageWithDescriptionSection(
@@ -40,7 +42,7 @@ class _STSegmentScreenState extends State<STSegmentScreen> {
                     'It is usually isoelectric (flat) and occurs after the QRS complex and before the T wave. '
                     'Deviations from the isoelectric line can indicate serious cardiac conditions.',
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               // Section for Types of ST Elevation MI
               _buildTypesOfSTElevationMICarousel(context),
@@ -59,7 +61,7 @@ class _STSegmentScreenState extends State<STSegmentScreen> {
                   'assets/images/st_elevation_5.png',
                 ],
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               // ST Segment Morphology in Other Conditions
               _buildCardSection(
@@ -75,24 +77,24 @@ class _STSegmentScreenState extends State<STSegmentScreen> {
                   'assets/images/st_brugada.png',
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Finished Topic button
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => STSegmentQuizScreen()),
+                    MaterialPageRoute(builder: (context) => const STSegmentQuizScreen()),
                   );
                 },
-                child: Text('Finished Topic'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
-                  padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
+                child: const Text('Finished Topic'),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -109,10 +111,10 @@ class _STSegmentScreenState extends State<STSegmentScreen> {
           borderRadius: BorderRadius.circular(10),
           child: Image.asset(imagePath, fit: BoxFit.cover, width: MediaQuery.of(context).size.width),
         ),
-        SizedBox(height: 12),
+        const SizedBox(height: 12),
         Text(
           description,
-          style: TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
+          style: const TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
           textAlign: TextAlign.left,
         ),
       ],
@@ -140,13 +142,13 @@ class _STSegmentScreenState extends State<STSegmentScreen> {
                 color: highlightColor,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             if (additionalInfo.isNotEmpty)
               Text(
                 additionalInfo,
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             SizedBox(height: 350,
               child: PageView.builder(
                 controller: pageController,
@@ -160,12 +162,12 @@ class _STSegmentScreenState extends State<STSegmentScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Center(
               child: SmoothPageIndicator(
                 controller: pageController,
                 count: imagePaths.length,
-                effect: ScrollingDotsEffect(
+                effect: const ScrollingDotsEffect(
                   dotHeight: 8,
                   dotWidth: 8,
                   activeDotColor: Colors.white,
@@ -182,21 +184,21 @@ class _STSegmentScreenState extends State<STSegmentScreen> {
   // Section for Types of ST Elevation MI - Carousel Version
   Widget _buildTypesOfSTElevationMICarousel(BuildContext context) {
     final miTypes = [
-      {'label': 'Anterior MI', 'screen': AnteriorMIScreen()},
-      {'label': 'Inferior MI', 'screen': InferiorMIScreen()},
-      {'label': 'Lateral MI', 'screen': LateralMIScreen()},
-      {'label': 'Septal MI', 'screen': SeptalMIScreen()},
-      {'label': 'Posterior MI', 'screen': PosteriorMIScreen()},
+      {'label': 'Anterior MI', 'screen': const AnteriorMIScreen()},
+      {'label': 'Inferior MI', 'screen': const InferiorMIScreen()},
+      {'label': 'Lateral MI', 'screen': const LateralMIScreen()},
+      {'label': 'Septal MI', 'screen': const SeptalMIScreen()},
+      {'label': 'Posterior MI', 'screen': const PosteriorMIScreen()},
     ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Types of ST Elevation MI',
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.green),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         CarouselSlider(
           items: miTypes.map((mi) => _buildCardNavigationButton(
             context,
@@ -207,7 +209,7 @@ class _STSegmentScreenState extends State<STSegmentScreen> {
             height: 200,
             enlargeCenterPage: true,
             autoPlay: true,
-            autoPlayInterval: Duration(seconds: 3),
+            autoPlayInterval: const Duration(seconds: 3),
             viewportFraction: 0.8,
           ),
         ),
@@ -231,10 +233,10 @@ class _STSegmentScreenState extends State<STSegmentScreen> {
           child: Row(
             children: [
 
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Text(
                 label,
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
+                style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
                 textAlign: TextAlign.center,
               ),
             ],

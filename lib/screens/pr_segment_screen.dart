@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:ecg_trainer/topics_completion_tracker/pr_segment_quiz_screen.dart'; // Import the quiz screen
 
 class PRSegmentScreen extends StatelessWidget {
+  const PRSegmentScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PR Segment'),
+        title: const Text('PR Segment'),
         backgroundColor: Colors.black, // Set AppBar color to black
       ),
       body: Padding(
@@ -23,7 +25,7 @@ class PRSegmentScreen extends StatelessWidget {
                   'conditions like AV blocks and pre-excitation syndromes.',
               Colors.orange, // Use orange for section highlight
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // Key Points Section
             _buildCardSection(
@@ -36,7 +38,7 @@ class PRSegmentScreen extends StatelessWidget {
                   '• A shortened PR segment can be seen in conditions like pre-excitation syndromes (e.g., Wolff-Parkinson-White syndrome).',
               Colors.green, // Use orange for key points title
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // Conclusion Section
             _buildCardSection(
@@ -47,23 +49,23 @@ class PRSegmentScreen extends StatelessWidget {
                   'Abnormalities in the PR segment can provide important diagnostic clues about various heart conditions.',
               Colors.orange, // Use orange for conclusion title
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // Finished Topic Button for Quiz
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PRSegmentQuizScreen()),
+                    MaterialPageRoute(builder: (context) => const PRSegmentQuizScreen()),
                   );
                 },
-                child: Text('Finished Topic'),
+                child: const Text('Finished Topic'),
               ),
             ),
           ],
@@ -89,7 +91,7 @@ class PRSegmentScreen extends StatelessWidget {
                 fit: BoxFit.contain,
                 width: MediaQuery.of(context).size.width, // Ensure image fits the screen width
               ),
-              SizedBox(height: 10), // Add spacing after the image
+              const SizedBox(height: 10), // Add spacing after the image
             ],
             if (title != null) ...[
               Text(
@@ -100,11 +102,11 @@ class PRSegmentScreen extends StatelessWidget {
                   color: highlightColor, // Use highlight color for sections
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
             ],
             Text(
               description,
-              style: TextStyle(fontSize: 16, color: Colors.white),
+              style: const TextStyle(fontSize: 16, color: Colors.white),
             ),
           ],
         ),

@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:ecg_trainer/topics_completion_tracker/p_wave_quiz_screen.dart';
 
 class PWaveScreen extends StatelessWidget {
+  const PWaveScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('P-Wave'),
+        title: const Text('P-Wave'),
         backgroundColor: Colors.black, // Consistent with RWaveScreen
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
 
           // Section 1: P-Wave Overview
@@ -19,7 +21,7 @@ class PWaveScreen extends StatelessWidget {
               'The P-wave represents atrial depolarization, which triggers the atria to contract. '
                   'It’s usually upright in leads I, II, and V2-V6, and is the first deflection in the ECG waveform.'
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Section 2: Normal P-Wave Parameters
           _buildCardSection(
@@ -31,10 +33,10 @@ class PWaveScreen extends StatelessWidget {
             ],
             Colors.green,  // Use green for normal parameters
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Section 3: Abnormal P-Waves
-          Text(
+          const Text(
             'Abnormal P-Waves',
             style: TextStyle(
               fontSize: 22,
@@ -42,7 +44,7 @@ class PWaveScreen extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
 
           _buildCardWithImage(
             'P Pulmonale',
@@ -63,22 +65,22 @@ class PWaveScreen extends StatelessWidget {
             Colors.red,
           ),
 
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Finished Topic button
           ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PWaveQuizScreen()),
+                MaterialPageRoute(builder: (context) => const PWaveQuizScreen()),
               );
             },
-            child: Text('Finished Topic'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
-              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+              textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            child: const Text('Finished Topic'),
           ),
         ],
       ),
@@ -90,10 +92,10 @@ class PWaveScreen extends StatelessWidget {
     return Column(
       children: [
         Image.asset(imagePath, height: 200),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Text(
           description,
-          style: TextStyle(fontSize: 18, color: Colors.white, height: 1.5),
+          style: const TextStyle(fontSize: 18, color: Colors.white, height: 1.5),
           textAlign: TextAlign.center,
         ),
       ],
@@ -118,7 +120,7 @@ class PWaveScreen extends StatelessWidget {
                 color: highlightColor,  // Use color for emphasis
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: details.map((detail) {
@@ -126,7 +128,7 @@ class PWaveScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Text(
                     detail,
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 );
               }).toList(),
@@ -142,7 +144,7 @@ class PWaveScreen extends StatelessWidget {
     return Card(
       elevation: 4,
       color: Colors.black87,  // Dark card background for contrast
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -156,12 +158,12 @@ class PWaveScreen extends StatelessWidget {
                 color: highlightColor,  // Use highlight color for abnormalities
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               description,
-              style: TextStyle(fontSize: 16, color: Colors.white),
+              style: const TextStyle(fontSize: 16, color: Colors.white),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Image.asset(imagePath, height: 150),
           ],
         ),

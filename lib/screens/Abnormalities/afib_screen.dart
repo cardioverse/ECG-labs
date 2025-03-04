@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AfibScreen extends StatefulWidget {
+  const AfibScreen({super.key});
+
   @override
   _AfibScreenState createState() => _AfibScreenState();
 }
@@ -14,7 +16,7 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 5),
+      duration: const Duration(seconds: 5),
     )..repeat(); // Makes the animation loop
 
     _animation = Tween<double>(begin: 0, end: -400).animate(CurvedAnimation(
@@ -33,10 +35,10 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Atrial Fibrillation (AFib)'),
+        title: const Text('Atrial Fibrillation (AFib)'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -70,7 +72,7 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
                 },
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // Overview Section
             Card(
@@ -78,8 +80,8 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
                 borderRadius: BorderRadius.circular(16.0),
               ),
               elevation: 4.0,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -99,7 +101,7 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // Pathophysiology Section
             Card(
@@ -107,8 +109,8 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
                 borderRadius: BorderRadius.circular(16.0),
               ),
               elevation: 4.0,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -128,7 +130,7 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // Clinical Significance Section
             Card(
@@ -136,8 +138,8 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
                 borderRadius: BorderRadius.circular(16.0),
               ),
               elevation: 4.0,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -157,7 +159,7 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // ECG Features Section
             Card(
@@ -165,8 +167,8 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
                 borderRadius: BorderRadius.circular(16.0),
               ),
               elevation: 4.0,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -185,7 +187,7 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // Study Pointers Section
             Card(
@@ -193,8 +195,8 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
                 borderRadius: BorderRadius.circular(16.0),
               ),
               elevation: 4.0,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -224,7 +226,7 @@ class _AfibScreenState extends State<AfibScreen> with SingleTickerProviderStateM
 class BulletPoint extends StatelessWidget {
   final String text;
 
-  BulletPoint({required this.text});
+  const BulletPoint({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -233,14 +235,14 @@ class BulletPoint extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             '• ',
             style: TextStyle(fontSize: 20.0),
           ),
           Expanded(
             child: Text(
               text,
-              style: TextStyle(fontSize: 16.0),
+              style: const TextStyle(fontSize: 16.0),
             ),
           ),
         ],

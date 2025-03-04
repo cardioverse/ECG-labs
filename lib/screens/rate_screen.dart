@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:ecg_trainer/topics_completion_tracker/rate_quiz_screen.dart';
 
 class RateScreen extends StatelessWidget {
+  const RateScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Heart Rate Basics'),
+        title: const Text('Heart Rate Basics'),
         backgroundColor: Colors.black,
       ),
       backgroundColor: Colors.black,
@@ -48,7 +50,7 @@ class RateScreen extends StatelessWidget {
                           highlightColor: Colors.redAccent,
                         ),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Expanded(
                         child: _buildHeartRateCard(
                           title: 'Bradycardia',
@@ -82,20 +84,20 @@ class RateScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RateQuizScreen()),
+                  MaterialPageRoute(builder: (context) => const RateQuizScreen()),
                 );
               },
-              child: Text('Finished Topic'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
+              child: const Text('Finished Topic'),
             ),
           ],
         ),
@@ -112,11 +114,11 @@ class RateScreen extends StatelessWidget {
           if (icon != null)
             Icon(icon, color: iconColor, size: 28),
           if (icon != null)
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
           Expanded(
             child: Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -153,18 +155,18 @@ class RateScreen extends StatelessWidget {
                 color: highlightColor,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               heartRate,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               conditions,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.white70,
               ),
@@ -195,16 +197,16 @@ class RateScreen extends StatelessWidget {
                 children: [
                   Text(
                     entry.key,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     entry.value,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white70,
                       height: 1.4,
@@ -220,7 +222,7 @@ class RateScreen extends StatelessWidget {
   }
 
   Widget _buildInfoCard(String text, {Color? highlightColor}) {
-    final TextStyle baseTextStyle = TextStyle(
+    const TextStyle baseTextStyle = TextStyle(
       fontSize: 16,
       height: 1.5,
       color: Colors.white,

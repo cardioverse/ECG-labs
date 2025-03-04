@@ -2,24 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:ecg_trainer/topics_completion_tracker/pr_interval_quiz_screen.dart';
 
 class PRIntervalScreen extends StatelessWidget {
+  const PRIntervalScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PR Interval'),
+        title: const Text('PR Interval'),
         backgroundColor: Colors.black,
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
 
           // PR Interval Overview Image
           _buildImageWithDescriptionSection(
             'assets/images/pr_interval_example.png',
             'The PR interval is the time from the onset of the P wave to the start of the QRS complex. It reflects conduction through the AV node.',
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Normal Duration Section
           _buildCardSection(
@@ -29,7 +31,7 @@ class PRIntervalScreen extends StatelessWidget {
               ],
               Colors.green  // Use green for normal parameters
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Prolonged PR Interval Section
           _buildCardSection(
@@ -45,7 +47,7 @@ class PRIntervalScreen extends StatelessWidget {
               'assets/images/av_block_first_degree.png',
               Colors.red  // Use red for abnormalities
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
 
           _buildSubsectionCard(
               'Second-Degree AV Block (Mobitz I):',
@@ -53,7 +55,7 @@ class PRIntervalScreen extends StatelessWidget {
               'assets/images/av_block_mobitz_1.png',
               Colors.red
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Short PR Interval Section
           _buildCardSection(
@@ -69,7 +71,7 @@ class PRIntervalScreen extends StatelessWidget {
               'assets/images/wpw_syndrome.png',
               Colors.red
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           _buildSubsectionCard(
               'AV Nodal (Junctional) Rhythm:',
@@ -77,22 +79,22 @@ class PRIntervalScreen extends StatelessWidget {
               'assets/images/junctional_rhythm.png',
               Colors.red
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Finished Topic button
           ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PRIntervalQuizScreen()),
+                MaterialPageRoute(builder: (context) => const PRIntervalQuizScreen()),
               );
             },
-            child: Text('Finished Topic'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
-              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+              textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            child: const Text('Finished Topic'),
           ),
         ],
       ),
@@ -104,10 +106,10 @@ class PRIntervalScreen extends StatelessWidget {
     return Column(
       children: [
         Image.asset(imagePath, height: 200),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Text(
           description,
-          style: TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
+          style: const TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
           textAlign: TextAlign.left,
         ),
       ],
@@ -132,7 +134,7 @@ class PRIntervalScreen extends StatelessWidget {
                 color: highlightColor,  // Use highlight color for sections
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: details.map((detail) {
@@ -140,7 +142,7 @@ class PRIntervalScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Text(
                     detail,
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 );
               }).toList(),
@@ -156,7 +158,7 @@ class PRIntervalScreen extends StatelessWidget {
     return Card(
       elevation: 4,
       color: Colors.black87,  // Dark card background for contrast
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -170,12 +172,12 @@ class PRIntervalScreen extends StatelessWidget {
                 color: highlightColor,  // Use red for abnormalities
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               description,
-              style: TextStyle(fontSize: 16, color: Colors.white),
+              style: const TextStyle(fontSize: 16, color: Colors.white),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Image.asset(imagePath, height: 150),
           ],
         ),

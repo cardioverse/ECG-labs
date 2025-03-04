@@ -5,6 +5,8 @@ import 'package:ecg_trainer/main.dart';  // Import ECGTrainerApp to navigate to 
 import 'package:ecg_trainer/user_authentication/signup_screen.dart';  // Import SignUpScreen
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -38,11 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
     if (user != null) {
       print('Login successful, navigating to HomeScreen');
       // Navigate to the HomeScreen with navigation bar
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
     } else {
       // Show an error message
       print('Login failed');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Login failed. Please check your email and password."),
         backgroundColor: Colors.red,
       ));
@@ -58,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _navigateToSignUp() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
   }
 
   @override
@@ -71,11 +73,11 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 64),
+              const SizedBox(height: 64),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 16.0),
+                  padding: const EdgeInsets.only(top: 16.0),
                   child: Image.asset(
                     'assets/icon/icon.png', // Custom icon at the top
                     height: 200,
@@ -83,8 +85,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 24),
-              Text(
+              const SizedBox(height: 24),
+              const Text(
                 'Welcome Back!',
                 style: TextStyle(
                   fontSize: 32,
@@ -92,17 +94,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 8),
-              Text(
+              const SizedBox(height: 8),
+              const Text(
                 'Enter your email address and password to get access to your account',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white70,
                 ),
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 decoration: BoxDecoration(
                   color: Colors.grey[800],
                   borderRadius: BorderRadius.circular(12.0),
@@ -111,21 +113,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     TextField(
                       controller: emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         icon: Icon(Icons.email, color: Colors.white),
                         labelText: "Email",
                         labelStyle: TextStyle(color: Colors.white),
                         border: InputBorder.none,
                       ),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
-                    Divider(color: Colors.white54),
+                    const Divider(color: Colors.white54),
                     TextField(
                       controller: passwordController,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.lock, color: Colors.white),
+                        icon: const Icon(Icons.lock, color: Colors.white),
                         labelText: "Password",
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: InputBorder.none,
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -139,19 +141,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                       ),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       obscureText: !_isPasswordVisible,
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
                     onPressed: () {}, // Add forgot password functionality
-                    child: Text(
+                    child: const Text(
                       "Forgot?",
                       style: TextStyle(color: Colors.white),
                     ),
@@ -169,13 +171,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.grey[700],
-                              borderRadius: BorderRadius.horizontal(left: Radius.circular(30.0)),
+                              borderRadius: const BorderRadius.horizontal(left: Radius.circular(30.0)),
                             ),
-                            padding: EdgeInsets.symmetric(horizontal: 24.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 24.0),
                             alignment: Alignment.center,
                             child: _isLoading
-                                ? CircularProgressIndicator(color: Colors.white)
-                                : Text(
+                                ? const CircularProgressIndicator(color: Colors.white)
+                                : const Text(
                               "Login",
                               style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                             ),
@@ -184,9 +186,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: 50,
                             decoration: BoxDecoration(
                               color: Colors.deepPurple[900],
-                              borderRadius: BorderRadius.horizontal(right: Radius.circular(30.0)),
+                              borderRadius: const BorderRadius.horizontal(right: Radius.circular(30.0)),
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Icon(
                                 Icons.arrow_forward,
                                 color: Colors.white,
@@ -199,17 +201,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               Center(
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       "Don't have an account yet?",
                       style: TextStyle(color: Colors.white),
                     ),
                     TextButton(
                       onPressed: _navigateToSignUp,
-                      child: Text(
+                      child: const Text(
                         "Create account",
                         style: TextStyle(
                           color: Colors.white,
@@ -220,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
             ],
           ),
         ),

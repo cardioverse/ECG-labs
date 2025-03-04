@@ -3,6 +3,8 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class ArrhythmiaTrainer extends StatefulWidget {
+  const ArrhythmiaTrainer({super.key});
+
   @override
   _ArrhythmiaTrainerState createState() => _ArrhythmiaTrainerState();
 }
@@ -21,7 +23,7 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Arrhythmia Trainer"),
+        title: const Text("Arrhythmia Trainer"),
       ),
       body: Column(
         children: [
@@ -47,14 +49,14 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
               ),
             ),
           ),
-          SizedBox(height: 16.0), // Adds space between the image and quiz
+          const SizedBox(height: 16.0), // Adds space between the image and quiz
 
           // Quiz question text
-          Text(
+          const Text(
             'Identify this ECG',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
 
           // Quiz options grid
           Expanded(
@@ -87,7 +89,7 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
     return options.map((option) {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.all(16.0), // Adds consistent padding
+          padding: const EdgeInsets.all(16.0), // Adds consistent padding
           backgroundColor: Colors.blueAccent, // Sets button background color
           foregroundColor: Colors.white, // Sets text color
           shape: RoundedRectangleBorder(
@@ -102,7 +104,7 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
         },
         child: Text(
           option,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
       );
@@ -142,7 +144,7 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
                   });
                 }
               },
-              child: Text('Next'),
+              child: const Text('Next'),
             ),
           ],
         );
@@ -156,7 +158,7 @@ class FullScreenEcgViewer extends StatelessWidget {
   final List<String> images;
   final int initialIndex;
 
-  FullScreenEcgViewer({required this.images, required this.initialIndex});
+  const FullScreenEcgViewer({super.key, required this.images, required this.initialIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -165,7 +167,7 @@ class FullScreenEcgViewer extends StatelessWidget {
       body: PhotoViewGallery.builder(
         itemCount: images.length,
         pageController: PageController(initialPage: initialIndex),
-        backgroundDecoration: BoxDecoration(color: Colors.black), // Set background to black for better contrast
+        backgroundDecoration: const BoxDecoration(color: Colors.black), // Set background to black for better contrast
         builder: (context, index) {
           return PhotoViewGalleryPageOptions(
             imageProvider: AssetImage(images[index]),
@@ -173,7 +175,7 @@ class FullScreenEcgViewer extends StatelessWidget {
             maxScale: PhotoViewComputedScale.covered * 2.0,
           );
         },
-        scrollPhysics: BouncingScrollPhysics(),
+        scrollPhysics: const BouncingScrollPhysics(),
       ),
     );
   }

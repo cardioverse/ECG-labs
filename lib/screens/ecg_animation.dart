@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ECGAnimation extends StatefulWidget {
+  const ECGAnimation({super.key});
+
   @override
   _ECGAnimationState createState() => _ECGAnimationState();
 }
@@ -13,7 +15,7 @@ class _ECGAnimationState extends State<ECGAnimation> with SingleTickerProviderSt
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(seconds: 10), // Adjust speed here for desired effect
+      duration: const Duration(seconds: 10), // Adjust speed here for desired effect
       vsync: this,
     )..repeat(); // Loop the animation continuously
 
@@ -64,7 +66,7 @@ class _ECGAnimationState extends State<ECGAnimation> with SingleTickerProviderSt
 
 // Example usage of the ECGAnimation widget
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: Scaffold(
       backgroundColor: Colors.black, // Set background color to enhance the ECG effect
       body: Center(

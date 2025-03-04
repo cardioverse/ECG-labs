@@ -1,22 +1,20 @@
 import 'package:ecg_trainer/medicine_repo/medicine_REPO.dart';
 import 'package:flutter/material.dart';
 import 'cardiac_axis_trainer.dart';
-import 'ecg_interpretation_helper.dart';
 import 'qrs_complex_quiz_screen.dart';
 import 'arrythmia trainer/arrhythmia_trainer.dart';
-import 'ecg_animation.dart';
 import 'ecg repo/ecg_repository_screen.dart';
 import 'package:ecg_trainer/screens/Abnormalities/abnormalities_screen.dart';
 import 'Qtc_calculator/qtc_calculator_screen.dart';
 import 'package:ecg_trainer/forum/forum_home_screen.dart';
-import 'package:ecg_trainer/medicine_repo/medicine_detail_screen.dart';// Import the new MedicineListScreen
+// Import the new MedicineListScreen
 import 'package:ecg_trainer/case_simulator/case_simulator.dart';
 class ECGTrainerScreen extends StatelessWidget {
   final List<_ECGTrainerItem> abnormalitiesItem = [
     _ECGTrainerItem(
       title: 'Abnormalities',
       color: Colors.deepPurple[900]!,
-      destination: () => AbnormalitiesScreen(),
+      destination: () =>  AbnormalitiesScreen(),
       icon: Icons.warning, // Replace with an appropriate icon
     ),
   ];
@@ -25,31 +23,31 @@ class ECGTrainerScreen extends StatelessWidget {
     _ECGTrainerItem(
       title: 'Cardiac Axis Trainer',
       color: Colors.deepPurple[900]!,
-      destination: () => CardiacAxisTrainer(),
+      destination: () => const CardiacAxisTrainer(),
       icon: Icons.trending_up, // Updated icon for Cardiac Axis Trainer
     ),
     _ECGTrainerItem(
       title: 'QRS Complex Quiz',
       color: Colors.deepPurple[900]!,
-      destination: () => QRSComplexQuizScreen(),
+      destination: () => const QRSComplexQuizScreen(),
       icon: Icons.quiz, // Replace with an appropriate icon
     ),
     _ECGTrainerItem(
       title: 'STEMI Spotter',
       color: Colors.deepPurple[900]!,
-      destination: () => ArrhythmiaTrainer(),
+      destination: () => const ArrhythmiaTrainer(),
       icon: Icons.show_chart, // Replace with an appropriate icon
     ),
     _ECGTrainerItem(
       title: 'ECG Repository',
       color: Colors.deepPurple[900]!,
-      destination: () => ECGRepositoryScreen(),
+      destination: () => const ECGRepositoryScreen(),
       icon: Icons.folder, // Replace with an appropriate icon
     ),
     _ECGTrainerItem(
       title: 'QTc Calculator',
       color: Colors.deepPurple[900]!,
-      destination: () => QTcCalculatorScreen(),
+      destination: () => const QTcCalculatorScreen(),
       icon: Icons.calculate, // Replace with an appropriate icon
     ),
     _ECGTrainerItem(
@@ -67,11 +65,13 @@ class ECGTrainerScreen extends StatelessWidget {
     _ECGTrainerItem(
       title: 'Case Simulator', // new item for forum
       color: Colors.deepPurple[900]!,
-      destination: () => CaseSimulator(), // Destination to the Medicine Repository
+      destination: () => const CaseSimulator(), // Destination to the Medicine Repository
       icon: Icons.medical_services, // Icon representing medicines
     ),
 
   ];
+
+   ECGTrainerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -83,9 +83,9 @@ class ECGTrainerScreen extends StatelessWidget {
             children: [
               GridView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: abnormalitiesItem.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1, // Single column for abnormalities
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
@@ -121,10 +121,10 @@ class ECGTrainerScreen extends StatelessWidget {
                                 size: 48,
                                 color: Colors.white,
                               ),
-                              SizedBox(height: 12),
+                              const SizedBox(height: 12),
                               Text(
                                 item.title,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -139,11 +139,11 @@ class ECGTrainerScreen extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Expanded(
                 child: GridView.builder(
                   itemCount: items.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, // Two columns for better layout
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
@@ -178,10 +178,10 @@ class ECGTrainerScreen extends StatelessWidget {
                                   size: 48,
                                   color: Colors.white,
                                 ),
-                                SizedBox(height: 12),
+                                const SizedBox(height: 12),
                                 Text(
                                   item.title,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
@@ -218,5 +218,6 @@ class _ECGTrainerItem {
     required this.destination,
     this.icon,
     this.image,
+
   });
 }

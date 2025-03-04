@@ -4,6 +4,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 
 class QTcCalculatorScreen extends StatefulWidget {
+  const QTcCalculatorScreen({super.key});
+
   @override
   _QTcCalculatorScreenState createState() => _QTcCalculatorScreenState();
 }
@@ -42,13 +44,13 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QTc Calculator'),
+        title: const Text('QTc Calculator'),
         actions: [
           DropdownButton<String>(
             value: _selectedGender,
-            icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+            icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
             dropdownColor: Colors.blue,
-            underline: SizedBox(),
+            underline: const SizedBox(),
             onChanged: (String? newValue) {
               setState(() {
                 _selectedGender = newValue!;
@@ -61,7 +63,7 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
                 value: value,
                 child: Text(
                   value,
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
               );
             }).toList(),
@@ -76,11 +78,11 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Correction Formula',
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blueAccent),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   CarouselSlider(
                     options: CarouselOptions(
                       height: 160,
@@ -103,18 +105,18 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
                             elevation: 4,
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.7,
-                              padding: EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
                                     formula,
-                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                   ),
-                                  SizedBox(height: 10),
+                                  const SizedBox(height: 10),
                                   Text(
                                     _formulaDescriptions[formula] ?? '',
-                                    style: TextStyle(fontSize: 14),
+                                    style: const TextStyle(fontSize: 14),
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
@@ -125,7 +127,7 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
                       );
                     }).toList(),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   _buildCard('QT Interval (ms)', 300, 500, _qtValue, (value) {
                     setState(() {
                       _qtValue = value;
@@ -155,8 +157,8 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
                 return Container(
                   decoration: BoxDecoration(
                     color: _sheetColor,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-                    boxShadow: [
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
+                    boxShadow: const [
                       BoxShadow(
                         color: Colors.black26,
                         blurRadius: 10.0,
@@ -169,7 +171,7 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
                       Container(
                         width: 50,
                         height: 5,
-                        margin: EdgeInsets.symmetric(vertical: 10),
+                        margin: const EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
                           color: Colors.grey,
                           borderRadius: BorderRadius.circular(10),
@@ -186,10 +188,10 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
                                 Center(
                                   child: Text(
                                     'QTc - $_result ms',
-                                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
+                                    style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 _selectedGender == 'Male'
                                     ? _buildNormalRangeCard('Normal Ranges - Male', [
                                   {'< 450 ms': 'Normal'},
@@ -201,7 +203,7 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
                                   {'460 - 480 ms': 'Borderline'},
                                   {'> 480 ms': 'Prolonged'},
                                 ]),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
@@ -244,7 +246,7 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 4,
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -252,9 +254,9 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
           children: [
             Text(
               label,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Expanded(
@@ -266,13 +268,13 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
                     onChanged: onChanged,
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Expanded(
                   flex: 1,
                   child: TextField(
                     controller: TextEditingController(text: value.toStringAsFixed(0)),
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                     ),
                     onSubmitted: (input) {
@@ -304,13 +306,13 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             for (String line in content)
               Text(
                 line,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
           ],
         ),
@@ -326,20 +328,20 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
       elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               for (String line in content)
                 Text(
                   line,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
             ],
           ),
@@ -361,9 +363,9 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: content.map((range) {
@@ -373,12 +375,12 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
                   children: [
                     Text(
                       key,
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       value,
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ],
                 );
@@ -396,7 +398,7 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 4,
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -404,12 +406,12 @@ class _QTcCalculatorScreenState extends State<QTcCalculatorScreen> {
           children: [
             Text(
               stepTitle,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               description,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),

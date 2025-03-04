@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class QRSComplexQuizScreen extends StatefulWidget {
+  const QRSComplexQuizScreen({super.key});
+
   @override
   _QRSComplexQuizScreenState createState() => _QRSComplexQuizScreenState();
 }
@@ -148,7 +150,7 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QRS Complex Quiz'),
+        title: const Text('QRS Complex Quiz'),
         backgroundColor: Colors.black,
       ),
       backgroundColor: Colors.black,
@@ -159,29 +161,29 @@ class _QRSComplexQuizScreenState extends State<QRSComplexQuizScreen> {
           children: [
             Text(
               'Question ${currentQuestionIndex + 1} of ${questions.length}',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               questions[currentQuestionIndex]['question'],
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                    textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   onPressed: () => _checkAnswer(index),
                   child: Text(questions[currentQuestionIndex]['options'][index]),

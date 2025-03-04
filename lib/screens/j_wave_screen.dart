@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:ecg_trainer/topics_completion_tracker/j_wave_quiz_screen.dart';
 
 class JWaveScreen extends StatelessWidget {
+  const JWaveScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('J Wave'),
+        title: const Text('J Wave'),
         backgroundColor: Colors.black,
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
           // J-Wave Overview Section
           _buildImageWithDescriptionSection(
@@ -18,7 +20,7 @@ class JWaveScreen extends StatelessWidget {
             'The J-wave, also known as the Osborn wave, is a positive deflection occurring immediately after the QRS complex '
                 'and before the T-wave. It is often seen at the junction between the QRS complex and the ST segment, typically in leads V2-V5.',
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Clinical Significance Section
           _buildCardSection(
@@ -29,7 +31,7 @@ class JWaveScreen extends StatelessWidget {
             ],
             Colors.green,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Common Abnormalities Section
           _buildCardSection(
@@ -41,22 +43,22 @@ class JWaveScreen extends StatelessWidget {
             ],
             Colors.red,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Finished Topic button
           ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => JWaveQuizScreen()),
+                MaterialPageRoute(builder: (context) => const JWaveQuizScreen()),
               );
             },
-            child: Text('Finished Topic'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
-              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+              textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            child: const Text('Finished Topic'),
           ),
         ],
       ),
@@ -69,11 +71,11 @@ class JWaveScreen extends StatelessWidget {
       children: [
         // Image first
         Image.asset(imagePath, height: 200),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         // Description next
         Text(
             description,
-            style: TextStyle(fontSize: 18, color: Colors.white, height: 1.5),
+            style: const TextStyle(fontSize: 18, color: Colors.white, height: 1.5),
             textAlign: TextAlign.left
         ),
       ],
@@ -98,7 +100,7 @@ class JWaveScreen extends StatelessWidget {
                 color: highlightColor,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: details.map((detail) {
@@ -106,7 +108,7 @@ class JWaveScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Text(
                     detail,
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 );
               }).toList(),

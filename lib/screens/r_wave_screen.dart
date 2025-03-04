@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:ecg_trainer/topics_completion_tracker/r_wave_quiz_screen.dart';
 
 class RWaveScreen extends StatelessWidget {
+  const RWaveScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('R Wave'),
+        title: const Text('R Wave'),
         backgroundColor: Colors.black,
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
           // R-Wave Overview Section
           _buildImageWithDescriptionSection(
@@ -20,7 +22,7 @@ class RWaveScreen extends StatelessWidget {
                 'The height and morphology of the R-wave can provide important clinical information '
                 'regarding the heart\'s electrical activity, chamber size, and conduction system abnormalities.',
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Normal Characteristics Section
           _buildCardSection(
@@ -36,7 +38,7 @@ class RWaveScreen extends StatelessWidget {
             ],
             Colors.green,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Common R-Wave Abnormalities Section
           _buildCardSection(
@@ -49,7 +51,7 @@ class RWaveScreen extends StatelessWidget {
             ],
             Colors.red,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // R-Wave in Specific Conditions Section
           _buildCardSection(
@@ -61,22 +63,22 @@ class RWaveScreen extends StatelessWidget {
             ],
             Colors.orange,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Finished Topic button
           ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RWaveQuizScreen()),
+                MaterialPageRoute(builder: (context) => const RWaveQuizScreen()),
               );
             },
-            child: Text('Finished Topic'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
-              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+              textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            child: const Text('Finished Topic'),
           ),
         ],
       ),
@@ -89,11 +91,11 @@ class RWaveScreen extends StatelessWidget {
       children: [
         // Image first
         Image.asset(imagePath, height: 200),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         // Description next
         Text(
           description,
-          style: TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
+          style: const TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
           textAlign: TextAlign.left,
         ),
       ],
@@ -118,7 +120,7 @@ class RWaveScreen extends StatelessWidget {
                 color: highlightColor,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: details.map((detail) {
@@ -126,7 +128,7 @@ class RWaveScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Text(
                     detail,
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 );
               }).toList(),

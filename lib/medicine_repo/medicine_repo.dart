@@ -32,6 +32,8 @@ class Medicine {
 }
 
 class MedicineRepositoryScreen extends StatefulWidget {
+  const MedicineRepositoryScreen({super.key});
+
   @override
   _MedicineRepositoryScreenState createState() =>
       _MedicineRepositoryScreenState();
@@ -72,7 +74,7 @@ class _MedicineRepositoryScreenState extends State<MedicineRepositoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Medicine Repository'),
+        title: const Text('Medicine Repository'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -81,18 +83,18 @@ class _MedicineRepositoryScreenState extends State<MedicineRepositoryScreen> {
             // Search Bar
             TextField(
               controller: searchController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Search Medicines',
                 suffixIcon: Icon(Icons.search),
               ),
               onChanged: (_) => _filterMedicines(),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Display medicines in a GridView
             Expanded(
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 200, // Maximum width per card
                   mainAxisSpacing: 8.0, // Vertical space between cards
                   crossAxisSpacing: 8.0, // Horizontal space between cards
@@ -127,22 +129,22 @@ class _MedicineRepositoryScreenState extends State<MedicineRepositoryScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min, // Allow dynamic height
                           children: [
-                            Icon(
+                            const Icon(
                               FontAwesomeIcons.pills, // Pill icon from FontAwesome
                               size: 50,
                               color: Colors.blue,
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
                               medicine.name,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
                               medicine.type,
                               style: TextStyle(

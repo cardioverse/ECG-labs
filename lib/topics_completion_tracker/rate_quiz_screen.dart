@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class RateQuizScreen extends StatefulWidget {
+  const RateQuizScreen({super.key});
+
   @override
   _RateQuizScreenState createState() => _RateQuizScreenState();
 }
@@ -63,7 +65,7 @@ class _RateQuizScreenState extends State<RateQuizScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Rate Quiz'), backgroundColor: Colors.black),
+      appBar: AppBar(title: const Text('Rate Quiz'), backgroundColor: Colors.black),
       backgroundColor: Colors.black,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -73,10 +75,10 @@ class _RateQuizScreenState extends State<RateQuizScreen> {
           children: [
             Text(
               'Quiz Completed!\nCorrect: $score/10\nIncorrect: ${10 - score}/10',
-              style: TextStyle(color: Colors.white, fontSize: 20),
+              style: const TextStyle(color: Colors.white, fontSize: 20),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             if (score >= 8)
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
@@ -84,13 +86,13 @@ class _RateQuizScreenState extends State<RateQuizScreen> {
                   _storeCompletionStatus();
                   Navigator.of(context).pop();
                 },
-                child: Text('Mark as Complete'),
+                child: const Text('Mark as Complete'),
               ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
               onPressed: _resetQuiz,
-              child: Text('Retry Quiz'),
+              child: const Text('Retry Quiz'),
             ),
           ],
         )
@@ -98,19 +100,19 @@ class _RateQuizScreenState extends State<RateQuizScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Question ${currentQuestionIndex + 1} of ${questions.length}',
-                style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 16),
+                style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
             Text(questions[currentQuestionIndex]['question'],
-                style: TextStyle(color: Colors.white, fontSize: 18)),
-            SizedBox(height: 16),
+                style: const TextStyle(color: Colors.white, fontSize: 18)),
+            const SizedBox(height: 16),
             ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                    textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   onPressed: () => _checkAnswer(index),
                   child: Text(questions[currentQuestionIndex]['options'][index]),

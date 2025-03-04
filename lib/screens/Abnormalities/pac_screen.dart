@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PACScreen extends StatefulWidget {
+  const PACScreen({super.key});
+
   @override
   _PACScreenState createState() => _PACScreenState();
 }
@@ -15,7 +17,7 @@ class _PACScreenState extends State<PACScreen> with SingleTickerProviderStateMix
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _controller = AnimationController(
         vsync: this,
-        duration: Duration(seconds: 6),
+        duration: const Duration(seconds: 6),
       )..repeat();
 
       _animation = Tween<double>(begin: 0, end: -MediaQuery.of(context).size.width / 1.5).animate(
@@ -38,10 +40,10 @@ class _PACScreenState extends State<PACScreen> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Premature Atrial Contractions (PACs)'),
+        title: const Text('Premature Atrial Contractions (PACs)'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -76,79 +78,79 @@ class _PACScreenState extends State<PACScreen> with SingleTickerProviderStateMix
                   },
                 ),
               ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // Overview Section
-            Text(
+            const Text(
               'Overview',
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8.0),
-            Text(
+            const SizedBox(height: 8.0),
+            const Text(
               'Premature Atrial Contractions (PACs) are early heartbeats originating in the atria. They are common and usually benign, but frequent PACs can be associated with underlying heart disease or may precede more significant arrhythmias.',
               style: TextStyle(fontSize: 16.0),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // Pathophysiology Section
-            Text(
+            const Text(
               'Pathophysiology',
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8.0),
-            Text(
+            const SizedBox(height: 8.0),
+            const Text(
               'PACs occur when an ectopic focus in the atria fires before the next sinus impulse is due, resulting in an early atrial depolarization. This can be caused by stress, caffeine, alcohol, or electrolyte imbalances, and is often seen in otherwise healthy individuals.',
               style: TextStyle(fontSize: 16.0),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // Clinical Significance Section
-            Text(
+            const Text(
               'Clinical Significance',
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8.0),
-            Text(
+            const SizedBox(height: 8.0),
+            const Text(
               'PACs are typically benign and asymptomatic, though they can cause palpitations or an irregular heartbeat sensation. In rare cases, frequent PACs may lead to atrial fibrillation or other sustained arrhythmias, particularly in patients with structural heart disease.',
               style: TextStyle(fontSize: 16.0),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // ECG Features Section
-            Text(
+            const Text(
               'ECG Features',
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8.0),
-            BulletPoint(text: 'Premature P Wave: The P wave occurs earlier than expected, often with a different morphology compared to sinus P waves.'),
-            BulletPoint(text: 'Normal QRS Complex: The QRS complex is usually narrow, indicating that conduction through the ventricles is normal.'),
-            BulletPoint(text: 'Compensatory Pause: A pause may follow the PAC as the sinus node resets.'),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 8.0),
+            const BulletPoint(text: 'Premature P Wave: The P wave occurs earlier than expected, often with a different morphology compared to sinus P waves.'),
+            const BulletPoint(text: 'Normal QRS Complex: The QRS complex is usually narrow, indicating that conduction through the ventricles is normal.'),
+            const BulletPoint(text: 'Compensatory Pause: A pause may follow the PAC as the sinus node resets.'),
+            const SizedBox(height: 16.0),
 
             // Study Pointers Section
-            Text(
+            const Text(
               'Pointers for Study',
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8.0),
-            BulletPoint(text: 'ECG Recognition: Practice identifying premature P waves and distinguishing them from sinus P waves.'),
-            BulletPoint(text: 'Triggers: Be aware of common triggers such as caffeine, alcohol, and stress.'),
-            BulletPoint(text: 'Clinical Relevance: Understand that while PACs are often benign, frequent occurrences may warrant further evaluation.'),
+            const SizedBox(height: 8.0),
+            const BulletPoint(text: 'ECG Recognition: Practice identifying premature P waves and distinguishing them from sinus P waves.'),
+            const BulletPoint(text: 'Triggers: Be aware of common triggers such as caffeine, alcohol, and stress.'),
+            const BulletPoint(text: 'Clinical Relevance: Understand that while PACs are often benign, frequent occurrences may warrant further evaluation.'),
           ],
         ),
       ),
@@ -159,7 +161,7 @@ class _PACScreenState extends State<PACScreen> with SingleTickerProviderStateMix
 class BulletPoint extends StatelessWidget {
   final String text;
 
-  BulletPoint({required this.text});
+  const BulletPoint({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -168,14 +170,14 @@ class BulletPoint extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             '• ',
             style: TextStyle(fontSize: 20.0),
           ),
           Expanded(
             child: Text(
               text,
-              style: TextStyle(fontSize: 16.0),
+              style: const TextStyle(fontSize: 16.0),
             ),
           ),
         ],

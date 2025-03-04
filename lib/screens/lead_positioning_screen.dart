@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:ecg_trainer/topics_completion_tracker/lead_positioning_quiz_screen.dart';
 
 class LeadPositioningScreen extends StatelessWidget {
+  const LeadPositioningScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ECG Lead Positioning'),
+        title: const Text('ECG Lead Positioning'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -18,26 +20,26 @@ class LeadPositioningScreen extends StatelessWidget {
               height: 250,
               fit: BoxFit.contain,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Introduction Card
-            Card(
+            const Card(
               elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Text(
                   'Proper lead placement is crucial for obtaining an accurate ECG recording. Incorrect lead positioning can result in incorrect diagnoses, so understanding where to place the leads is essential.',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // 12-lead ECG system overview Card
-            Card(
+            const Card(
               elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -61,7 +63,7 @@ class LeadPositioningScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Add the 12-lead ECG image here
             Image.asset(
@@ -69,13 +71,13 @@ class LeadPositioningScreen extends StatelessWidget {
               height: 300,
               fit: BoxFit.contain,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Limb lead placement Card
-            Card(
+            const Card(
               elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -100,13 +102,13 @@ class LeadPositioningScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Chest lead placement Card
-            Card(
+            const Card(
               elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -132,13 +134,13 @@ class LeadPositioningScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Tips for accurate positioning Card
-            Card(
+            const Card(
               elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -161,13 +163,13 @@ class LeadPositioningScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // 3-electrode ECG section Card
-            Card(
+            const Card(
               elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -191,7 +193,7 @@ class LeadPositioningScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Add 3-electrode image
             Image.asset(
@@ -199,13 +201,13 @@ class LeadPositioningScreen extends StatelessWidget {
               height: 300,
               fit: BoxFit.contain,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // 5-electrode ECG section Card
-            Card(
+            const Card(
               elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -231,7 +233,7 @@ class LeadPositioningScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Add 5-electrode image
             Image.asset(
@@ -239,13 +241,13 @@ class LeadPositioningScreen extends StatelessWidget {
               height: 300,
               fit: BoxFit.contain,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Importance of correct lead placement Card
-            Card(
+            const Card(
               elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -269,22 +271,22 @@ class LeadPositioningScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Finished Topic button
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LeadPositioningQuizScreen()),
+                  MaterialPageRoute(builder: (context) => const LeadPositioningQuizScreen()),
                 );
               },
-              child: Text('Finished Topic'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
+              child: const Text('Finished Topic'),
             ),
           ],
         ),

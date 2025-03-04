@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class QTIntervalQuizScreen extends StatefulWidget {
+  const QTIntervalQuizScreen({super.key});
+
   @override
   _QTIntervalQuizScreenState createState() => _QTIntervalQuizScreenState();
 }
@@ -150,7 +152,7 @@ class _QTIntervalQuizScreenState extends State<QTIntervalQuizScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Quiz Completed!'),
+          title: const Text('Quiz Completed!'),
           content: Text('You scored $score out of ${questions.length}.'),
           actions: [
             TextButton(
@@ -159,7 +161,7 @@ class _QTIntervalQuizScreenState extends State<QTIntervalQuizScreen> {
                 Navigator.of(context).pop();
                 _storeCompletionStatus();
               },
-              child: Text('Finish'),
+              child: const Text('Finish'),
             ),
           ],
         );
@@ -171,7 +173,7 @@ class _QTIntervalQuizScreenState extends State<QTIntervalQuizScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QT Interval Quiz'),
+        title: const Text('QT Interval Quiz'),
         backgroundColor: Colors.black,
       ),
       backgroundColor: Colors.black,
@@ -182,29 +184,29 @@ class _QTIntervalQuizScreenState extends State<QTIntervalQuizScreen> {
           children: [
             Text(
               'Question ${currentQuestionIndex + 1} of ${questions.length}',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               questions[currentQuestionIndex]['question'],
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                    textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   onPressed: () => _checkAnswer(index),
                   child: Text(questions[currentQuestionIndex]['options'][index]),

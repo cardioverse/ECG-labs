@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class NewPostScreen extends StatefulWidget {
+  const NewPostScreen({super.key});
+
   @override
   _NewPostScreenState createState() => _NewPostScreenState();
 }
@@ -37,7 +39,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
 
         if (existingPosts.docs.isNotEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("A similar post already exists!"), backgroundColor: Colors.red),
+            const SnackBar(content: Text("A similar post already exists!"), backgroundColor: Colors.red),
           );
           return;
         }
@@ -51,7 +53,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Post submitted successfully!"), backgroundColor: Colors.green),
+          const SnackBar(content: Text("Post submitted successfully!"), backgroundColor: Colors.green),
         );
 
         Navigator.pop(context);
@@ -62,7 +64,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('New Post')),
+      appBar: AppBar(title: const Text('New Post')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -81,7 +83,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     TextField(
                       controller: _contentController,
                       decoration: InputDecoration(
@@ -94,7 +96,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
@@ -102,13 +104,13 @@ class _NewPostScreenState extends State<NewPostScreen> {
                     onPressed: _submitPost,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
-                      padding: EdgeInsets.symmetric(vertical: 14),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     ),
-                    child: Text('Submit', style: TextStyle(fontSize: 16, color: Colors.white)),
+                    child: const Text('Submit', style: TextStyle(fontSize: 16, color: Colors.white)),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
@@ -117,10 +119,10 @@ class _NewPostScreenState extends State<NewPostScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey,
-                      padding: EdgeInsets.symmetric(vertical: 14),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     ),
-                    child: Text('Clear', style: TextStyle(fontSize: 16, color: Colors.white)),
+                    child: const Text('Clear', style: TextStyle(fontSize: 16, color: Colors.white)),
                   ),
                 ),
               ],

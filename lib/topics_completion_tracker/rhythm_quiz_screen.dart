@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class RhythmQuizScreen extends StatefulWidget {
+  const RhythmQuizScreen({super.key});
+
   @override
   _RhythmQuizScreenState createState() => _RhythmQuizScreenState();
 }
@@ -56,7 +58,7 @@ class _RhythmQuizScreenState extends State<RhythmQuizScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Quiz Completed!'),
+          title: const Text('Quiz Completed!'),
           content: Text('You got $score correct and ${questions.length - score} wrong.'),
           actions: [
             TextButton(
@@ -89,7 +91,7 @@ class _RhythmQuizScreenState extends State<RhythmQuizScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rhythm Quiz'),
+        title: const Text('Rhythm Quiz'),
         backgroundColor: Colors.black,
       ),
       backgroundColor: Colors.black,
@@ -100,22 +102,22 @@ class _RhythmQuizScreenState extends State<RhythmQuizScreen> {
           children: [
             Text(
               'Question ${currentQuestionIndex + 1} of ${questions.length}',
-              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               questions[currentQuestionIndex]['question'],
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              style: const TextStyle(color: Colors.white, fontSize: 18),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                    textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   onPressed: () => _checkAnswer(index),
                   child: Text(questions[currentQuestionIndex]['options'][index]),

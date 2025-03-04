@@ -4,13 +4,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import FontA
 class MedicineDetailScreen extends StatelessWidget {
   final Map<String, dynamic> medicine;
 
-  MedicineDetailScreen({required this.medicine});
+  const MedicineDetailScreen({super.key, required this.medicine});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Medicine Details'),
+        title: const Text('Medicine Details'),
       ),
       body: Stack(
         children: [
@@ -28,13 +28,13 @@ class MedicineDetailScreen extends StatelessWidget {
                     title: 'Description',
                     content: medicine['description'] ?? 'No description available',
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
                   // Grid Layout for Type, Dosage, Half-Life, and Onset of Action (2x2)
                   GridView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // 2 cards per row
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
@@ -44,7 +44,7 @@ class MedicineDetailScreen extends StatelessWidget {
                       return _buildCard(index); // Type (0), Dosage (1), Half-Life (2), Onset of Action (3)
                     },
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
                   // Full-width Indication Card
                   _buildFullWidthCard(
@@ -52,7 +52,7 @@ class MedicineDetailScreen extends StatelessWidget {
                     title: 'Indication',
                     content: medicine['indication'] ?? 'No indication available',
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
                   // Full-width Contraindication Card
                   _buildFullWidthCard(
@@ -84,7 +84,7 @@ class MedicineDetailScreen extends StatelessWidget {
                       color: Colors.blue.shade200, // Background color of the pill icon
                       borderRadius: BorderRadius.circular(16), // Smooth edges
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Icon(
                         FontAwesomeIcons.pills,  // Pill icon from FontAwesome
                         size: 30, // Icon size
@@ -92,13 +92,13 @@ class MedicineDetailScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 16), // Space between the icon and the text
+                  const SizedBox(width: 16), // Space between the icon and the text
 
                   // Display the Medicine Name to the right of the pill icon
                   Expanded(
                     child: Text(
                       medicine['name'] ?? 'No name',  // Directly displaying the medicine name
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 38,  // Larger text for the medicine name
                         fontWeight: FontWeight.bold,
                         color: Colors.white, // Text color to make it stand out
@@ -156,24 +156,24 @@ class MedicineDetailScreen extends StatelessWidget {
               size: 40,
               color: Colors.blue,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
 
             // Title centered at the top of the card
             Text(
               titles[index],
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
 
             // Content below the title
             Text(
               content[index],
-              style: TextStyle(fontSize: 14),
+              style: const TextStyle(fontSize: 14),
               textAlign: TextAlign.center,
             ),
           ],
@@ -200,10 +200,10 @@ class MedicineDetailScreen extends StatelessWidget {
             Row(
               children: [
                 Icon(icon, size: 40, color: Colors.blue),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
@@ -211,10 +211,10 @@ class MedicineDetailScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               content,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),

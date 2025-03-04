@@ -17,6 +17,8 @@ import 's_wave_screen.dart';
 import 'j_wave_screen.dart';
 
 class LearnScreen extends StatelessWidget {
+  const LearnScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,25 +32,25 @@ class LearnScreen extends StatelessWidget {
               height: 250,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // First Segment: Pure Basics
           Card(
             elevation: 4,
-            margin: EdgeInsets.symmetric(vertical: 10),
+            margin: const EdgeInsets.symmetric(vertical: 10),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SectionHeader(title: 'Pure Basics'),
+                  const SectionHeader(title: 'Pure Basics'),
                   GridView.count(
                     crossAxisCount: 2,
                     crossAxisSpacing: 16.0,
                     mainAxisSpacing: 16.0,
                     childAspectRatio: 1.5,
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       ElevatedButtonStyle(
                         label: 'Rate',
@@ -56,7 +58,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => RateScreen()), // Navigate to RateScreen
+                            MaterialPageRoute(builder: (context) => const RateScreen()), // Navigate to RateScreen
                           );
                         },
                       ),
@@ -66,7 +68,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => RhythmScreen()), // Navigate to RhythmScreen
+                            MaterialPageRoute(builder: (context) => const RhythmScreen()), // Navigate to RhythmScreen
                           );
                         },
                       ),
@@ -76,7 +78,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => GridScreen()), // Navigate to GridScreen
+                            MaterialPageRoute(builder: (context) => const GridScreen()), // Navigate to GridScreen
                           );
                         },
                       ),
@@ -86,7 +88,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => AxisCalculationScreen()), // Navigate to AxisCalculationScreen
+                            MaterialPageRoute(builder: (context) => const AxisCalculationScreen()), // Navigate to AxisCalculationScreen
                           );
                         },
                       ),
@@ -96,7 +98,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LeadPositioningScreen()), // Navigate to LeadPositioningScreen
+                            MaterialPageRoute(builder: (context) => const LeadPositioningScreen()), // Navigate to LeadPositioningScreen
                           );
                         },
                       ),
@@ -110,20 +112,20 @@ class LearnScreen extends StatelessWidget {
           // Second Segment: Waves
           Card(
             elevation: 4,
-            margin: EdgeInsets.symmetric(vertical: 10),
+            margin: const EdgeInsets.symmetric(vertical: 10),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SectionHeader(title: 'Waves'),
+                  const SectionHeader(title: 'Waves'),
                   GridView.count(
                     crossAxisCount: 2,
                     crossAxisSpacing: 16.0,
                     mainAxisSpacing: 16.0,
                     childAspectRatio: 1.5,
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       ElevatedButtonStyle(
                         label: 'P-Wave',
@@ -131,7 +133,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => PWaveScreen()),
+                            MaterialPageRoute(builder: (context) => const PWaveScreen()),
                           );
                         },
                       ),
@@ -141,7 +143,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => QRSWaveScreen()),
+                            MaterialPageRoute(builder: (context) => const QRSWaveScreen()),
                           );
                         },
                       ),
@@ -151,7 +153,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => TWaveScreen()),
+                            MaterialPageRoute(builder: (context) => const TWaveScreen()),
                           );
                         },
                       ),
@@ -161,7 +163,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => RWaveScreen()),  // Navigate to RWaveScreen
+                            MaterialPageRoute(builder: (context) => const RWaveScreen()),  // Navigate to RWaveScreen
                           );
                         },
                       ),
@@ -171,7 +173,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => QWaveScreen()),  // Navigate to QWaveScreen
+                            MaterialPageRoute(builder: (context) => const QWaveScreen()),  // Navigate to QWaveScreen
                           );
                         },
                       ),
@@ -181,7 +183,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => SWaveScreen()),  // Navigate to SWaveScreen
+                            MaterialPageRoute(builder: (context) => const SWaveScreen()),  // Navigate to SWaveScreen
                           );
                         },
                       ),
@@ -191,7 +193,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => JWaveScreen()),  // Navigate to JWaveScreen
+                            MaterialPageRoute(builder: (context) => const JWaveScreen()),  // Navigate to JWaveScreen
                           );
                         },
                       ),
@@ -205,20 +207,20 @@ class LearnScreen extends StatelessWidget {
           // Third Segment: Segments/Intervals
           Card(
             elevation: 4,
-            margin: EdgeInsets.symmetric(vertical: 10),
+            margin: const EdgeInsets.symmetric(vertical: 10),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SectionHeader(title: 'Segments/Intervals'),
+                  const SectionHeader(title: 'Segments/Intervals'),
                   GridView.count(
                     crossAxisCount: 2,
                     crossAxisSpacing: 16.0,
                     mainAxisSpacing: 16.0,
                     childAspectRatio: 1.5,
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       ElevatedButtonStyle(
                         label: 'PR Interval',
@@ -226,7 +228,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => PRIntervalScreen()),
+                            MaterialPageRoute(builder: (context) => const PRIntervalScreen()),
                           );
                         },
                       ),
@@ -236,7 +238,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => STSegmentScreen()),
+                            MaterialPageRoute(builder: (context) => const STSegmentScreen()),
                           );
                         },
                       ),
@@ -246,7 +248,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => PRSegmentScreen()),
+                            MaterialPageRoute(builder: (context) => const PRSegmentScreen()),
                           );
                         },
                       ),
@@ -256,7 +258,7 @@ class LearnScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => QTIntervalScreen()),  // Navigate to QTIntervalScreen
+                            MaterialPageRoute(builder: (context) => const QTIntervalScreen()),  // Navigate to QTIntervalScreen
                           );
                         },
                       ),
@@ -276,7 +278,7 @@ class LearnScreen extends StatelessWidget {
 class SectionHeader extends StatelessWidget {
   final String title;
 
-  SectionHeader({required this.title});
+  const SectionHeader({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -284,7 +286,7 @@ class SectionHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 18.0,
           fontWeight: FontWeight.bold,
         ),
@@ -299,7 +301,7 @@ class ElevatedButtonStyle extends StatelessWidget {
   final String? imagePath;
   final VoidCallback onPressed;
 
-  ElevatedButtonStyle({
+  const ElevatedButtonStyle({super.key, 
     required this.label,
     required this.onPressed,
     this.imagePath,
@@ -323,13 +325,13 @@ class ElevatedButtonStyle extends StatelessWidget {
               imagePath!,
               height: 80,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
           ],
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
               label,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.bold,
               ),

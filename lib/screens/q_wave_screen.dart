@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:ecg_trainer/topics_completion_tracker/q_wave_quiz_screen.dart';
 
 class QWaveScreen extends StatelessWidget {
+  const QWaveScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Q Wave'),
+        title: const Text('Q Wave'),
         backgroundColor: Colors.black,  // Consistent app bar color
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
 
           // Q-Wave Overview Section
@@ -19,7 +21,7 @@ class QWaveScreen extends StatelessWidget {
               'The Q wave is the first negative deflection of the QRS complex, occurring before the R wave. '
                   'It represents the initial depolarization of the interventricular septum and is crucial for understanding cardiac health.'
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Clinical Significance Section
           _buildCardSection(
@@ -29,7 +31,7 @@ class QWaveScreen extends StatelessWidget {
               ],
               Colors.green  // Use blue for clinical significance
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Common Abnormalities Section
           _buildCardSection(
@@ -40,22 +42,22 @@ class QWaveScreen extends StatelessWidget {
               ],
               Colors.red  // Use red for abnormalities
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Finished Topic button
           ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => QWaveQuizScreen()),
+                MaterialPageRoute(builder: (context) => const QWaveQuizScreen()),
               );
             },
-            child: Text('Finished Topic'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
-              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+              textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            child: const Text('Finished Topic'),
           ),
         ],
       ),
@@ -68,11 +70,11 @@ class QWaveScreen extends StatelessWidget {
       children: [
         // Image first
         Image.asset(imagePath, height: 200),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         // Description next
         Text(
           description,
-          style: TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
+          style: const TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
           textAlign: TextAlign.left,
         ),
       ],
@@ -97,7 +99,7 @@ class QWaveScreen extends StatelessWidget {
                 color: highlightColor,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: details.map((detail) {
@@ -105,7 +107,7 @@ class QWaveScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Text(
                     detail,
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 );
               }).toList(),

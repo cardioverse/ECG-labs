@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ECGInterpretationHelper extends StatefulWidget {
+  const ECGInterpretationHelper({super.key});
+
   @override
   _ECGInterpretationHelperState createState() => _ECGInterpretationHelperState();
 }
@@ -237,7 +239,7 @@ class _ECGInterpretationHelperState extends State<ECGInterpretationHelper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ECG Interpretation Helper'),
+        title: const Text('ECG Interpretation Helper'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -293,17 +295,17 @@ class _ECGInterpretationHelperState extends State<ECGInterpretationHelper> {
                   selectedBundleBranch = value;
                   getPossibleDiagnoses();
                 })),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Possible Diagnoses:',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               getPossibleDiagnoses().isNotEmpty
                   ? getPossibleDiagnoses().join(', ')
                   : 'No matching diagnosis found',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),
@@ -318,9 +320,9 @@ class _ECGInterpretationHelperState extends State<ECGInterpretationHelper> {
       children: [
         Text(
           label,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Wrap(
           spacing: 10,
           children: options.map((option) {
@@ -335,7 +337,7 @@ class _ECGInterpretationHelperState extends State<ECGInterpretationHelper> {
             );
           }).toList(),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ],
     );
   }

@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class PostDetailScreen extends StatefulWidget {
   final String postId;
 
-  PostDetailScreen({required this.postId});
+  const PostDetailScreen({super.key, required this.postId});
 
   @override
   _PostDetailScreenState createState() => _PostDetailScreenState();
@@ -53,14 +53,14 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Post Details')),
+      appBar: AppBar(title: const Text('Post Details')),
       body: Column(
         children: [
           Expanded(
             child: StreamBuilder(
               stream: FirebaseFirestore.instance.collection('forums').doc(widget.postId).snapshots(),
               builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
+                if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
                 var post = snapshot.data!;
 
                 return SingleChildScrollView(
@@ -69,42 +69,46 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Card(
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Title
-                                Text(
-                                  post['title'],
-                                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(height: 12),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Card(
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Title
+                                  Text(
+                                    post['title'],
+                                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(height: 12),
 
-                                // Post Content
-                                Text(
-                                  post['content'],
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                SizedBox(height: 12),
+                                  // Post Content
+                                  Text(
+                                    post['content'],
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                  const SizedBox(height: 12),
 
-                                // Author & Timestamp
-                                Text(
-                                  'By: ${post['author']} • ${formatTimestamp(post['timestamp'])}',
-                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey[700]),
-                                ),
-                              ],
+                                  // Author & Timestamp
+                                  Text(
+                                    'By: ${post['author']} • ${formatTimestamp(post['timestamp'])}',
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey[700]),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
 
-                        SizedBox(height: 20),
 
-                        Text("Replies", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 20),
+
+                        const Text("Replies", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 8),
 
                         StreamBuilder(
                           stream: FirebaseFirestore.instance
@@ -114,25 +118,25 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                               .orderBy('timestamp', descending: true)
                               .snapshots(),
                           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
+                            if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
 
                             if (snapshot.data!.docs.isEmpty) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
+                              return const Padding(
+                                padding: EdgeInsets.all(8.0),
                                 child: Text("No replies yet. Be the first to reply!", style: TextStyle(color: Colors.grey)),
                               );
                             }
 
                             return ListView(
                               shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               children: snapshot.data!.docs.map((doc) {
                                 return Card(
                                   elevation: 2,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                  margin: EdgeInsets.symmetric(vertical: 6),
+                                  margin: const EdgeInsets.symmetric(vertical: 6),
                                   child: ListTile(
-                                    leading: CircleAvatar(
+                                    leading: const CircleAvatar(
                                       backgroundColor: Colors.green,
                                       child: Icon(Icons.person, color: Colors.white),
                                     ),
@@ -140,8 +144,8 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                     subtitle: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text('By: ${doc['author']}', style: TextStyle(fontWeight: FontWeight.w500)),
-                                        SizedBox(height: 4),
+                                        Text('By: ${doc['author']}', style: const TextStyle(fontWeight: FontWeight.w500)),
+                                        const SizedBox(height: 4),
                                         Text(formatTimestamp(doc['timestamp']), style: TextStyle(fontSize: 12, color: Colors.grey[500])),
                                       ],
                                     ),
@@ -161,8 +165,8 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
 
           // Reply Input Field
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: const BoxDecoration(
               color: Colors.black,
             ),
             child: Row(
@@ -178,17 +182,17 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                         borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 GestureDetector(
                   onTap: _isSubmitting ? null : _submitReply, // Disable tap when submitting
                   child: CircleAvatar(
                     backgroundColor: _isSubmitting ? Colors.grey : Colors.green, // Change color when disabled
                     radius: 22,
-                    child: Icon(Icons.send, color: Colors.white),
+                    child: const Icon(Icons.send, color: Colors.white),
                   ),
                 ),
               ],

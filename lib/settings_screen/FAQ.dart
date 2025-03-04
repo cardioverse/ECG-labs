@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class FAQScreen extends StatelessWidget {
+  const FAQScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('FAQ'),
+        title: const Text('FAQ'),
         backgroundColor: Colors.deepPurple[900],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+      body: const SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -69,7 +71,7 @@ class FAQItem extends StatelessWidget {
   final String question;
   final String answer;
 
-  FAQItem({required this.question, required this.answer});
+  const FAQItem({super.key, required this.question, required this.answer});
 
   @override
   Widget build(BuildContext context) {
@@ -86,16 +88,16 @@ class FAQItem extends StatelessWidget {
           children: [
             Text(
               question,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               answer,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 color: Colors.white,
               ),

@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:ecg_trainer/topics_completion_tracker/t_wave_quiz_screen.dart';
 
 class TWaveScreen extends StatelessWidget {
+  const TWaveScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('T Wave'),
+        title: const Text('T Wave'),
         backgroundColor: Colors.black,  // Consistent app bar color
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
 
           // T-Wave Overview Section
@@ -19,7 +21,7 @@ class TWaveScreen extends StatelessWidget {
               'The T wave represents the repolarization of the ventricles. '
                   'It follows the QRS complex and reflects the recovery phase of the ventricles.'
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Normal T-Wave Characteristics
           _buildCardSection(
@@ -30,7 +32,7 @@ class TWaveScreen extends StatelessWidget {
               ],
               Colors.green  // Use green for normal parameters
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Clinical Significance Section
           _buildCardSection(
@@ -40,10 +42,10 @@ class TWaveScreen extends StatelessWidget {
               ],
               Colors.orange  // Use orange for clinical significance
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Common T-Wave Abnormalities Title
-          Text(
+          const Text(
             'Common T-Wave Abnormalities',
             style: TextStyle(
               fontSize: 22,
@@ -51,7 +53,7 @@ class TWaveScreen extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
 
           // T-Wave Abnormalities Cards
           _buildAbnormalityCard(
@@ -73,22 +75,22 @@ class TWaveScreen extends StatelessWidget {
               Colors.red
           ),
 
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Finished Topic button
           ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TWaveQuizScreen()),
+                MaterialPageRoute(builder: (context) => const TWaveQuizScreen()),
               );
             },
-            child: Text('Finished Topic'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
-              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+              textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            child: const Text('Finished Topic'),
           ),
         ],
       ),
@@ -100,10 +102,10 @@ class TWaveScreen extends StatelessWidget {
     return Column(
       children: [
         Image.asset(imagePath, height: 200),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Text(
           description,
-          style: TextStyle(fontSize: 18, color: Colors.white, height: 1.5),
+          style: const TextStyle(fontSize: 18, color: Colors.white, height: 1.5),
           textAlign: TextAlign.center,
         ),
       ],
@@ -128,7 +130,7 @@ class TWaveScreen extends StatelessWidget {
                 color: highlightColor,  // Use highlight color for sections
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: details.map((detail) {
@@ -136,7 +138,7 @@ class TWaveScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Text(
                     detail,
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 );
               }).toList(),
@@ -152,7 +154,7 @@ class TWaveScreen extends StatelessWidget {
     return Card(
       elevation: 4,
       color: Colors.black87,  // Dark card background for contrast
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -166,12 +168,12 @@ class TWaveScreen extends StatelessWidget {
                 color: highlightColor,  // Use red for abnormalities
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               description,
-              style: TextStyle(fontSize: 16, color: Colors.white),
+              style: const TextStyle(fontSize: 16, color: Colors.white),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Image.asset(imagePath, height: 150),
           ],
         ),

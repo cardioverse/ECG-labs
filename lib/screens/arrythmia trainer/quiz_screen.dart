@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 class QuizScreen extends StatefulWidget {
   final String difficulty;
 
-  QuizScreen({required this.difficulty});
+  const QuizScreen({super.key, required this.difficulty});
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
@@ -23,7 +23,7 @@ class _QuizScreenState extends State<QuizScreen> {
   int _timeLeft = 30;
   Timer? _timer;
 
-  List<String> _ecgImages = [
+  final List<String> _ecgImages = [
     'assets/images/arrhythmia_trainer_ecg/beginner/MI(2).jpg',
     'assets/images/arrhythmia_trainer_ecg/beginner/MI(4).jpg',
     'assets/images/arrhythmia_trainer_ecg/beginner/MI(5).jpg',
@@ -32,10 +32,10 @@ class _QuizScreenState extends State<QuizScreen> {
     'assets/images/arrhythmia_trainer_ecg/beginner/MI(10).jpg',
   ];
 
-  List<String> _correctAnswers = []; // Interpretations.
-  List<String> _diagnosisNames = []; // Diagnosis names.
+  final List<String> _correctAnswers = []; // Interpretations.
+  final List<String> _diagnosisNames = []; // Diagnosis names.
   List<int> _randomizedQuestionIndices = []; // List of randomized indices.
-  Random _random = Random();
+  final Random _random = Random();
 
   String? _selectedAnswer;
 
@@ -69,7 +69,7 @@ class _QuizScreenState extends State<QuizScreen> {
         currentDiagnosis = line.substring(2).trim();
       } else if (currentImage != null) {
         if (line.isNotEmpty) {
-          currentInterpretation?.write(line + '\n');
+          currentInterpretation?.write('$line\n');
         } else {
           if (currentInterpretation != null && currentInterpretation.isNotEmpty) {
             _correctAnswers.add(currentInterpretation.toString().trim());
@@ -99,7 +99,7 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (_timeLeft > 0) {
           _timeLeft--;
@@ -132,7 +132,7 @@ class _QuizScreenState extends State<QuizScreen> {
       _showExplanation = true;
 
       if (!_isRelaxedMode) {
-        Future.delayed(Duration(seconds: 1), () {
+        Future.delayed(const Duration(seconds: 1), () {
           _nextQuestion();
         });
       }
@@ -187,7 +187,7 @@ class _QuizScreenState extends State<QuizScreen> {
             },
           ),
           Text(_isRelaxedMode ? 'Relaxed' : 'Rapid'),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
         ],
       ),
       body: _isQuizComplete
@@ -204,13 +204,13 @@ class _QuizScreenState extends State<QuizScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Timer: $_timeLeft', style: TextStyle(fontSize: 20)),
-                  Text('Correct: $_correctCount', style: TextStyle(fontSize: 20)),
-                  Text('Wrong: $_wrongCount', style: TextStyle(fontSize: 20)),
+                  Text('Timer: $_timeLeft', style: const TextStyle(fontSize: 20)),
+                  Text('Correct: $_correctCount', style: const TextStyle(fontSize: 20)),
+                  Text('Wrong: $_wrongCount', style: const TextStyle(fontSize: 20)),
                 ],
               ),
             ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Expanded(
             flex: 1,
             child: InteractiveViewer(
@@ -243,7 +243,7 @@ class _QuizScreenState extends State<QuizScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 _feedbackMessage!,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
           if (_showExplanation && _isRelaxedMode)
@@ -251,13 +251,13 @@ class _QuizScreenState extends State<QuizScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 'Explanation: ${_correctAnswers[_randomizedQuestionIndices[_currentQuestionIndex]]}',
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           if (_showExplanation && _isRelaxedMode)
             ElevatedButton(
               onPressed: _nextQuestion,
-              child: Text('Next Question'),
+              child: const Text('Next Question'),
             ),
         ],
       ),
@@ -271,7 +271,7 @@ class _QuizScreenState extends State<QuizScreen> {
       splashColor: Colors.tealAccent,
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [Colors.blue, Colors.blueAccent],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -282,7 +282,7 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Center(
           child: Text(
             optionText,
-            style: TextStyle(fontSize: 15, color: Colors.white),
+            style: const TextStyle(fontSize: 15, color: Colors.white),
           ),
         ),
       ),

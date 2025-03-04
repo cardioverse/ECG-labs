@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/services.dart';
-import 'dart:io';
 
 class ECGRepositoryScreen extends StatefulWidget {
-  const ECGRepositoryScreen({Key? key}) : super(key: key);
+  const ECGRepositoryScreen({super.key});
 
   @override
   _ECGRepositoryScreenState createState() => _ECGRepositoryScreenState();
@@ -102,7 +100,7 @@ class NormalECGScreen extends StatelessWidget {
         (index) => 'Normal/Normal(${index + 1}).jpg',
   );
 
-  NormalECGScreen({Key? key}) : super(key: key);
+  NormalECGScreen({super.key});
 
   Future<String> _getImageUrl(String path) async {
     final ref = FirebaseStorage.instance.ref().child(path);
@@ -177,7 +175,7 @@ class ArrhythmiaECGScreen extends StatelessWidget {
         (index) => 'Arrhythmias/HB(${index + 1}).jpg',
   );
 
-  ArrhythmiaECGScreen({Key? key}) : super(key: key);
+  ArrhythmiaECGScreen({super.key});
 
   Future<String> _getImageUrl(String path) async {
     final ref = FirebaseStorage.instance.ref().child(path);
@@ -253,7 +251,7 @@ class HypertrophyCategoriesScreen extends StatelessWidget {
     'Bi-ventricular Hypertrophy',
   ];
 
-  HypertrophyCategoriesScreen({Key? key}) : super(key: key);
+  HypertrophyCategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

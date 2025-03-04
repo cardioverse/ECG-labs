@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class CaseView extends StatefulWidget {
   final String category;
 
-  const CaseView({Key? key, required this.category}) : super(key: key);
+  const CaseView({super.key, required this.category});
 
   @override
   _CaseViewState createState() => _CaseViewState();
@@ -60,11 +60,11 @@ class _CaseViewState extends State<CaseView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Case View')),
+      appBar: AppBar(title: const Text('Case View')),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : (caseData == null || caseData!.isEmpty)
-          ? Center(child: Text('No cases available for this category.'))
+          ? const Center(child: Text('No cases available for this category.'))
           : Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -80,21 +80,21 @@ class _CaseViewState extends State<CaseView> {
                   children: [
                     Text(
                       caseData!['title'],
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(caseData!['description']),
-                    SizedBox(height: 10),
-                    Text('ECG Findings:', style: TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                    const Text('ECG Findings:', style: TextStyle(fontWeight: FontWeight.bold)),
                     Text(caseData!['ecg_findings']),
                     if (caseData!['echo'] != null) ...[
-                      SizedBox(height: 10),
-                      Text('Echo Findings:', style: TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 10),
+                      const Text('Echo Findings:', style: TextStyle(fontWeight: FontWeight.bold)),
                       Text(caseData!['echo']),
                     ],
                     if (caseData!['xray'] != null) ...[
-                      SizedBox(height: 10),
-                      Text('X-ray Findings:', style: TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 10),
+                      const Text('X-ray Findings:', style: TextStyle(fontWeight: FontWeight.bold)),
                       Text(caseData!['xray']),
                     ],
                   ],
@@ -102,14 +102,14 @@ class _CaseViewState extends State<CaseView> {
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Question
             Text(
               'Question: ${caseData!['question']}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Answer Options
             Column(
@@ -130,14 +130,14 @@ class _CaseViewState extends State<CaseView> {
               }),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Explanation and "Next Case" Button
             if (isAnswered)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Explanation:',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
@@ -145,12 +145,12 @@ class _CaseViewState extends State<CaseView> {
                     caseData!['explanation'],
                     textAlign: TextAlign.justify,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Center(
                     child: ElevatedButton(
                       onPressed: fetchCase,
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                      child: Text("Next Case", style: TextStyle(color: Colors.white)),
+                      child: const Text("Next Case", style: TextStyle(color: Colors.white)),
                     ),
                   ),
                 ],

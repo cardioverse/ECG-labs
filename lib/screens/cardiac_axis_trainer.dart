@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'dart:async';
 
 class CardiacAxisTrainer extends StatefulWidget {
+  const CardiacAxisTrainer({super.key});
+
   @override
   _CardiacAxisTrainerState createState() => _CardiacAxisTrainerState();
 }
@@ -87,7 +88,7 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
   }
 
   void _startCountdown() {
-    countdownTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdown > 0) {
         setState(() {
           countdown--;
@@ -116,7 +117,7 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
       });
 
       // Automatically show the next image after 2 seconds if no restart button is needed
-      Future.delayed(Duration(seconds: 2), () {
+      Future.delayed(const Duration(seconds: 2), () {
         if (showNextButton && !showRestartButton) _showNextImage();
       });
     }
@@ -127,7 +128,7 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
       feedbackMessage = message;
     });
 
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         feedbackMessage = '';
       });
@@ -154,14 +155,14 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cardiac Axis Trainer'),
+        title: const Text('Cardiac Axis Trainer'),
       ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (currentImage.isNotEmpty)
-              Container(
+              SizedBox(
                 width: screenWidth,
                 height: 380,
                 child: Image.asset(
@@ -169,7 +170,7 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
                   fit: BoxFit.contain,
                 ),
               ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Countdown timer display
             Text(
@@ -181,11 +182,11 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildScoreCard('Correct', score, Colors.green, Colors.white), // Set text color to white
-                SizedBox(width: 80),
+                const SizedBox(width: 80),
                 _buildScoreCard('Wrong', wrongAnswers, Colors.red, Colors.white), // Set text color to white
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Answer buttons
             if (!showRestartButton)
@@ -199,7 +200,7 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
                   _buildAnswerButton('Right Axis Deviation', Colors.orange),
                 ],
               ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Feedback message
             Text(
@@ -209,25 +210,25 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
                 color: feedbackMessage == 'Correct!' ? Colors.green : Colors.red,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Restart button
             if (showRestartButton)
               AnimatedOpacity(
                 opacity: showRestartButton ? 1.0 : 0.0,
-                duration: Duration(seconds: 1),
+                duration: const Duration(seconds: 1),
                 child: ElevatedButton(
                   onPressed: _resetQuiz,
-                  child: Text('Restart'),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   ),
+                  child: const Text('Restart'),
                 ),
               ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -243,18 +244,18 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
       height: screenWidth * 0.3,
       child: ElevatedButton(
         onPressed: () => _checkAnswer(answer),
-        child: Text(
-          answer,
-          textAlign: TextAlign.center,
-        ),
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           shadowColor: Colors.black54,
           elevation: 6,
+        ),
+        child: Text(
+          answer,
+          textAlign: TextAlign.center,
         ),
       ),
     );
@@ -274,7 +275,7 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
               label,
               style: TextStyle(fontSize: 18, color: textColor), // Use the passed textColor
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               '$value',
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: textColor), // Use the passed textColor

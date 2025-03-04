@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class InferiorMIScreen extends StatelessWidget {
+  const InferiorMIScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inferior MI'),
+        title: const Text('Inferior MI'),
         backgroundColor: Colors.black,
       ),
       body: Padding(
@@ -16,14 +18,14 @@ class InferiorMIScreen extends StatelessWidget {
             children: [
               // Title Section
 
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // General information about Inferior STEMI
-              Text(
+              const Text(
                 'Inferior STEMI can result from occlusion of any of the three main coronary arteries:',
                 style: TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Culprit Arteries and their involvement
               _buildBulletPoint('Dominant right coronary artery (RCA) in 80% of cases.'),
@@ -32,33 +34,33 @@ class InferiorMIScreen extends StatelessWidget {
                 'Occasionally, a “type III” or “wraparound” left anterior descending artery (LAD), '
                     'producing the unusual pattern of concomitant inferior and anterior ST elevation.',
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               // RCA Occlusion Section
               _buildSectionHeader('RCA Occlusion', Colors.blueAccent),
-              Text(
+              const Text(
                 'RCA occlusion is suggested by:',
                 style: TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
               ),
               _buildBulletPoint('ST elevation in lead III > lead II.'),
               _buildBulletPoint('Presence of reciprocal ST depression in lead I.'),
               _buildBulletPoint('Signs of right ventricular infarction: STE in V1 and V4R.'),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               // Circumflex Occlusion Section
               _buildSectionHeader('Circumflex Occlusion', Colors.green),
-              Text(
+              const Text(
                 'Circumflex occlusion is suggested by:',
                 style: TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
               ),
               _buildBulletPoint('ST elevation in lead II = lead III.'),
               _buildBulletPoint('Absence of reciprocal ST depression in lead I.'),
               _buildBulletPoint('Signs of lateral infarction: ST elevation in the lateral leads I and aVL or V5-6.'),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               // ECG Example Section
               _buildSectionHeader('ECG Example - Early Inferior STEMI', Colors.amber),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // ECG Image Display
               Center(
@@ -75,7 +77,7 @@ class InferiorMIScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // ECG Description
               _buildECGDescription(),
@@ -105,14 +107,14 @@ class InferiorMIScreen extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             '• ',
             style: TextStyle(fontSize: 16, color: Colors.white),
           ),
           Expanded(
             child: Text(
               text,
-              style: TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
+              style: const TextStyle(fontSize: 16, color: Colors.white, height: 1.5),
             ),
           ),
         ],
@@ -125,7 +127,7 @@ class InferiorMIScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'ECG Description:',
           style: TextStyle(
             fontSize: 18,
@@ -133,7 +135,7 @@ class InferiorMIScreen extends StatelessWidget {
             color: Colors.orange,
           ),
         ),
-        SizedBox(height: 12),
+        const SizedBox(height: 12),
         Padding(
           padding: const EdgeInsets.only(left: 16.0, bottom: 8.0),
           child: Column(

@@ -5,6 +5,8 @@ import 'package:ecg_trainer/user_authentication/login_screen.dart';
 import 'dart:math';
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -45,7 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         await user.delete();
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
               (route) => false,
         );
       } catch (e) {
@@ -61,21 +63,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Account'),
-          content: Text('Are you sure you want to delete your account? This action is irreversible and all your data will be permanently deleted.'),
+          title: const Text('Delete Account'),
+          content: const Text('Are you sure you want to delete your account? This action is irreversible and all your data will be permanently deleted.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 _deleteAccount();
               },
-              child: Text('Delete', style: TextStyle(color: Colors.red)),
+              child: const Text('Delete', style: TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -99,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Profile', style: TextStyle(color: Colors.white)),
+        title: const Text('Profile', style: TextStyle(color: Colors.white)),
         centerTitle: false,
         elevation: 0,
       ),
@@ -108,37 +110,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               CircleAvatar(
                 radius: 60,
                 backgroundColor: _generateRandomColor(),
                 child: Text(
                   fullName.isNotEmpty ? fullName[0] : '',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 fullName,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 profession,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -149,15 +151,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       onPressed: () {
                         // Add functionality to edit profile
                       },
-                      child: Text('Edit', style: TextStyle(color: Colors.white)),
+                      child: const Text('Edit', style: TextStyle(color: Colors.white)),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -165,42 +167,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       onPressed: () {
                         _auth.signOut();
                         Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginScreen()),
+                          MaterialPageRoute(builder: (context) => const LoginScreen()),
                               (route) => false,
                         );
                       },
-                      child: Text('Logout', style: TextStyle(color: Colors.white)),
+                      child: const Text('Logout', style: TextStyle(color: Colors.white)),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
                 ),
                 onPressed: () {
                   _confirmDeleteAccount();
                 },
-                child: Text('Delete Account', style: TextStyle(color: Colors.white)),
+                child: const Text('Delete Account', style: TextStyle(color: Colors.white)),
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               _buildProfileInfoCard('Name', fullName),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildProfileInfoCard('Profession', profession),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildProfileInfoCard('Email', email),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildProfileInfoCard('Password', '************'),
             ],
           ),
@@ -223,7 +225,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -231,7 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Text(
               value,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 16,
               ),
