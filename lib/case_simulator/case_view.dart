@@ -32,12 +32,14 @@ class _CaseViewState extends State<CaseView> {
     var querySnapshot = await FirebaseFirestore.instance
         .collection('cases')
         .where('category', isEqualTo: widget.category.toLowerCase())
-        .limit(1)
-        .get();
+        .get(); // Get all cases in the category
 
     if (querySnapshot.docs.isNotEmpty) {
+      // Pick a random case
+      final randomCase = (querySnapshot.docs.toList()..shuffle()).first;
+
       setState(() {
-        caseData = querySnapshot.docs.first.data();
+        caseData = randomCase.data();
       });
     } else {
       setState(() {
@@ -49,6 +51,7 @@ class _CaseViewState extends State<CaseView> {
       isLoading = false;
     });
   }
+
 
   void checkAnswer(String answer) {
     setState(() {

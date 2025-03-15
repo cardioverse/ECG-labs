@@ -1,6 +1,6 @@
-// case_simulator.dart
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'case_view.dart';
 
 class CaseSimulator extends StatelessWidget {
@@ -9,37 +9,107 @@ class CaseSimulator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Case Simulator')),
-      body: Center(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: const Text('ECG Case Simulator'),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildOption(context, 'Basic', Colors.blue),
-            _buildOption(context, 'Intermediate', Colors.orange),
-            _buildOption(context, 'Advanced', Colors.red),
+            _buildHeader(),
+            const SizedBox(height: 30),
+            _buildSelectionButton(context, 'Basic', Colors.blue, 'Start with simple cases'),
+            const SizedBox(height: 20),
+            _buildSelectionButton(context, 'Intermediate', Colors.orange, 'Take on moderate challenges'),
+            const SizedBox(height: 20),
+            _buildSelectionButton(context, 'Advanced', Colors.red, 'Push your ECG skills to the limit'),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildOption(BuildContext context, String title, Color color) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(backgroundColor: color),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CaseView(category: title.toLowerCase()), // Pass category in lowercase for consistency
-            ),
-          );
-        },
-        child: Text(title, style: const TextStyle(color: Colors.white)),
-      ),
+  // Header Section
+  Widget _buildHeader() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Select Your Proficiency",
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+
+      ],
     );
   }
 
+  // Animated Selection Button
+  Widget _buildSelectionButton(BuildContext context, String title, Color color, String subtitle) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CaseView(category: title.toLowerCase()),
+          ),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.9),
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: color.withOpacity(0.6),
+              blurRadius: 15,
+              spreadRadius: -3,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundColor: color.withOpacity(0.8),
+              child: Icon(Icons.monitor_heart, color: Colors.white),
+            ),
+            const SizedBox(width: 15),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  subtitle,
+                  style: GoogleFonts.poppins(
+                    color: Colors.white70,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+            const Spacer(),
+            const Icon(Icons.arrow_forward_ios, color: Colors.white),
+          ],
+        ),
+      ).animate().scale(duration: 200.ms, curve: Curves.easeOut),
+    );
+  }
 }
-
