@@ -124,10 +124,13 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
         wrongCount++;
         feedbackMessage = 'Incorrect! The correct answer was: ';
       }
-      if (mode == 'Relaxed') {
+    });
+
+    if (mode == 'Relaxed') {
+      Future.delayed(const Duration(seconds: 1), () {  // Delay popup by 1 second
         showDialog(
           context: context,
-          barrierDismissible: false,  // Prevent dialog from closing when tapping outside
+          barrierDismissible: false,
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text(isCorrect ? 'Correct!' : 'Incorrect!'),
@@ -183,16 +186,17 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
             );
           },
         );
-      }
-    });
+      });
+    }
 
     if (mode == 'Rapid') {
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(milliseconds: 200), () {
         loadNextECG();
         resetTimer();
       });
     }
   }
+
 
   @override
   void dispose() {
@@ -300,16 +304,24 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
                 }
 
                 return SizedBox(
-                  height: 50,  // Set the desired height for the button
+                  height: 50, // Set the desired height for the button
                   child: InkWell(
                     onTap: selectedAnswer == null ? () => checkAnswer(options[index]) : null,
                     borderRadius: BorderRadius.circular(15),
-                    splashColor: Colors.tealAccent,
+                    splashColor: Colors.red,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: buttonColor,
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(width: 3, color: Colors.white),
+                        color: Colors.blueAccent.withOpacity(0.1), // Dark, semi-transparent
+                        borderRadius: BorderRadius.circular(15), // Rounded corners
+                        border: Border.all(width: 2, color: Colors.white),
+                        boxShadow: [
+                          BoxShadow(
+                            color: buttonColor.withOpacity(0.6), // Soft colored glow
+                            blurRadius: 15, // Blurred edges for smooth glow
+                            spreadRadius: -3, // Prevents over-spreading of glow
+                            offset: const Offset(0, 6), // Moves shadow downward
+                          ),
+                        ],
                       ),
                       child: Center(
                         child: Text(
@@ -321,6 +333,7 @@ class _ArrhythmiaTrainerState extends State<ArrhythmiaTrainer> {
                     ),
                   ),
                 );
+
               },
             ),
           ],

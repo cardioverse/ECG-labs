@@ -37,8 +37,6 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
   int questionsAnswered = 0;
   String feedbackMessage = '';
   bool isAnswered = false;
-  bool showNextButton = false;
-  bool isTimerRunning = false;
   bool showRestartButton = false;
 
   Timer? countdownTimer;
@@ -60,7 +58,6 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
     setState(() {
       feedbackMessage = '';
       isAnswered = false;
-      showNextButton = false;
       countdown = 15;
       countdownTimer?.cancel();
 
@@ -70,7 +67,7 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
       if (availableImages.isEmpty) {
         usedImages.clear();
         availableImages = allImages;
-        showRestartButton = true; // Show Restart button when all questions are answered
+        showRestartButton = true;
       }
 
       availableImages.shuffle();
@@ -95,7 +92,7 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
         });
       } else {
         timer.cancel();
-        _checkAnswer(''); // Handle time's up scenario as a wrong answer
+        _checkAnswer('');
       }
     });
   }
@@ -108,181 +105,97 @@ class _CardiacAxisTrainerState extends State<CardiacAxisTrainer> {
 
         if (selectedAnswer == correctAnswer) {
           score++;
-          _showFeedbackMessage('Correct!');
+          feedbackMessage = '✅ Correct!';
         } else {
           wrongAnswers++;
-          _showFeedbackMessage('Wrong! The correct answer was $correctAnswer');
+          feedbackMessage = '❌ Wrong! Correct: $correctAnswer';
         }
-        showNextButton = true;
       });
 
-      // Automatically show the next image after 2 seconds if no restart button is needed
       Future.delayed(const Duration(seconds: 2), () {
-        if (showNextButton && !showRestartButton) _showNextImage();
+        if (!showRestartButton) _showNextImage();
       });
     }
   }
 
-  void _showFeedbackMessage(String message) {
-    setState(() {
-      feedbackMessage = message;
-    });
-
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        feedbackMessage = '';
-      });
-    });
-  }
-
   void _resetQuiz() {
-    countdownTimer?.cancel(); // Stop the countdown timer
+    countdownTimer?.cancel();
     setState(() {
       score = 0;
       wrongAnswers = 0;
       questionsAnswered = 0;
       usedImages.clear();
-      countdown = 15; // Reset the countdown
-      showRestartButton = false; // Hide Restart button on quiz reset
-      currentImage = ''; // Clear current image
+      countdown = 15;
+      showRestartButton = false;
+      currentImage = '';
     });
-    _showNextImage(); // Show the next image (starts the quiz)
+    _showNextImage();
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cardiac Axis Trainer'),
+        centerTitle: true,
+        backgroundColor: Colors.black,
       ),
-      body: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (currentImage.isNotEmpty)
-              SizedBox(
-                width: screenWidth,
-                height: 380,
-                child: Image.asset(
-                  currentImage,
-                  fit: BoxFit.contain,
-                ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(currentImage, height: 300, fit: BoxFit.contain),
               ),
             const SizedBox(height: 20),
-
-            // Countdown timer display
             Text(
-              'Time Left: $countdown seconds',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: countdown > 5 ? Colors.black : Colors.red),
-            ),
-            // Score display
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildScoreCard('Correct', score, Colors.green, Colors.white), // Set text color to white
-                const SizedBox(width: 80),
-                _buildScoreCard('Wrong', wrongAnswers, Colors.red, Colors.white), // Set text color to white
-              ],
-            ),
-            const SizedBox(height: 20),
-
-            // Answer buttons
-            if (!showRestartButton)
-              Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 10.0,
-                runSpacing: 10.0,
-                children: [
-                  _buildAnswerButton('Left Axis Deviation', Colors.blue),
-                  _buildAnswerButton('Normal Axis', Colors.green),
-                  _buildAnswerButton('Right Axis Deviation', Colors.orange),
-                ],
-              ),
-            const SizedBox(height: 20),
-
-            // Feedback message
-            Text(
-              feedbackMessage,
+              '⏳ Time Left: $countdown s',
               style: TextStyle(
                 fontSize: 18,
-                color: feedbackMessage == 'Correct!' ? Colors.green : Colors.red,
+                fontWeight: FontWeight.bold,
+                color: countdown > 5 ? Colors.white : Colors.red,
               ),
-            ),
-            const SizedBox(height: 20),
-
-            // Restart button
-            if (showRestartButton)
-              AnimatedOpacity(
-                opacity: showRestartButton ? 1.0 : 0.0,
-                duration: const Duration(seconds: 1),
-                child: ElevatedButton(
-                  onPressed: _resetQuiz,
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  ),
-                  child: const Text('Restart'),
-                ),
-              ),
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Helper to create an answer button with consistent style
-  Widget _buildAnswerButton(String answer, Color color) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    return SizedBox(
-      width: screenWidth * 0.3,
-      height: screenWidth * 0.3,
-      child: ElevatedButton(
-        onPressed: () => _checkAnswer(answer),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          padding: const EdgeInsets.all(10),
-          shadowColor: Colors.black54,
-          elevation: 6,
-        ),
-        child: Text(
-          answer,
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-
-  // Helper to build a score card
-  Widget _buildScoreCard(String label, int value, MaterialColor color, Color textColor) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    return Card(
-      color: color.shade800,
-      elevation: 4,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1, vertical: 20.0),
-        child: Column(
-          children: [
-            Text(
-              label,
-              style: TextStyle(fontSize: 18, color: textColor), // Use the passed textColor
             ),
             const SizedBox(height: 10),
-            Text(
-              '$value',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: textColor), // Use the passed textColor
+            Text(feedbackMessage, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 20),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 12,
+              runSpacing: 12,
+              children: [
+                _buildAnswerButton('Left Axis Deviation', Colors.blue),
+                _buildAnswerButton('Normal Axis', Colors.green),
+                _buildAnswerButton('Right Axis Deviation', Colors.orange),
+              ],
             ),
+            if (showRestartButton)
+              ElevatedButton(
+                onPressed: _resetQuiz,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                ),
+                child: const Text('Restart', style: TextStyle(fontSize: 16, color: Colors.white)),
+              ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildAnswerButton(String answer, Color color) {
+    return ElevatedButton(
+      onPressed: () => _checkAnswer(answer),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+      child: Text(answer, textAlign: TextAlign.center, style: const TextStyle(fontSize: 16, color: Colors.white)),
     );
   }
 }

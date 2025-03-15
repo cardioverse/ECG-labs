@@ -146,8 +146,20 @@ class _QuizScreenState extends State<QuizScreen> {
         _showExplanation = false;
         _feedbackMessage = null;
 
-        // Shuffle diagnoses for the next question
-        _diagnosisNames.shuffle();
+        // Ensure the correct answer is included
+        String correctAnswer = _diagnosisNames[_randomizedQuestionIndices[_currentQuestionIndex]];
+
+        // Pick three random incorrect answers
+        List<String> incorrectAnswers = _diagnosisNames.where((name) => name != correctAnswer).toList();
+        incorrectAnswers.shuffle();
+        List<String> options = [correctAnswer, ...incorrectAnswers.take(3)];
+
+        // Shuffle the final options
+        options.shuffle();
+
+        // Store only four options for the current question
+        _diagnosisNames.clear();
+        _diagnosisNames.addAll(options);
 
         if (!_isRelaxedMode) {
           _resetTimer();
@@ -160,6 +172,7 @@ class _QuizScreenState extends State<QuizScreen> {
       _timer?.cancel();
     }
   }
+
 
   @override
   void dispose() {
@@ -268,24 +281,46 @@ class _QuizScreenState extends State<QuizScreen> {
     return InkWell(
       onTap: () => _checkAnswer(optionText),
       borderRadius: BorderRadius.circular(15),
-      splashColor: Colors.tealAccent,
-      child: Container(
+      splashColor: Colors.white24,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
         decoration: BoxDecoration(
           gradient: const LinearGradient(
-            colors: [Colors.blue, Colors.blueAccent],
+            colors: [Colors.purple, Colors.cyan],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(width: 3, color: Colors.white),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.cyanAccent.withOpacity(0.6),
+              blurRadius: 10,
+              spreadRadius: 2,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
         child: Center(
           child: Text(
             optionText,
-            style: const TextStyle(fontSize: 15, color: Colors.white),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                  color: Colors.black45,
+                  blurRadius: 2,
+                  offset: Offset(1, 1),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+
 }
