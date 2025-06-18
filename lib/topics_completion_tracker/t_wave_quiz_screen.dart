@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class TWaveQuizScreen extends StatefulWidget {
+  const TWaveQuizScreen({super.key}); // Added const constructor for consistency
+
   @override
   _TWaveQuizScreenState createState() => _TWaveQuizScreenState();
 }
@@ -10,14 +12,20 @@ class TWaveQuizScreen extends StatefulWidget {
 class _TWaveQuizScreenState extends State<TWaveQuizScreen> {
   int currentQuestionIndex = 0;
   int score = 0;
-  bool showResetButton = false;
+  // bool showResetButton = false; // This variable is no longer needed with the new flow
+  final int passThreshold = 8;
+
+  // New state variables for feedback, consistent with other quiz screens
+  int? _selectedOptionIndex; // Stores the index of the option the user tapped
+  bool _isAnswerEvaluated = false; // True when an answer has been picked and evaluated
+
 
   final List<Map<String, dynamic>> questions = [
     {
       'question': 'What does the T wave represent in an ECG?',
       'options': [
         'Atrial depolarization',
-        'Ventricular repolarization',
+        'Ventricular repolarization', // Correct answer
         'Atrial repolarization',
         'Ventricular depolarization'
       ],
@@ -28,7 +36,7 @@ class _TWaveQuizScreenState extends State<TWaveQuizScreen> {
       'options': [
         'Flat',
         'Inverted',
-        'Asymmetrical and upright',
+        'Asymmetrical and upright', // Correct answer
         'Biphasic'
       ],
       'answer': 2,
@@ -38,7 +46,7 @@ class _TWaveQuizScreenState extends State<TWaveQuizScreen> {
       'options': [
         'Left ventricular hypertrophy',
         'Right ventricular hypertrophy',
-        'Myocardial ischemia',
+        'Myocardial ischemia', // Correct answer
         'Normal variant'
       ],
       'answer': 2,
@@ -46,46 +54,63 @@ class _TWaveQuizScreenState extends State<TWaveQuizScreen> {
     {
       'question': 'Which electrolyte imbalance causes peaked T waves?',
       'options': ['Hypokalemia', 'Hyperkalemia', 'Hypocalcemia', 'Hypernatremia'],
-      'answer': 1,
+      'answer': 1, // Correct answer
     },
     {
       'question': 'What does a flattened T wave suggest?',
       'options': ['Hyperkalemia', 'Hypokalemia', 'Hypercalcemia', 'Hypertension'],
-      'answer': 1,
+      'answer': 1, // Correct answer
     },
     {
       'question': 'T wave inversion in V1-V3 can indicate?',
       'options': ['Pulmonary embolism', 'Pericarditis', 'Wellens syndrome', 'Atrial fibrillation'],
-      'answer': 2,
+      'answer': 2, // Correct answer
     },
     {
       'question': 'Which leads typically show an upright T wave in a normal ECG?',
       'options': ['V1-V2', 'aVR', 'II, V3-V6', 'aVL'],
-      'answer': 2,
+      'answer': 2, // Correct answer
     },
     {
       'question': 'T wave alternans is associated with?',
       'options': ['Atrial fibrillation', 'Ventricular arrhythmias', 'Bradycardia', 'Sinus tachycardia'],
-      'answer': 1,
+      'answer': 1, // Correct answer
     },
     {
       'question': 'A notched T wave can be seen in?',
       'options': ['Hyperthyroidism', 'Hypothermia', 'Digitalis effect', 'Myocardial infarction'],
-      'answer': 2,
+      'answer': 2, // Correct answer
     },
     {
       'question': 'Tall, symmetrical T waves may indicate?',
       'options': ['Hyperkalemia', 'Hypomagnesemia', 'Mitral stenosis', 'Pulmonary hypertension'],
-      'answer': 0,
+      'answer': 0, // Correct answer
     },
   ];
 
   void _checkAnswer(int selectedIndex) {
-    if (selectedIndex == questions[currentQuestionIndex]['answer']) {
-      score++;
+    // Prevent multiple selections for the same question after it's evaluated
+    if (_isAnswerEvaluated) {
+      return;
     }
 
     setState(() {
+      _selectedOptionIndex = selectedIndex;
+      _isAnswerEvaluated = true; // Mark that the answer has been evaluated for this question
+
+      if (selectedIndex == questions[currentQuestionIndex]['answer']) {
+        score++;
+      }
+      // Do NOT immediately go to the next question here.
+      // The "Next Question" button will handle the progression.
+    });
+  }
+
+  void _goToNextQuestion() {
+    setState(() {
+      _selectedOptionIndex = null; // Reset selected option for next question
+      _isAnswerEvaluated = false; // Reset evaluation status
+
       if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
       } else {
@@ -97,7 +122,7 @@ class _TWaveQuizScreenState extends State<TWaveQuizScreen> {
   Future<void> _storeCompletionStatus() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      if (user != null && score >= 8) {
+      if (user != null && score >= passThreshold) { // Only store if user passes the threshold
         String uid = user.uid;
         DocumentReference userDoc = FirebaseFirestore.instance.collection('userProgress').doc(uid);
 
@@ -111,27 +136,33 @@ class _TWaveQuizScreenState extends State<TWaveQuizScreen> {
   }
 
   void _showCompletionDialog() {
+    bool passed = score >= passThreshold; // Determine if user passed for the "Mark as Complete" option
+
     showDialog(
       context: context,
+      barrierDismissible: false, // Prevent dialog from closing by tapping outside
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Quiz Completed!'),
-          content: Text(score >= 8
-              ? 'You passed! Score: $score/10'
-              : 'You failed. Score: $score/10. Try again!'),
+          title: Text(passed ? 'Quiz Passed!' : 'Quiz Failed'), // Consistent with other quizzes
+          content: Text('You scored $score out of ${questions.length}.'), // Display score directly
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                if (score >= 8) {
+            if (passed) // Show "Mark as Complete" only if passed
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Pop the dialog
+                  Navigator.of(context).pop(); // Pop the quiz screen
                   _storeCompletionStatus();
-                  Navigator.of(context).pop();
-                } else {
+                },
+                child: const Text('Mark as Complete'), // Consistent text for finishing
+              )
+            else
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Pop the dialog
                   _resetQuiz();
-                }
-              },
-              child: Text(score >= 8 ? 'Finish' : 'Retry'),
-            ),
+                },
+                child: const Text('Retry'), // Consistent text for retrying
+              )
           ],
         );
       },
@@ -141,17 +172,46 @@ class _TWaveQuizScreenState extends State<TWaveQuizScreen> {
   void _resetQuiz() {
     setState(() {
       currentQuestionIndex = 0;
-      score = 0;
-      showResetButton = false;
+      score = 0; // Reset score
+      _selectedOptionIndex = null; // Reset for new quiz
+      _isAnswerEvaluated = false; // Reset for new quiz
+      // showResetButton = false; // Removed, not used
     });
+  }
+
+  // Helper function to determine button color based on feedback
+  Color _getOptionButtonColor(int index) {
+    if (!_isAnswerEvaluated) {
+      return Colors.white; // Default color before evaluation
+    }
+    // After evaluation
+    if (index == questions[currentQuestionIndex]['answer']) {
+      return Colors.green.shade700; // Correct answer is always green
+    } else if (index == _selectedOptionIndex) {
+      return Colors.red.shade700; // Incorrectly selected answer is red
+    }
+    return Colors.white; // Other unselected options remain white
+  }
+
+  // Helper function to determine button text color for contrast
+  Color _getOptionButtonTextColor(int index) {
+    if (!_isAnswerEvaluated) {
+      return Colors.black; // Default text color
+    }
+    // After evaluation
+    if (index == questions[currentQuestionIndex]['answer'] || index == _selectedOptionIndex) {
+      return Colors.white; // Text is white for highlighted (green/red) buttons
+    }
+    return Colors.black; // Text is black for non-highlighted buttons
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('T Wave Quiz'),
+        title: const Text('T Wave Quiz'), // Added const for consistency
         backgroundColor: Colors.black,
+        foregroundColor: Colors.white, // Ensures title and icons are white
       ),
       backgroundColor: Colors.black,
       body: Padding(
@@ -159,39 +219,82 @@ class _TWaveQuizScreenState extends State<TWaveQuizScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (!showResetButton) ...[
-              Text(
-                'Question ${currentQuestionIndex + 1} of ${questions.length}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+            // --- Score Tracker ---
+            Text(
+              'Score: $score / ${questions.length}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 16),
-              Text(
-                questions[currentQuestionIndex]['question'],
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
+            ),
+            const SizedBox(height: 16), // Spacing after score
+            // --- End Score Tracker ---
+
+            Text(
+              'Question ${currentQuestionIndex + 1} of ${questions.length}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 16),
-              ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              questions[currentQuestionIndex]['question'],
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Expanded( // Use Expanded to give the list of buttons available space
+              child: ListView.builder(
+                itemCount: questions[currentQuestionIndex]['options'].length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _getOptionButtonColor(index), // Use helper for color
+                        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0), // Optional: add some rounded corners
+                        ),
+                      ),
+                      // Always provide the onPressed callback, the _checkAnswer logic prevents re-evaluation
+                      onPressed: () => _checkAnswer(index),
+                      child: Text(
+                        questions[currentQuestionIndex]['options'][index],
+                        style: TextStyle(
+                          color: _getOptionButtonTextColor(index), // Use helper for text color
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            if (_isAnswerEvaluated) // Show "Next Question" button only after an answer is selected
+              Padding(
+                padding: const EdgeInsets.only(top: 24.0),
+                child: Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      backgroundColor: Colors.blue.shade700,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 40.0),
+                      textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    onPressed: () => _checkAnswer(index),
-                    child: Text(questions[currentQuestionIndex]['options'][index]),
+                    onPressed: _goToNextQuestion,
+                    child: Text(
+                      currentQuestionIndex < questions.length - 1 ? 'Next Question' : 'Finish Quiz',
+                    ),
                   ),
-                );
-              }),
-            ],
+                ),
+              ),
+            const SizedBox(height: 16), // Add some bottom spacing
           ],
         ),
       ),
