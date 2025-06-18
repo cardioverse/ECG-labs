@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AxisCalculationQuizScreen extends StatefulWidget {
+  const AxisCalculationQuizScreen({super.key});
+
   @override
   _AxisCalculationQuizScreenState createState() => _AxisCalculationQuizScreenState();
 }
@@ -10,7 +12,11 @@ class AxisCalculationQuizScreen extends StatefulWidget {
 class _AxisCalculationQuizScreenState extends State<AxisCalculationQuizScreen> {
   int currentQuestionIndex = 0;
   int score = 0;
-  bool showResetButton = false;
+  bool showResetButton = false; // This variable isn't used in the provided code logic, consider removing if not needed.
+
+  // New state variables for feedback
+  int? _selectedOptionIndex; // Stores the index of the option the user tapped
+  bool _isAnswerEvaluated = false; // True when an answer has been picked and evaluated
 
   final List<Map<String, dynamic>> questions = [
     {
@@ -66,10 +72,27 @@ class _AxisCalculationQuizScreenState extends State<AxisCalculationQuizScreen> {
   ];
 
   void _checkAnswer(int selectedIndex) {
-    if (selectedIndex == questions[currentQuestionIndex]['answer']) {
-      score++;
+    // This check is crucial to prevent multiple evaluations if the button
+    // is tapped again before _isAnswerEvaluated is reset for the next question.
+    if (_isAnswerEvaluated) {
+      return;
     }
+
     setState(() {
+      _selectedOptionIndex = selectedIndex;
+      _isAnswerEvaluated = true; // Mark that the answer has been evaluated for this question
+
+      if (selectedIndex == questions[currentQuestionIndex]['answer']) {
+        score++;
+      }
+    });
+  }
+
+  void _goToNextQuestion() {
+    setState(() {
+      _selectedOptionIndex = null; // Reset selected option for next question
+      _isAnswerEvaluated = false; // Reset evaluation status
+
       if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
       } else {
@@ -97,27 +120,28 @@ class _AxisCalculationQuizScreenState extends State<AxisCalculationQuizScreen> {
   void _showCompletionDialog() {
     showDialog(
       context: context,
+      barrierDismissible: false, // Prevent dialog from closing by tapping outside
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Quiz Completed!'),
+          title: const Text('Quiz Completed!'),
           content: Text('You scored $score out of ${questions.length}.'),
           actions: [
             if (score >= 8) ...[
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(); // Pop the dialog
+                  Navigator.of(context).pop(); // Pop the quiz screen
                   _storeCompletionStatus();
                 },
-                child: Text('Mark as Complete'),
+                child: const Text('Mark as Complete'),
               ),
             ],
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(); // Pop the dialog
                 _resetQuiz();
               },
-              child: Text('Retry'),
+              child: const Text('Retry'),
             ),
           ],
         );
@@ -129,16 +153,46 @@ class _AxisCalculationQuizScreenState extends State<AxisCalculationQuizScreen> {
     setState(() {
       currentQuestionIndex = 0;
       score = 0;
-      showResetButton = false;
+      _selectedOptionIndex = null;
+      _isAnswerEvaluated = false;
+      showResetButton = false; // Unused, consider removing
     });
   }
+
+  // Helper function to determine button color based on feedback
+  Color _getOptionButtonColor(int index) {
+    if (!_isAnswerEvaluated) {
+      return Colors.white; // Default color before evaluation
+    }
+    // After evaluation
+    if (index == questions[currentQuestionIndex]['answer']) {
+      return Colors.green.shade700; // Correct answer is always green
+    } else if (index == _selectedOptionIndex) {
+      return Colors.red.shade700; // Incorrectly selected answer is red
+    }
+    return Colors.white; // Other unselected options remain white
+  }
+
+  // Helper function to determine button text color for contrast
+  Color _getOptionButtonTextColor(int index) {
+    if (!_isAnswerEvaluated) {
+      return Colors.black; // Default text color
+    }
+    // After evaluation
+    if (index == questions[currentQuestionIndex]['answer'] || index == _selectedOptionIndex) {
+      return Colors.white; // Text is white for highlighted (green/red) buttons
+    }
+    return Colors.black; // Text is black for non-highlighted buttons
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Axis Calculation Quiz'),
+        title: const Text('Axis Calculation Quiz'), // Removed score from AppBar
         backgroundColor: Colors.black,
+        foregroundColor: Colors.white, // Ensures title and icons are white
       ),
       backgroundColor: Colors.black,
       body: Padding(
@@ -146,37 +200,87 @@ class _AxisCalculationQuizScreenState extends State<AxisCalculationQuizScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // --- Score Tracker (relocated) ---
             Text(
-              'Question ${currentQuestionIndex + 1} of ${questions.length}',
-              style: TextStyle(
+              'Score: $score / ${questions.length}',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16), // Spacing after score
+            // --- End Score Tracker ---
+
+            Text(
+              'Question ${currentQuestionIndex + 1} of ${questions.length}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
             Text(
               questions[currentQuestionIndex]['question'],
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),
             ),
-            SizedBox(height: 16),
-            ...List.generate(questions[currentQuestionIndex]['options'].length, (index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            const SizedBox(height: 16),
+            Expanded( // Use Expanded to give the list of buttons available space
+              child: ListView.builder(
+                itemCount: questions[currentQuestionIndex]['options'].length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _getOptionButtonColor(index),
+                        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0), // Optional: add some rounded corners
+                        ),
+                      ),
+                      // *********************************************************************
+                      // FIX: The onPressed callback should always be present,
+                      // and the _checkAnswer function itself will handle
+                      // preventing re-evaluation. This ensures the button
+                      // remains visually "active" to apply custom colors.
+                      // *********************************************************************
+                      onPressed: () => _checkAnswer(index),
+                      child: Text(
+                        questions[currentQuestionIndex]['options'][index],
+                        style: TextStyle(
+                          color: _getOptionButtonTextColor(index),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            if (_isAnswerEvaluated) // Show "Next Question" button only after an answer is selected
+              Padding(
+                padding: const EdgeInsets.only(top: 24.0),
+                child: Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue.shade700,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 40.0),
+                      textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: _goToNextQuestion,
+                    child: Text(
+                      currentQuestionIndex < questions.length - 1 ? 'Next Question' : 'Finish Quiz',
+                    ),
                   ),
-                  onPressed: () => _checkAnswer(index),
-                  child: Text(questions[currentQuestionIndex]['options'][index]),
                 ),
-              );
-            }),
+              ),
+            const SizedBox(height: 16), // Add some bottom spacing
           ],
         ),
       ),
